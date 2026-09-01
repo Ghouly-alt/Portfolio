@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carte Runeterra - Zones Interactives</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+    </style>
+</head>
+
+<body>
+    <!-- Ecran de chargement -->
+    <div id="loader">
+        <h1 class="loader-title">MON PORTFOLIO</h1>
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+    <div id="intro-screen">
+        <div class="intro-content">
+            <h1 class="intro-title">BODET LOÏC</h1>
+            <h2 class="intro-subtitle">PORTFOLIO</h2>
+            <p class="intro-desc">Administrateur système et réseaux</p>
+
+            <div class="intro-contact">
+                <a href="https://www.linkedin.com/in/loic-bodet/" target="_blank" class="contact-item link">LinkedIn</a>
+                <span class="separator">•</span>
+                <span class="contact-item">06 16 46 39 08</span>
+                <span class="separator">•</span>
+                <span class="contact-item">LYON</span>
+                <span class="separator">•</span>
+                <a href="mailto:loic95110@gmail.com" class="contact-item link">loic95110@gmail.com</a>
+            </div>
+            <button id="enter-btn" class="hextech-btn">
+                <span class="btn-text">Suivant</span>
+                <span class="btn-border"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="map-container">
+        <!-- Carte de fond contenant déjà les icônes -->
+        <img src="Carte de Runettera.png" alt="Carte Runeterra" class="map-image">
+
+        <!-- Zone Haut (Froid) -->
+        <a href="projets.html" class="zone-link zone-cold" data-label="Mes projets">
+            <span class="sr-only">Mes projets</span>
+        </a>
+
+        <!-- Zone Bas Gauche (Ombre) -->
+        <a href="veille.html" class="zone-link zone-shadow" data-label="Veille technologique">
+            <span class="sr-only">Veille technologique</span>
+        </a>
+
+        <!-- Zone Bas Droite (Soleil) -->
+        <a href="cv.html" class="zone-link zone-sun" data-label="Mon parcours">
+            <span class="sr-only">Mon parcours</span>
+        </a>
+
+        <!-- Zone Milieu (Force) -->
+        <a href="competences.html" class="zone-link zone-middle" data-label="Mes compétences">
+            <span class="sr-only">Mes compétences</span>
+        </a>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const loader = document.getElementById('loader');
+            const introScreen = document.getElementById('intro-screen');
+            const enterBtn = document.getElementById('enter-btn');
+            const progressBar = document.querySelector('.progress-bar');
+            const mapContainer = document.querySelector('.map-container');
+            const zoneLinks = document.querySelectorAll('.zone-link');
+
+            // --- ZOOM NAVIGATION LOGIC ---
+            zoneLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetUrl = link.href;
+
+                    // Calculate center of the clicked zone for transform-origin
+                    const rect = link.getBoundingClientRect();
+                    const mapRect = mapContainer.getBoundingClientRect();
+                    const relativeTop = rect.top - mapRect.top + rect.height / 2;
+                    const relativeLeft = rect.left - mapRect.left + rect.width / 2;
+
+                    mapContainer.style.transformOrigin = `${relativeLeft}px ${relativeTop}px`;
+                    mapContainer.classList.remove('zoom-in'); // Ensure base state
+                    mapContainer.classList.add('zoomed-in'); // Scale up and fade out
+
+                    setTimeout(() => {
+                        window.location.href = targetUrl;
+                    }, 1000); // Wait for transition
+                });
+            });
+
+            // --- INTRO / RETURN LOGIC ---
+            const urlParams = new URLSearchParams(window.location.search);
+            const skipIntro = urlParams.get('skipIntro') === 'true';
+            const origin = urlParams.get('origin');
+
+            if (skipIntro) {
+                // Skip loader and intro
+                loader.style.display = 'none';
+                introScreen.style.display = 'none';
+
+
+
+                // If returning from a specific page, zoom out from that zone
+                if (origin === 'projets') {
+                    // Find the 'Mes projets' link
+                    const projetsLink = document.querySelector('a[data-label="Mes projets"]');
+                    if (projetsLink) {
+                        const rect = projetsLink.getBoundingClientRect();
+                        const mapRect = mapContainer.getBoundingClientRect();
+                        const relativeTop = rect.top - mapRect.top + rect.height / 2;
+                        const relativeLeft = rect.left - mapRect.left + rect.width / 2;
+
+                        mapContainer.style.transformOrigin = `${relativeLeft}px ${relativeTop}px`;
+                        mapContainer.classList.add('zoomed-in'); // Start zoomed in
+
+                        // Force reflow
+                        void mapContainer.offsetWidth;
+
+                        // Animate to normal
+                        requestAnimationFrame(() => {
+                            mapContainer.classList.remove('zoomed-in');
+                            mapContainer.classList.add('zoom-in');
+                        });
+                    } else {
+                        mapContainer.classList.add('zoom-in');
+                    }
+                } else if (origin === 'veille') {
+                    // Find the 'Veille technologique' link
+                    const veilleLink = document.querySelector('a[data-label="Veille technologique"]');
+                    if (veilleLink) {
+                        const rect = veilleLink.getBoundingClientRect();
+                        const mapRect = mapContainer.getBoundingClientRect();
+                        const relativeTop = rect.top - mapRect.top + rect.height / 2;
+                        const relativeLeft = rect.left - mapRect.left + rect.width / 2;
+
+                        mapContainer.style.transformOrigin = `${relativeLeft}px ${relativeTop}px`;
+                        mapContainer.classList.add('zoomed-in'); // Start zoomed in
+
+                        // Force reflow
+                        void mapContainer.offsetWidth;
+
+                        // Animate to normal
+                        requestAnimationFrame(() => {
+                            mapContainer.classList.remove('zoomed-in');
+                            mapContainer.classList.add('zoom-in');
+                        });
+                    } else {
+                        mapContainer.classList.add('zoom-in');
+                    }
+                } else if (origin === 'cv') {
+                    // Find the 'Mon parcours' link
+                    const cvLink = document.querySelector('a[data-label="Mon parcours"]');
+                    if (cvLink) {
+                        const rect = cvLink.getBoundingClientRect();
+                        const mapRect = mapContainer.getBoundingClientRect();
+                        const relativeTop = rect.top - mapRect.top + rect.height / 2;
+                        const relativeLeft = rect.left - mapRect.left + rect.width / 2;
+
+                        mapContainer.style.transformOrigin = `${relativeLeft}px ${relativeTop}px`;
+                        mapContainer.classList.add('zoomed-in'); // Start zoomed in
+
+                        // Force reflow
+                        void mapContainer.offsetWidth;
+
+                        // Animate to normal
+                        requestAnimationFrame(() => {
+                            mapContainer.classList.remove('zoomed-in');
+                            mapContainer.classList.add('zoom-in');
+                        });
+                    } else {
+                        mapContainer.classList.add('zoom-in');
+                    }
+                } else if (origin === 'competences') {
+                    // Find the 'Mes compétences' link
+                    const compLink = document.querySelector('a[data-label="Mes compétences"]');
+                    if (compLink) {
+                        const rect = compLink.getBoundingClientRect();
+                        const mapRect = mapContainer.getBoundingClientRect();
+                        const relativeTop = rect.top - mapRect.top + rect.height / 2;
+                        const relativeLeft = rect.left - mapRect.left + rect.width / 2;
+
+                        mapContainer.style.transformOrigin = `${relativeLeft}px ${relativeTop}px`;
+                        mapContainer.classList.add('zoomed-in'); // Start zoomed in
+
+                        // Force reflow
+                        void mapContainer.offsetWidth;
+
+                        // Animate to normal
+                        requestAnimationFrame(() => {
+                            mapContainer.classList.remove('zoomed-in');
+                            mapContainer.classList.add('zoom-in');
+                        });
+                    } else {
+                        mapContainer.classList.add('zoom-in');
+                    }
+                } else {
+                    // Default behavior (center zoom out or just appear)
+                    mapContainer.classList.add('zoom-in');
+                }
+
+                // Clean URL so refresh shows intro again
+                window.history.replaceState({}, document.title, window.location.pathname);
+            } else {
+                // Normal Intro Flow
+                setTimeout(() => {
+                    progressBar.style.width = '100%';
+                }, 100);
+
+                setTimeout(() => {
+                    loader.classList.add('fade-out');
+                    introScreen.classList.add('visible');
+                    setTimeout(() => { loader.style.display = 'none'; }, 500);
+                }, 3100);
+            }
+
+            // Click "ENTRER"
+            enterBtn.addEventListener('click', () => {
+                introScreen.classList.add('fade-out');
+                mapContainer.classList.add('zoom-in');
+                setTimeout(() => { introScreen.style.display = 'none'; }, 800);
+            });
+        });
+    </script>
+</body>
+
+</html>

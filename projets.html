@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Projets - Bodet Loïc</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 50px 20px;
+            overflow-y: auto;
+            background-image: url('fond-projets.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .page-title {
+            font-family: 'Cinzel', serif;
+            color: #00d2ff; /* Bleu éclatant pour contraster */
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 6px #000, 0 0 15px rgba(0, 210, 255, 0.8); /* Ombre forte pour détacher du fond */
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: #f0f0f0;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            border: 1px solid #82c8fa;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+            background: rgba(10, 20, 40, 0.4);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            background: rgba(130, 200, 250, 0.2);
+            box-shadow: 0 0 15px rgba(130, 200, 250, 0.5);
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            color: #00d2ff;
+            font-size: 2rem;
+            margin-top: 40px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+            width: 100%;
+            max-width: 1200px;
+            border-bottom: 2px solid rgba(0, 210, 255, 0.3);
+            padding-bottom: 15px;
+            text-shadow: 0 0 15px rgba(0, 210, 255, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .section-title::before,
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(0, 210, 255, 0.5), transparent);
+        }
+
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 50px;
+        }
+
+        .project-card {
+            background-color: rgba(10, 22, 38, 0.93); /* Fond bleu très sombre Hextech pour un excellent contraste */
+            backdrop-filter: blur(8px); /* Floute l'arrière-plan pour détacher la carte */
+            border: 2px solid rgba(0, 210, 255, 0.4); /* Bordure fine cyan */
+            padding: 22px;
+            border-radius: 8px; /* Angles arrondis plus doux */
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(0, 210, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffd700; /* Devient doré au survol */
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+            border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+            padding-bottom: 10px;
+        }
+
+        .project-title {
+            color: #ffffff; /* Blanc pur */
+            font-size: 1.35rem;
+            font-family: 'Cinzel', serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0;
+            text-shadow: 0 0 8px rgba(0, 229, 255, 0.6), 1px 1px 3px rgba(0, 0, 0, 0.8);
+        }
+
+        .project-date {
+            color: #ffd700; /* Doré pour contraster avec le titre */
+            font-size: 0.8rem;
+            font-weight: bold;
+            font-family: 'Cinzel', serif;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.4);
+            white-space: nowrap;
+        }
+
+        .project-desc {
+            color: #e2e8f0; /* Off-white pour une lisibilité maximale */
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; /* Police sans-serif propre */
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-weight: 400; /* Poids normal pour éviter le flou */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9); /* Ombre portée sombre, pas de lueur cyan floue */
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .project-tag {
+            background: rgba(0, 210, 255, 0.15);
+            border: 1px solid rgba(0, 210, 255, 0.4);
+            color: #00e5ff;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 5px rgba(0, 210, 255, 0.1);
+            font-weight: 600;
+        }
+
+        .project-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #ffd700;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border: 1px solid #ffd700;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            background: rgba(40, 20, 5, 0.4);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            align-self: flex-start;
+        }
+
+        .project-link:hover {
+            color: #fff;
+            background: rgba(255, 215, 0, 0.3);
+            border-color: #fff;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+    <a href="index.html?skipIntro=true&origin=projets" class="back-btn">← Retour</a>
+
+    <h1 class="page-title">MES PROJETS</h1>
+
+    <!-- SECTION ENTREPRISE -->
+    <h2 class="section-title">Entreprise</h2>
+    
+    <div class="projects-container">
+        <div class="project-card">
+            <div class="project-header">
+                <h3 class="project-title">Gestion & Supervision du Parc</h3>
+                <span class="project-date">Août 2025 - En cours</span>
+            </div>
+            <p class="project-desc">
+                Gestion et supervision du parc informatique. Configuration des droits d'accès aux serveurs, administration du matériel, gestion des sauvegardes et support aux nouveaux arrivants.
+            </p>
+            <div class="project-tags">
+                <span class="project-tag">Active Directory</span>
+                <span class="project-tag">Windows Server</span>
+                <span class="project-tag">Sauvegardes</span>
+                <span class="project-tag">Support IT</span>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-header">
+                <h3 class="project-title">Gestion de Tickets (SharePoint)</h3>
+                <span class="project-date">Octobre 2025</span>
+            </div>
+            <p class="project-desc">
+                Conception et déploiement d'un système collaboratif de gestion des incidents et demandes d'assistance via un formulaire SharePoint personnalisé.
+            </p>
+            <div class="project-tags">
+                <span class="project-tag">SharePoint</span>
+                <span class="project-tag">Microsoft 365</span>
+                <span class="project-tag">Ticketing</span>
+                <span class="project-tag">Collaboration</span>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-header">
+                <h3 class="project-title">Migration NEO & Admin Kiséo</h3>
+                <span class="project-date">Fév. - Avr. 2026</span>
+            </div>
+            <p class="project-desc">
+                Prise en main de l'administration et migration complète des comptes utilisateurs vers le nouvel environnement de travail NEO.
+            </p>
+            <div class="project-tags">
+                <span class="project-tag">Active Directory</span>
+                <span class="project-tag">Administration M365</span>
+                <span class="project-tag">Migration</span>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-header">
+                <h3 class="project-title">SharePoint Entreprise</h3>
+                <span class="project-date">Mai 2026 - En cours</span>
+            </div>
+            <p class="project-desc">
+                Étude, modélisation et développement du portail SharePoint interne pour centraliser la communication et les documents de l'entreprise.
+            </p>
+            <div class="project-tags">
+                <span class="project-tag">SharePoint</span>
+                <span class="project-tag">Intranet</span>
+                <span class="project-tag">Gestion de projet</span>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-header">
+                <h3 class="project-title">E-learning Equans</h3>
+                <span class="project-date">Août 2025 - En cours</span>
+            </div>
+            <p class="project-desc">
+                Identification des relais d'expertise internes et déploiement d'une plateforme d'apprentissage en ligne pour accompagner les collaborateurs.
+            </p>
+            <div class="project-tags">
+                <span class="project-tag">LMS</span>
+                <span class="project-tag">Ingénierie Pédagogique</span>
+                <span class="project-tag">Formation</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION FORMATION -->
+    <h2 class="section-title">Formation</h2>
+
+    <div class="projects-container">
+        <div class="project-card">
+            <div class="project-header">
+                <h3 class="project-title">Global Swiss Bourdin</h3>
+                <span class="project-date">Mai 2026</span>
+            </div>
+            <p class="project-desc">
+                Projet académique complet de conception et de déploiement d'une infrastructure réseau et des services Windows Server associés (Active Directory, DNS, DHCP).
+            </p>
+            <div class="project-tags">
+                <span class="project-tag">Infrastructure Réseau</span>
+                <span class="project-tag">Windows Server</span>
+                <span class="project-tag">Sécurité</span>
+            </div>
+            <a href="https://drive.google.com/drive/folders/17k6Yh1YECzoqbg8lJewWjeEWQFlthh7E?usp=drive_link" target="_blank" class="project-link">Voir le projet</a>
+        </div>
+
+        <div class="project-card">
+            <div class="project-header">
+                <h3 class="project-title">TP Réseaux Cisco</h3>
+                <span class="project-date">Mai 2026</span>
+            </div>
+            <p class="project-desc">
+                Configuration d'équipements Cisco et implémentation des protocoles de routage dynamique RIP et OSPF pour l'interconnexion de plusieurs sites.
+            </p>
+            <div class="project-tags">
+                <span class="project-tag">Cisco IOS</span>
+                <span class="project-tag">OSPF</span>
+                <span class="project-tag">RIP</span>
+                <span class="project-tag">Routage</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

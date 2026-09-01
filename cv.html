@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon parcours - Bodet Loïc</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 20px;
+            overflow: hidden; /* To prevent double scrollbars */
+            height: 100vh;
+            box-sizing: border-box;
+            background: #021422; /* Bleu très profond en fond de secours */
+        }
+
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('fond-cv.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            transition: transform 2.5s cubic-bezier(0.25, 1, 0.5, 1), filter 2.5s ease;
+        }
+
+        .bg-container.zoomed {
+            transform: scale(1.4);
+            filter: brightness(0.4) blur(3px);
+        }
+
+        .page-title {
+            font-family: 'Cinzel', serif;
+            color: #ffd700; /* Or du coucher de soleil */
+            font-size: 2.5rem;
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px #00e5ff, 2px 2px 5px #000; /* Lueur magique des cristaux */
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .page-title.hidden {
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: #ffd700;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            border: 2px solid #00e5ff;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+            z-index: 100;
+            background: #021422; /* Bleu très profond océan, sans transparence */
+        }
+
+        .back-btn:hover {
+            background: #00e5ff;
+            color: #021422;
+            box-shadow: 0 0 20px #00e5ff;
+        }
+
+        .cv-container {
+            flex-grow: 1;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .cv-embed {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 6px; /* Arrondi pour s'accorder avec le cadre */
+        }
+
+        /* Bouton interactif en forme de cristal magique */
+        .kingdom-entrance {
+            position: absolute;
+            /* Légèrement décalé à gauche et positionné au centre */
+            top: 36%; 
+            left: 48%; 
+            width: 24px;
+            height: 40px;
+            background: linear-gradient(135deg, #e0ffff 0%, #00e5ff 50%, #0077ff 100%);
+            cursor: pointer;
+            z-index: 50;
+            transform: translate(-50%, -50%);
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            filter: drop-shadow(0 0 10px #00e5ff) drop-shadow(0 0 20px #00e5ff);
+            transition: all 0.8s ease;
+        }
+
+        .kingdom-entrance:hover {
+            background: linear-gradient(135deg, #ffffff 0%, #ffd700 50%, #ff8800 100%);
+            animation: none;
+            transform: translate(-50%, -50%) scale(1.3);
+            filter: drop-shadow(0 0 20px #ffd700) drop-shadow(0 0 40px #ff8800);
+        }
+
+        .kingdom-entrance.hidden {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0);
+            pointer-events: none;
+        }
+
+        /* Carte de présentation */
+        .presentation-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 90%;
+            max-width: 700px;
+            background: rgba(2, 20, 34, 0.95); /* Fond bleu très profond et opaque pour lisibilité */
+            border: 2px solid #ffd700;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.2), inset 0 0 15px rgba(0, 229, 255, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            color: #f0f0f0;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 100;
+            text-align: center;
+        }
+
+        .presentation-card.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .card-title {
+            font-family: 'Cinzel', serif;
+            color: #ffd700;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .card-content {
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            text-align: justify;
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* Personnalisation de la scrollbar de la carte */
+        .card-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        .card-content::-webkit-scrollbar-track {
+            background: rgba(2, 20, 34, 0.5);
+        }
+        .card-content::-webkit-scrollbar-thumb {
+            background: #ffd700;
+            border-radius: 3px;
+        }
+
+        .card-content p {
+            margin-bottom: 15px;
+        }
+        .card-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .card-content strong {
+            color: #00e5ff;
+            font-weight: bold;
+        }
+
+        .close-card {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            color: #ffd700;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .close-card:hover {
+            transform: scale(1.2);
+            color: #00e5ff;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+        }
+
+        /* Modale pour le CV */
+        .cv-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 20, 34, 0.85); /* Fond océan profond transparent */
+            backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .cv-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 3rem;
+            color: #ffd700;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-shadow: 0 0 15px #00e5ff;
+            transition: transform 0.3s ease;
+        }
+
+        .close-modal:hover {
+            transform: scale(1.2);
+            color: #00e5ff;
+            text-shadow: 0 0 15px #ffd700;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background pour l'effet de zoom -->
+    <div id="bgContainer" class="bg-container"></div>
+
+    <a href="index.html?skipIntro=true&origin=cv" class="back-btn">← Retour</a>
+
+    <h1 id="pageTitle" class="page-title">MON PARCOURS</h1>
+
+    <!-- Point interactif à l'entrée de la cité -->
+    <div id="kingdomEntrance" class="kingdom-entrance" title="Entrer pour voir le parcours"></div>
+
+    <!-- Carte de présentation -->
+    <div id="presentationCard" class="presentation-card">
+        <button id="closePresentation" class="close-card" title="Sortir de la ville">&times;</button>
+        <h2 class="card-title">Mon histoire</h2>
+        <div class="card-content">
+            <p>Je m’appelle <strong>Loïc Bodet</strong>, j’ai 23 ans et je suis actuellement en alternance chez <strong>Ineo RHT</strong>.</p>
+            <p>Mon intérêt pour l'informatique n'a pas été immédiat. Au départ, c’est ma passion pour les jeux vidéo qui a éveillé ma curiosité : j'ai commencé à m'interroger sur le fonctionnement technique de ce que je voyais à l'écran, notamment sur la notion binaire de bits (0/1). Cependant, à cette époque, ma curiosité n'était encore que superficielle.</p>
+            <p>C’est véritablement en classe de première, grâce à la matière "Sciences du numérique", que ma vocation s'est confirmée. Au contact de passionnés, j'ai découvert le plaisir d'apprendre et de comprendre les systèmes. Cette curiosité m'a pushed à monter mon propre PC, une expérience concrète qui m'a permis de mieux appréhender le matériel et ses fonctionnalités.</p>
+            <p>Bien que mon parcours n'ait pas été linéaire — après une orientation en STAPS et une sélection initiale refusée en BTS informatique — je suis aujourd'hui plus impliqué que jamais. Cette persévérance a renforcé mon appétence pour l'apprentissage continu et ma motivation à découvrir l'étendue des possibilités qu'offre ce domaine.</p>
+        </div>
+        <button id="viewCvBtn" class="hextech-btn">
+            <span class="btn-text">Voir mon CV</span>
+            <span class="btn-border"></span>
+        </button>
+    </div>
+
+    <!-- Modale qui s'ouvre au clic -->
+    <div id="cvModal" class="cv-modal">
+        <button id="closeCvModal" class="close-modal" title="Fermer">&times;</button>
+        <div class="cv-container" style="height: 80vh;">
+            <!-- Affichage du CV au format image -->
+            <img src="cv-image.png" class="cv-embed" alt="Parcours de Bodet Loïc" style="object-fit: contain;">
+        </div>
+    </div>
+
+    <script>
+        const entranceBtn = document.getElementById('kingdomEntrance');
+        const cvModal = document.getElementById('cvModal');
+        const closeCvModal = document.getElementById('closeCvModal');
+        const bgContainer = document.getElementById('bgContainer');
+        const pageTitle = document.getElementById('pageTitle');
+        const presentationCard = document.getElementById('presentationCard');
+        const closePresentation = document.getElementById('closePresentation');
+        const viewCvBtn = document.getElementById('viewCvBtn');
+
+        // Entrer dans la ville (zoom + affichage de la carte)
+        entranceBtn.addEventListener('click', () => {
+            bgContainer.classList.add('zoomed');
+            pageTitle.classList.add('hidden');
+            entranceBtn.classList.add('hidden');
+            
+            setTimeout(() => {
+                presentationCard.classList.add('active');
+            }, 800);
+        });
+
+        // Sortir de la ville (dé-zoom + retour à l'état initial)
+        closePresentation.addEventListener('click', () => {
+            presentationCard.classList.remove('active');
+            
+            setTimeout(() => {
+                bgContainer.classList.remove('zoomed');
+                pageTitle.classList.remove('hidden');
+                entranceBtn.classList.remove('hidden');
+            }, 400);
+        });
+
+        // Ouvrir la modale du CV depuis la carte
+        viewCvBtn.addEventListener('click', () => {
+            cvModal.classList.add('active');
+        });
+
+        // Fermer la modale du CV avec la croix
+        closeCvModal.addEventListener('click', () => {
+            cvModal.classList.remove('active');
+        });
+
+        // Fermer en cliquant en dehors du CV
+        cvModal.addEventListener('click', (e) => {
+            if (e.target === cvModal) {
+                cvModal.classList.remove('active');
+            }
+        });
+
+    </script>
+</body>
+
+</html>

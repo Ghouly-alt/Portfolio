@@ -1,0 +1,369 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+
+/* Reset de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #1a1a1d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Cinzel', serif;
+    overflow: hidden;
+}
+
+.map-container {
+    position: relative;
+    width: 90vw;
+    max-width: 1200px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    overflow: hidden;
+
+    /* Initial state for zoom effect (Intro) */
+    opacity: 0;
+    transform: scale(0.8);
+    /* Start slightly zoomed out */
+    transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+}
+
+.map-container.zoom-in {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.map-container.zoomed-in {
+    transform: scale(3);
+    opacity: 0;
+}
+
+/* --- ECRAN DE CHARGEMENT --- */
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1a1a1d;
+    z-index: 9999;
+    /* Au-dessus de tout */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease-out;
+}
+
+.loader-title {
+    font-family: 'Cinzel', serif;
+    color: #c8aa6e;
+    /* Or LoL */
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    text-align: center;
+
+    /* Effet 3D et Ombrage */
+    text-shadow:
+        1px 1px 0 #8a6c3c,
+        2px 2px 0 #8a6c3c,
+        3px 3px 0 #8a6c3c,
+        4px 4px 0 #8a6c3c,
+        5px 5px 10px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(200, 170, 110, 0.4);
+}
+
+.progress-container {
+    width: 300px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.progress-bar {
+    width: 0%;
+    /* Départ à 0 */
+    height: 100%;
+    background-color: #c8aa6e;
+    box-shadow: 0 0 15px #c8aa6e;
+    transition: width 3s linear;
+}
+
+#loader.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.map-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Styles pour les zones interactives */
+.zone-link {
+    position: absolute;
+    width: 115px;
+    height: 115px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    /* DEBUG STYLE: Masqué pour la version finale */
+    z-index: 1000;
+}
+
+.zone-link:hover {
+    /* Effet subtil au survol */
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+}
+
+/* Custom Tooltip */
+.zone-link::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: -50px;
+    /* Position under the zone */
+    left: 50%;
+    transform: translateX(-50%);
+
+    background-color: #1a1a1d;
+    color: #c8aa6e;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 8px 15px;
+    border: 1px solid #c8aa6e;
+    border-radius: 4px;
+    white-space: nowrap;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 2000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.zone-link:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Positionnement des zones ajusté */
+
+/* Haut Gauche (Froid / Main qui se serrent) */
+.zone-cold {
+    top: 9%;
+    left: 27%;
+    width: 109px;
+    height: 109px;
+}
+
+/* Bas Gauche (Ombre / Ordi) */
+.zone-shadow {
+    bottom: 21%;
+    left: 11%;
+}
+
+/* Haut Droite (Soleil / Parchemin) */
+.zone-sun {
+    top: 17%;
+    right: 10%;
+    bottom: auto;
+    width: 130px;
+    height: 130px;
+}
+
+/* Milieu (Force / Cerveau) - Shurima */
+.zone-middle {
+    top: 66%;
+    left: 50.7%;
+    transform: translate(-50%, -50%);
+    /* width and height inherited from .zone-link (120px) */
+}
+
+.zone-middle:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+
+@media (max-width: 768px) {
+    .zone-link {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* --- ECRAN D'INTRODUCTION (Standing Screen) --- */
+#intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1a1a1d;
+    z-index: 5000;
+    /* Sous le loader (9999) mais au-dessus de tout le reste */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease-in-out;
+}
+
+#intro-screen.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#intro-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease-out;
+}
+
+.intro-content {
+    text-align: center;
+    color: #f0f0f0;
+    animation: fadeInUp 1.2s ease-out forwards;
+}
+
+.intro-title {
+    font-size: 5rem;
+    color: #c8aa6e;
+    margin-bottom: 0.2em;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    text-shadow: 0 0 20px rgba(200, 170, 110, 0.4);
+}
+
+.intro-subtitle {
+    font-size: 2rem;
+    color: #a09b8c;
+    margin-bottom: 2rem;
+    font-weight: 400;
+    letter-spacing: 8px;
+    border-bottom: 1px solid rgba(200, 170, 110, 0.3);
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.intro-desc {
+    font-family: 'Cinzel', serif;
+    /* Assurez-vous que c'est la bonne police */
+    color: #888;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    font-style: italic;
+}
+
+.intro-contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 3rem;
+    font-family: 'Cinzel', serif;
+    color: #a09b8c;
+    font-size: 0.9rem;
+}
+
+.contact-item {
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+.contact-item.link {
+    text-decoration: none;
+    color: #c8aa6e;
+    border-bottom: 1px solid transparent;
+    cursor: pointer;
+}
+
+.contact-item.link:hover {
+    color: #f0f0f0;
+    border-bottom: 1px solid #c8aa6e;
+    text-shadow: 0 0 8px rgba(200, 170, 110, 0.6);
+}
+
+.separator {
+    color: #555;
+    font-size: 0.8rem;
+}
+
+/* --- BOUTON HEXTECH --- */
+.hextech-btn {
+    position: relative;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 15px 40px;
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: #c8aa6e;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    overflow: hidden;
+}
+
+.hextech-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #c8aa6e;
+    transform: scale(1);
+    transition: transform 0.3s ease;
+}
+
+.hextech-btn:hover::before {
+    transform: scale(1.05);
+    background: rgba(200, 170, 110, 0.1);
+    box-shadow: 0 0 15px rgba(200, 170, 110, 0.4);
+}
+
+.hextech-btn:hover {
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* Animation d'apparition simple */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

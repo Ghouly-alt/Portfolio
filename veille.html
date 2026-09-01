@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veilles Technologiques - Bodet Loïc</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 50px;
+            overflow-y: auto;
+            background-image: linear-gradient(rgba(10, 25, 40, 0.55), rgba(5, 10, 15, 0.85)), url('fond-veille.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .page-title {
+            font-family: 'Cinzel', serif;
+            color: #c8aa6e;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(200, 170, 110, 0.6);
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: #f0f0f0;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            border: 1px solid #c8aa6e;
+            padding: 10px 20px;
+            background: rgba(10, 25, 40, 0.6);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            background: rgba(200, 170, 110, 0.2);
+            box-shadow: 0 0 15px rgba(200, 170, 110, 0.5), inset 0 0 5px rgba(200, 170, 110, 0.2);
+            color: #fff;
+        }
+
+        .articles-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .article-card {
+            background: rgba(8, 22, 38, 0.7); /* Translucide bleu nuit/turquoise sombre */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(200, 170, 110, 0.25);
+            padding: 25px;
+            border-radius: 8px;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle radial gradient for hover card background depth */
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(200, 170, 110, 0.05), transparent 70%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .article-card:hover::before {
+            opacity: 1;
+        }
+
+        .article-card:hover {
+            transform: translateY(-8px);
+            border-color: #c8aa6e;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 15px rgba(200, 170, 110, 0.25);
+        }
+
+        div.article-card {
+            cursor: default;
+        }
+
+        div.article-card:hover {
+            transform: none;
+            border-color: rgba(200, 170, 110, 0.25);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .article-title {
+            color: #c8aa6e;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-family: 'Cinzel', serif;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9), 0 0 10px rgba(200, 170, 110, 0.4);
+            transition: color 0.3s ease;
+        }
+
+        .article-card:hover .article-title {
+            color: #f0d5a0;
+        }
+
+        .article-desc {
+            color: #e0e0e0;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            flex-grow: 1;
+            font-size: 1rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+        }
+
+        .read-more {
+            color: #c8aa6e;
+            font-weight: bold;
+            margin-top: auto;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            display: inline-block;
+            border-bottom: 1px solid transparent;
+            width: fit-content;
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .article-card:hover .read-more {
+            color: #f0d5a0;
+            border-bottom: 1px solid #f0d5a0;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="index.html?skipIntro=true&origin=veille" class="back-btn">← Retour</a>
+
+    <h1 class="page-title">VEILLES TECHNOLOGIQUES</h1>
+
+    <div class="articles-container">
+        <!-- Article 1 -->
+        <a href="https://www.journaldugeek.com/2025/12/13/euria-le-bot-ia-suisse-qui-garde-vos-secrets-et-rechauffe-les-voisins/" target="_blank" class="article-card">
+            <h2 class="article-title">Euria : Le bot IA suisse</h2>
+            <p class="article-desc">
+                Découvrez comment ce bot IA suisse garde vos secrets et réchauffe les voisins.
+            </p>
+            <span class="read-more">Lire l'article</span>
+        </a>
+
+        <!-- Article 2 -->
+        <div class="article-card">
+            <h2 class="article-title">Article à venir</h2>
+            <p class="article-desc">
+                Emplacement réservé pour une future veille technologique.
+            </p>
+        </div>
+
+        <!-- Article 3 -->
+        <div class="article-card">
+            <h2 class="article-title">Article à venir</h2>
+            <p class="article-desc">
+                Emplacement réservé pour une future veille technologique.
+            </p>
+        </div>
+    </div>
+
+</body>
+
+</html>
