@@ -4,21 +4,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon parcours - Bodet Loïc</title>
+    <title>Mon parcours & Mon avenir - Bodet Loïc</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        body {
-            flex-direction: column;
-            justify-content: flex-start;
-            padding: 20px;
-            overflow: hidden; /* To prevent double scrollbars */
-            height: 100vh;
-            box-sizing: border-box;
-            background: #021422; /* Bleu très profond en fond de secours */
+        :root {
+            --gold-primary: #ffd700;
+            --gold-glow: rgba(255, 215, 0, 0.6);
+            --cyan-primary: #00e5ff;
+            --cyan-glow: rgba(0, 229, 255, 0.5);
+            --silver-primary: #e2e8f0;
+            --silver-glow: rgba(226, 232, 240, 0.6);
+            --bronze-primary: #cd7f32;
+            --bronze-glow: rgba(205, 127, 50, 0.6);
+            --ocean-dark: #021422;
+            --ocean-panel: rgba(2, 20, 34, 0.9);
+            --gold-border: rgba(255, 215, 0, 0.4);
         }
 
-        .bg-container {
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            background: var(--ocean-dark);
+            font-family: 'Cinzel', serif;
+        }
+
+        /* --- CONTENEUR GLOBAL SLIDER --- */
+        .slider-viewport {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slider-track {
+            display: flex;
+            width: 200vw;
+            height: 100vh;
+            transition: transform 0.85s cubic-bezier(0.77, 0, 0.175, 1);
+            will-change: transform;
+        }
+
+        .slide-page {
+            width: 100vw;
+            height: 100vh;
+            flex-shrink: 0;
+            position: relative;
+            box-sizing: border-box;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* Barre de navigation fixe (Retour & Onglets de commutation) */
+        .global-header-nav {
             position: fixed;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .back-btn {
+            color: var(--gold-primary);
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            border: 2px solid var(--cyan-primary);
+            padding: 8px 18px;
+            transition: all 0.3s ease;
+            background: var(--ocean-dark);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            pointer-events: auto;
+            border-radius: 4px;
+        }
+
+        .back-btn:hover {
+            background: var(--cyan-primary);
+            color: var(--ocean-dark);
+            box-shadow: 0 0 20px var(--cyan-primary);
+        }
+
+        /* Commutateur central d'onglets */
+        .tab-switch-nav {
+            display: flex;
+            gap: 12px;
+            pointer-events: auto;
+            background: rgba(2, 20, 34, 0.85);
+            padding: 6px;
+            border: 1px solid var(--gold-border);
+            border-radius: 30px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        .switch-tab-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: #a09b8c;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .switch-tab-btn:hover {
+            color: var(--gold-primary);
+        }
+
+        .switch-tab-btn.active {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: var(--gold-primary);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+            text-shadow: 0 0 8px var(--gold-primary);
+        }
+
+        /* --- FLÈCHES DE DÉFILEMENT EN BAS DE PAGE (PULSE ARROWS) --- */
+        .slide-nav-arrow {
+            position: fixed;
+            bottom: 25px;
+            top: auto;
+            transform: none;
+            z-index: 950;
+            background: rgba(2, 20, 34, 0.92);
+            border: 2px solid var(--gold-primary);
+            color: var(--gold-primary);
+            padding: 12px 24px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .slide-nav-arrow.arrow-right {
+            right: 35px;
+            animation: pulseRight 2.5s infinite;
+        }
+
+        .slide-nav-arrow.arrow-left {
+            left: 35px;
+            animation: pulseLeft 2.5s infinite;
+        }
+
+        .slide-nav-arrow:hover {
+            background: var(--gold-primary);
+            color: var(--ocean-dark);
+            box-shadow: 0 0 30px var(--gold-primary);
+            transform: translateY(-4px) scale(1.05);
+            animation: none;
+        }
+
+        .slide-nav-arrow .arrow-symbol {
+            font-size: 1.4rem;
+            font-weight: bold;
+            line-height: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .slide-nav-arrow.arrow-right:hover .arrow-symbol {
+            transform: translateX(6px);
+        }
+
+        .slide-nav-arrow.arrow-left:hover .arrow-symbol {
+            transform: translateX(-6px);
+        }
+
+        @keyframes pulseRight {
+            0%, 100% {
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 12px rgba(255, 215, 0, 0.3);
+                transform: translateX(0);
+            }
+            50% {
+                box-shadow: 0 6px 25px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 215, 0, 0.7);
+                transform: translateX(6px);
+            }
+        }
+
+        @keyframes pulseLeft {
+            0%, 100% {
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 12px rgba(255, 215, 0, 0.3);
+                transform: translateX(0);
+            }
+            50% {
+                box-shadow: 0 6px 25px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 215, 0, 0.7);
+                transform: translateX(-6px);
+            }
+        }
+
+        /* --- SLIDE 1 : MON PARCOURS --- */
+        #parcoursSlide {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 80px 20px 20px 20px;
+            overflow: hidden;
+        }
+
+        .bg-parcours {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
@@ -26,23 +227,25 @@
             background-image: url('fond-cv.jpg');
             background-size: cover;
             background-position: center;
-            z-index: -1;
+            z-index: 1;
             transition: transform 2.5s cubic-bezier(0.25, 1, 0.5, 1), filter 2.5s ease;
         }
 
-        .bg-container.zoomed {
+        .bg-parcours.zoomed {
             transform: scale(1.4);
             filter: brightness(0.4) blur(3px);
         }
 
         .page-title {
+            position: relative;
+            z-index: 10;
             font-family: 'Cinzel', serif;
-            color: #ffd700; /* Or du coucher de soleil */
-            font-size: 2.5rem;
+            color: var(--gold-primary);
+            font-size: 2.6rem;
             text-align: center;
             margin-top: 10px;
             margin-bottom: 20px;
-            text-shadow: 0 0 15px #00e5ff, 2px 2px 5px #000; /* Lueur magique des cristaux */
+            text-shadow: 0 0 15px var(--cyan-primary), 2px 2px 5px #000;
             transition: opacity 1s ease, transform 1s ease;
         }
 
@@ -52,66 +255,38 @@
             pointer-events: none;
         }
 
-        .back-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            color: #ffd700;
-            text-decoration: none;
-            font-family: 'Cinzel', serif;
-            font-size: 1.2rem;
-            border: 2px solid #00e5ff;
-            padding: 10px 20px;
-            transition: all 0.3s ease;
-            z-index: 100;
-            background: #021422; /* Bleu très profond océan, sans transparence */
-        }
-
-        .back-btn:hover {
-            background: #00e5ff;
-            color: #021422;
-            box-shadow: 0 0 20px #00e5ff;
-        }
-
-        .cv-container {
-            flex-grow: 1;
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-            border-radius: 12px;
-            overflow: hidden;
-            display: flex;
-        }
-
-        .cv-embed {
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 6px; /* Arrondi pour s'accorder avec le cadre */
-        }
-
-        /* Bouton interactif en forme de cristal magique */
         .kingdom-entrance {
             position: absolute;
-            /* Légèrement décalé à gauche et positionné au centre */
-            top: 36%; 
-            left: 48%; 
-            width: 24px;
-            height: 40px;
+            top: 42%;
+            left: 48%;
+            width: 28px;
+            height: 44px;
             background: linear-gradient(135deg, #e0ffff 0%, #00e5ff 50%, #0077ff 100%);
             cursor: pointer;
             z-index: 50;
             transform: translate(-50%, -50%);
             clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-            filter: drop-shadow(0 0 10px #00e5ff) drop-shadow(0 0 20px #00e5ff);
+            filter: drop-shadow(0 0 12px var(--cyan-primary)) drop-shadow(0 0 25px var(--cyan-primary));
             transition: all 0.8s ease;
+            animation: pulseCrystal 2.5s infinite ease-in-out;
+        }
+
+        @keyframes pulseCrystal {
+            0%, 100% {
+                filter: drop-shadow(0 0 10px var(--cyan-primary)) drop-shadow(0 0 20px var(--cyan-primary));
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                filter: drop-shadow(0 0 20px var(--gold-primary)) drop-shadow(0 0 35px var(--gold-primary));
+                transform: translate(-50%, -50%) scale(1.18);
+            }
         }
 
         .kingdom-entrance:hover {
             background: linear-gradient(135deg, #ffffff 0%, #ffd700 50%, #ff8800 100%);
             animation: none;
-            transform: translate(-50%, -50%) scale(1.3);
-            filter: drop-shadow(0 0 20px #ffd700) drop-shadow(0 0 40px #ff8800);
+            transform: translate(-50%, -50%) scale(1.35);
+            filter: drop-shadow(0 0 25px var(--gold-primary)) drop-shadow(0 0 45px #ff8800);
         }
 
         .kingdom-entrance.hidden {
@@ -120,25 +295,25 @@
             pointer-events: none;
         }
 
-        /* Carte de présentation */
         .presentation-card {
             position: absolute;
-            top: 50%;
+            top: 52%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.9);
             width: 90%;
-            max-width: 700px;
-            background: rgba(2, 20, 34, 0.95); /* Fond bleu très profond et opaque pour lisibilité */
-            border: 2px solid #ffd700;
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.2), inset 0 0 15px rgba(0, 229, 255, 0.1);
+            max-width: 720px;
+            background: var(--ocean-panel);
+            border: 2px solid var(--gold-primary);
+            box-shadow: 0 0 35px rgba(255, 215, 0, 0.25), inset 0 0 20px rgba(0, 229, 255, 0.15);
             border-radius: 10px;
-            padding: 30px;
+            padding: 32px;
             color: #f0f0f0;
             opacity: 0;
             pointer-events: none;
             transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
             z-index: 100;
             text-align: center;
+            backdrop-filter: blur(10px);
         }
 
         .presentation-card.active {
@@ -149,7 +324,7 @@
 
         .card-title {
             font-family: 'Cinzel', serif;
-            color: #ffd700;
+            color: var(--gold-primary);
             font-size: 2rem;
             margin-bottom: 20px;
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
@@ -162,13 +337,12 @@
             font-size: 0.95rem;
             line-height: 1.6;
             text-align: justify;
-            max-height: 350px;
+            max-height: 340px;
             overflow-y: auto;
             padding-right: 15px;
             margin-bottom: 20px;
         }
 
-        /* Personnalisation de la scrollbar de la carte */
         .card-content::-webkit-scrollbar {
             width: 6px;
         }
@@ -176,7 +350,7 @@
             background: rgba(2, 20, 34, 0.5);
         }
         .card-content::-webkit-scrollbar-thumb {
-            background: #ffd700;
+            background: var(--gold-primary);
             border-radius: 3px;
         }
 
@@ -188,7 +362,7 @@
         }
 
         .card-content strong {
-            color: #00e5ff;
+            color: var(--cyan-primary);
             font-weight: bold;
         }
 
@@ -197,7 +371,7 @@
             top: 15px;
             right: 20px;
             font-size: 2rem;
-            color: #ffd700;
+            color: var(--gold-primary);
             background: none;
             border: none;
             cursor: pointer;
@@ -207,21 +381,23 @@
 
         .close-card:hover {
             transform: scale(1.2);
-            color: #00e5ff;
+            color: var(--cyan-primary);
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
         }
 
-        /* Modale pour le CV */
         .cv-modal {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(2, 20, 34, 0.85); /* Fond océan profond transparent */
-            backdrop-filter: blur(5px);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 20, 34, 0.9);
+            backdrop-filter: blur(8px);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 200;
+            z-index: 2000;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.4s ease;
@@ -234,110 +410,436 @@
 
         .close-modal {
             position: absolute;
-            top: 30px;
-            right: 40px;
+            top: 25px;
+            right: 35px;
             font-size: 3rem;
-            color: #ffd700;
+            color: var(--gold-primary);
             background: none;
             border: none;
             cursor: pointer;
-            text-shadow: 0 0 15px #00e5ff;
+            text-shadow: 0 0 15px var(--cyan-primary);
             transition: transform 0.3s ease;
         }
 
         .close-modal:hover {
             transform: scale(1.2);
-            color: #00e5ff;
-            text-shadow: 0 0 15px #ffd700;
+            color: var(--cyan-primary);
+        }
+
+        .cv-container {
+            width: 90%;
+            max-width: 1000px;
+            height: 85vh;
+            border: 2px solid var(--gold-primary);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            background: #000;
+        }
+
+        .cv-embed {
+            width: 100%;
+            height: 100%;
+            border: none;
+            object-fit: contain;
+        }
+
+        /* --- SLIDE 2 : MON AVENIR (LES 3 CASES ÉPURÉES & AÉRÉES) --- */
+        #avenirSlide {
+            background: radial-gradient(circle at 50% 40%, rgba(10, 35, 60, 0.95), #020b14 85%);
+            padding: 95px 50px 90px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .avenir-header {
+            text-align: center;
+            margin-bottom: 50px;
+            max-width: 900px;
+        }
+
+        .avenir-subtitle {
+            color: #c8aa6e;
+            font-size: 1.15rem;
+            letter-spacing: 2px;
+            margin-top: -8px;
+            text-shadow: 0 0 8px rgba(200, 170, 110, 0.4);
+        }
+
+        /* Grille des 3 choix */
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            width: 100%;
+            max-width: 1300px;
+            margin-bottom: 25px;
+        }
+
+        .dest-card {
+            background: rgba(2, 20, 34, 0.88);
+            border: 2px solid var(--gold-border);
+            border-radius: 16px;
+            padding: 38px 30px;
+            backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.75);
+        }
+
+        .dest-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 22px 50px rgba(0, 0, 0, 0.9);
+        }
+
+        .dest-card.card-gold {
+            border-color: rgba(255, 215, 0, 0.55);
+            background: linear-gradient(180deg, rgba(255, 215, 0, 0.07) 0%, rgba(2, 20, 34, 0.92) 40%);
+        }
+        .dest-card.card-gold:hover {
+            border-color: var(--gold-primary);
+            box-shadow: 0 18px 45px rgba(255, 215, 0, 0.3);
+        }
+
+        .dest-card.card-silver {
+            border-color: rgba(203, 213, 225, 0.55);
+            background: linear-gradient(180deg, rgba(203, 213, 225, 0.07) 0%, rgba(2, 20, 34, 0.92) 40%);
+        }
+        .dest-card.card-silver:hover {
+            border-color: var(--silver-primary);
+            box-shadow: 0 18px 45px rgba(203, 213, 225, 0.3);
+        }
+
+        .dest-card.card-bronze {
+            border-color: rgba(205, 127, 50, 0.55);
+            background: linear-gradient(180deg, rgba(205, 127, 50, 0.07) 0%, rgba(2, 20, 34, 0.92) 40%);
+        }
+        .dest-card.card-bronze:hover {
+            border-color: var(--bronze-primary);
+            box-shadow: 0 18px 45px rgba(205, 127, 50, 0.3);
+        }
+
+        .dest-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px;
+        }
+
+        .dest-rank-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .dest-medal-icon {
+            font-size: 2.5rem;
+            line-height: 1;
+            filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.45));
+        }
+
+        .dest-country-name {
+            font-size: 1.45rem;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .dest-body {
+            font-size: 1rem;
+            color: #d1d5db;
+            line-height: 1.8;
+            letter-spacing: 0.2px;
+        }
+
+        .dest-body p {
+            margin: 0;
+        }
+
+        .dest-body strong {
+            color: var(--gold-primary);
+        }
+
+        .dest-card.card-silver .dest-body strong {
+            color: var(--silver-primary);
+        }
+
+        .dest-card.card-bronze .dest-body strong {
+            color: #fbd38d;
+        }
+
+        /* Responsive Mobile & Tablette */
+        @media (max-width: 1024px) {
+            .destinations-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                max-width: 650px;
+            }
+            #avenirSlide {
+                justify-content: flex-start;
+                padding-top: 80px;
+                padding-bottom: 90px;
+            }
+        }
+
+        @media (max-width: 850px) {
+            .page-title {
+                font-size: 2rem;
+                margin-top: 20px;
+            }
+            .global-header-nav {
+                top: 10px;
+                left: 10px;
+                right: 10px;
+            }
+            .back-btn {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+            .switch-tab-btn {
+                padding: 6px 12px;
+                font-size: 0.75rem;
+            }
+            .slide-nav-arrow {
+                padding: 10px 18px;
+                font-size: 0.85rem;
+                bottom: 15px;
+            }
+            .slide-nav-arrow.arrow-right {
+                right: 15px;
+            }
+            .slide-nav-arrow.arrow-left {
+                left: 15px;
+            }
+            #parcoursSlide, #avenirSlide {
+                padding: 70px 15px 75px 15px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <!-- Background pour l'effet de zoom -->
-    <div id="bgContainer" class="bg-container"></div>
+    <!-- En-tête globale : Bouton Retour + Onglets de transition -->
+    <div class="global-header-nav">
+        <a href="index.html?skipIntro=true&origin=cv" class="back-btn">← Retour</a>
 
-    <a href="index.html?skipIntro=true&origin=cv" class="back-btn">← Retour</a>
-
-    <h1 id="pageTitle" class="page-title">MON PARCOURS</h1>
-
-    <!-- Point interactif à l'entrée de la cité -->
-    <div id="kingdomEntrance" class="kingdom-entrance" title="Entrer pour voir le parcours"></div>
-
-    <!-- Carte de présentation -->
-    <div id="presentationCard" class="presentation-card">
-        <button id="closePresentation" class="close-card" title="Sortir de la ville">&times;</button>
-        <h2 class="card-title">Mon histoire</h2>
-        <div class="card-content">
-            <p>Je m’appelle <strong>Loïc Bodet</strong>, j’ai 23 ans et je suis actuellement en alternance chez <strong>Ineo RHT</strong>.</p>
-            <p>Mon intérêt pour l'informatique n'a pas été immédiat. Au départ, c’est ma passion pour les jeux vidéo qui a éveillé ma curiosité : j'ai commencé à m'interroger sur le fonctionnement technique de ce que je voyais à l'écran, notamment sur la notion binaire de bits (0/1). Cependant, à cette époque, ma curiosité n'était encore que superficielle.</p>
-            <p>C’est véritablement en classe de première, grâce à la matière "Sciences du numérique", que ma vocation s'est confirmée. Au contact de passionnés, j'ai découvert le plaisir d'apprendre et de comprendre les systèmes. Cette curiosité m'a poussé à monter mon propre PC, une expérience concrète qui m'a permis de mieux appréhender le matériel et ses fonctionnalités.</p>
-            <p>Bien que mon parcours n'ait pas été linéaire — après une orientation en STAPS et une sélection initiale refusée en BTS informatique — je suis aujourd'hui plus impliqué que jamais. Cette persévérance a renforcé mon appétence pour l'apprentissage continu et ma motivation à découvrir l'étendue des possibilités qu'offre ce domaine.</p>
+        <div class="tab-switch-nav">
+            <button id="tabParcours" class="switch-tab-btn active" data-slide="0">Mon Parcours</button>
+            <button id="tabAvenir" class="switch-tab-btn" data-slide="1">Mon Avenir</button>
         </div>
-        <button id="viewCvBtn" class="hextech-btn">
-            <span class="btn-text">Voir mon CV</span>
-            <span class="btn-border"></span>
-        </button>
+
+        <div style="width: 80px;"></div> <!-- Espaceur équilibré -->
     </div>
 
-    <!-- Modale qui s'ouvre au clic -->
-    <div id="cvModal" class="cv-modal">
-        <button id="closeCvModal" class="close-modal" title="Fermer">&times;</button>
-        <div class="cv-container" style="height: 80vh;">
-            <!-- Affichage du CV au format image -->
-            <img src="cv-image.png" class="cv-embed" alt="Parcours de Bodet Loïc" style="object-fit: contain;">
+    <!-- Flèche de navigation en bas à droite (sur le parcours pour aller vers l'avenir) -->
+    <button id="btnSlideToAvenir" class="slide-nav-arrow arrow-right" title="Glisser vers Mon Avenir">
+        <span>Mon Avenir</span>
+        <span class="arrow-symbol">➔</span>
+    </button>
+
+    <!-- Flèche de navigation en bas à gauche (sur l'avenir pour revenir au parcours) -->
+    <button id="btnSlideToParcours" class="slide-nav-arrow arrow-left" style="display: none;" title="Glisser vers Mon Parcours">
+        <span class="arrow-symbol">⬅</span>
+        <span>Mon Parcours</span>
+    </button>
+
+    <!-- VIEWPORT SLIDER -->
+    <div class="slider-viewport">
+        <div id="sliderTrack" class="slider-track">
+
+            <!-- ===================== SLIDE 1 : MON PARCOURS ===================== -->
+            <section id="parcoursSlide" class="slide-page">
+                <!-- Background pour l'effet de zoom -->
+                <div id="bgContainer" class="bg-parcours"></div>
+
+                <h1 id="pageTitle" class="page-title">MON PARCOURS</h1>
+
+                <!-- Point interactif à l'entrée de la cité -->
+                <div id="kingdomEntrance" class="kingdom-entrance" title="Entrer pour voir le parcours"></div>
+
+                <!-- Carte de présentation -->
+                <div id="presentationCard" class="presentation-card">
+                    <button id="closePresentation" class="close-card" title="Sortir de la ville">&times;</button>
+                    <h2 class="card-title">Mon histoire</h2>
+                    <div class="card-content">
+                        <p>Je m’appelle <strong>Loïc Bodet</strong>, j’ai 23 ans et je suis actuellement en alternance chez <strong>Ineo RHT</strong>.</p>
+                        <p>Mon intérêt pour l'informatique n'a pas été immédiat. Au départ, c’est ma passion pour les jeux vidéo qui a éveillé ma curiosité : j'ai commencé à m'interroger sur le fonctionnement technique de ce que je voyais à l'écran, notamment sur la notion binaire de bits (0/1). Cependant, à cette époque, ma curiosité n'était encore que superficielle.</p>
+                        <p>C’est véritablement en classe de première, grâce à la matière "Sciences du numérique", que ma vocation s'est confirmée. Au contact de passionnés, j'ai découvert le plaisir d'apprendre et de comprendre les systèmes. Cette curiosité m'a poussé à monter mon propre PC, une expérience concrète qui m'a permis de mieux appréhender le matériel et ses fonctionnalités.</p>
+                        <p>Bien que mon parcours n'ait pas été linéaire — après une orientation en STAPS et une sélection initiale refusée en BTS informatique — je suis aujourd'hui plus impliqué que jamais. Cette persévérance a renforcé mon appétence pour l'apprentissage continu et ma motivation à découvrir l'étendue des possibilités qu'offre ce domaine.</p>
+                    </div>
+                    <button id="viewCvBtn" class="hextech-btn">
+                        <span class="btn-text">Voir mon CV</span>
+                        <span class="btn-border"></span>
+                    </button>
+                </div>
+
+                <!-- Modale du CV -->
+                <div id="cvModal" class="cv-modal">
+                    <button id="closeCvModal" class="close-modal" title="Fermer">&times;</button>
+                    <div class="cv-container">
+                        <img src="cv-image.png" class="cv-embed" alt="Parcours de Bodet Loïc">
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== SLIDE 2 : MON AVENIR ===================== -->
+            <section id="avenirSlide" class="slide-page">
+                <div class="avenir-header">
+                    <h1 class="page-title" style="margin-bottom: 10px;">MON AVENIR</h1>
+                    <p class="avenir-subtitle">Perspectives internationales & Ambitions professionnelles</p>
+                </div>
+
+                <!-- LES 3 CASES (CONCISES & AÉRÉES) -->
+                <div class="destinations-grid">
+
+                    <!-- 1. ALLEMAGNE -->
+                    <div id="cardGermany" class="dest-card card-gold">
+                        <div class="dest-header">
+                            <div class="dest-rank-title">
+                                <span class="dest-medal-icon">🥇</span>
+                                <span class="dest-country-name">Allemagne 🇩🇪</span>
+                            </div>
+                        </div>
+                        <div class="dest-body">
+                            <p><strong>1er Choix :</strong> Leader industriel et économique européen. Écosystème d'infrastructures informatiques de premier plan, forte valorisation des compétences en administration système, réseaux et cybersécurité.</p>
+                        </div>
+                    </div>
+
+                    <!-- 2. SUISSE -->
+                    <div id="cardSwitzerland" class="dest-card card-silver">
+                        <div class="dest-header">
+                            <div class="dest-rank-title">
+                                <span class="dest-medal-icon">🥈</span>
+                                <span class="dest-country-name">Suisse 🇨🇭</span>
+                            </div>
+                        </div>
+                        <div class="dest-body">
+                            <p><strong>2ème Choix :</strong> Pôle d'excellence mondial pour les infrastructures critiques, la sécurité des données et les télécoms. Environnement international prestigieux et investissements IT massifs.</p>
+                        </div>
+                    </div>
+
+                    <!-- 3. SINGAPOUR -->
+                    <div id="cardSingapore" class="dest-card card-bronze">
+                        <div class="dest-header">
+                            <div class="dest-rank-title">
+                                <span class="dest-medal-icon">🥉</span>
+                                <span class="dest-country-name">Singapour 🇸🇬</span>
+                            </div>
+                        </div>
+                        <div class="dest-body">
+                            <p><strong>3ème Choix :</strong> Hub technologique et financier incontournable d'Asie-Pacifique. Cadre ultra-dynamique axé sur le Cloud computing, la Smart Nation et la connectivité mondiale.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
         </div>
     </div>
 
+    <!-- JAVASCRIPT : INTERACTIONS & TRANSITIONS -->
     <script>
-        const entranceBtn = document.getElementById('kingdomEntrance');
-        const cvModal = document.getElementById('cvModal');
-        const closeCvModal = document.getElementById('closeCvModal');
-        const bgContainer = document.getElementById('bgContainer');
-        const pageTitle = document.getElementById('pageTitle');
-        const presentationCard = document.getElementById('presentationCard');
-        const closePresentation = document.getElementById('closePresentation');
-        const viewCvBtn = document.getElementById('viewCvBtn');
+        document.addEventListener("DOMContentLoaded", () => {
+            // --- GESTION DU DÉFILEMENT (SLIDER) ---
+            const sliderTrack = document.getElementById("sliderTrack");
+            const tabParcours = document.getElementById("tabParcours");
+            const tabAvenir = document.getElementById("tabAvenir");
+            const btnSlideToAvenir = document.getElementById("btnSlideToAvenir");
+            const btnSlideToParcours = document.getElementById("btnSlideToParcours");
 
-        // Entrer dans la ville (zoom + affichage de la carte)
-        entranceBtn.addEventListener('click', () => {
-            bgContainer.classList.add('zoomed');
-            pageTitle.classList.add('hidden');
-            entranceBtn.classList.add('hidden');
-            
-            setTimeout(() => {
-                presentationCard.classList.add('active');
-            }, 800);
-        });
+            let currentSlide = 0; // 0: Parcours, 1: Avenir
 
-        // Sortir de la ville (dé-zoom + retour à l'état initial)
-        closePresentation.addEventListener('click', () => {
-            presentationCard.classList.remove('active');
-            
-            setTimeout(() => {
-                bgContainer.classList.remove('zoomed');
-                pageTitle.classList.remove('hidden');
-                entranceBtn.classList.remove('hidden');
-            }, 400);
-        });
+            function goToSlide(index) {
+                currentSlide = index;
+                sliderTrack.style.transform = `translateX(-${index * 100}vw)`;
 
-        // Ouvrir la modale du CV depuis la carte
-        viewCvBtn.addEventListener('click', () => {
-            cvModal.classList.add('active');
-        });
-
-        // Fermer la modale du CV avec la croix
-        closeCvModal.addEventListener('click', () => {
-            cvModal.classList.remove('active');
-        });
-
-        // Fermer en cliquant en dehors du CV
-        cvModal.addEventListener('click', (e) => {
-            if (e.target === cvModal) {
-                cvModal.classList.remove('active');
+                if (index === 0) {
+                    tabParcours.classList.add("active");
+                    tabAvenir.classList.remove("active");
+                    btnSlideToAvenir.style.display = "flex";
+                    btnSlideToParcours.style.display = "none";
+                } else {
+                    tabAvenir.classList.add("active");
+                    tabParcours.classList.remove("active");
+                    btnSlideToAvenir.style.display = "none";
+                    btnSlideToParcours.style.display = "flex";
+                }
             }
-        });
 
+            // Boutons d'onglets
+            tabParcours.addEventListener("click", () => goToSlide(0));
+            tabAvenir.addEventListener("click", () => goToSlide(1));
+
+            // Flèches en bas de page
+            btnSlideToAvenir.addEventListener("click", () => goToSlide(1));
+            btnSlideToParcours.addEventListener("click", () => goToSlide(0));
+
+            // Support clavier (Flèche droite / Flèche gauche)
+            window.addEventListener("keydown", (e) => {
+                if (cvModal.classList.contains("active")) return;
+
+                if (e.key === "ArrowRight") {
+                    goToSlide(1);
+                } else if (e.key === "ArrowLeft") {
+                    goToSlide(0);
+                }
+            });
+
+            // --- INTERACTIONS DU SLIDE 1 (PARCOURS) ---
+            const entranceBtn = document.getElementById('kingdomEntrance');
+            const cvModal = document.getElementById('cvModal');
+            const closeCvModal = document.getElementById('closeCvModal');
+            const bgContainer = document.getElementById('bgContainer');
+            const pageTitle = document.getElementById('pageTitle');
+            const presentationCard = document.getElementById('presentationCard');
+            const closePresentation = document.getElementById('closePresentation');
+            const viewCvBtn = document.getElementById('viewCvBtn');
+
+            // Entrer dans la ville (zoom + affichage carte de présentation)
+            entranceBtn.addEventListener('click', () => {
+                bgContainer.classList.add('zoomed');
+                pageTitle.classList.add('hidden');
+                entranceBtn.classList.add('hidden');
+                
+                setTimeout(() => {
+                    presentationCard.classList.add('active');
+                }, 800);
+            });
+
+            // Sortir de la ville (dé-zoom + retour)
+            closePresentation.addEventListener('click', () => {
+                presentationCard.classList.remove('active');
+                
+                setTimeout(() => {
+                    bgContainer.classList.remove('zoomed');
+                    pageTitle.classList.remove('hidden');
+                    entranceBtn.classList.remove('hidden');
+                }, 400);
+            });
+
+            // Ouvrir la modale du CV
+            viewCvBtn.addEventListener('click', () => {
+                cvModal.classList.add('active');
+            });
+
+            // Fermer la modale du CV
+            closeCvModal.addEventListener('click', () => {
+                cvModal.classList.remove('active');
+            });
+
+            cvModal.addEventListener('click', (e) => {
+                if (e.target === cvModal) {
+                    cvModal.classList.remove('active');
+                }
+            });
+        });
     </script>
 </body>
 
