@@ -46,25 +46,26 @@
         <img src="Carte de Runettera.png" alt="Carte Runeterra" class="map-image">
 
         <!-- Zone Haut (Froid) -->
-        <a href="projets.html" class="zone-link zone-cold" data-label="Mes projets">
+        <a href="projets.html" data-theme="frost" class="zone-link zone-cold" data-label="Mes projets">
             <span class="sr-only">Mes projets</span>
         </a>
 
         <!-- Zone Bas Gauche (Ombre) -->
-        <a href="veille.html" class="zone-link zone-shadow" data-label="Veille technologique">
+        <a href="veille.html" data-theme="shadow" class="zone-link zone-shadow" data-label="Veille technologique">
             <span class="sr-only">Veille technologique</span>
         </a>
 
         <!-- Zone Bas Droite (Soleil) -->
-        <a href="cv.html" class="zone-link zone-sun" data-label="Mon parcours">
+        <a href="cv.html" data-theme="sun" class="zone-link zone-sun" data-label="Mon parcours">
             <span class="sr-only">Mon parcours</span>
         </a>
 
         <!-- Zone Milieu (Force) -->
-        <a href="competences.html" class="zone-link zone-middle" data-label="Mes compétences">
+        <a href="competences.html" data-theme="arcane" class="zone-link zone-middle" data-label="Mes compétences">
             <span class="sr-only">Mes compétences</span>
         </a>
     </div>
+    <script src="transitions.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const loader = document.getElementById('loader');
@@ -90,9 +91,7 @@
                     mapContainer.classList.remove('zoom-in'); // Ensure base state
                     mapContainer.classList.add('zoomed-in'); // Scale up and fade out
 
-                    setTimeout(() => {
-                        window.location.href = targetUrl;
-                    }, 1000); // Wait for transition
+                    playThemeTransition(link.dataset.theme, targetUrl);
                 });
             });
 

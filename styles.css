@@ -367,3 +367,35 @@ body {
         transform: translateY(0);
     }
 }
+/* Transitions thématiques entre la carte et les régions */
+.theme-transition {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.9s ease, transform 0.9s ease, filter 0.9s ease;
+}
+
+.theme-transition.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.theme-transition canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.theme-frost { transform: scale(1.15); filter: blur(6px); }
+.theme-frost.active { transform: scale(1); filter: blur(0); }
+
+.theme-shadow { filter: blur(12px) brightness(0.6); }
+.theme-shadow.active { filter: blur(0) brightness(1); }
+
+.theme-sun { filter: brightness(2.5); }
+.theme-sun.active { filter: brightness(1); }
+
+.theme-arcane { transform: rotate(-8deg) scale(1.2); }
+.theme-arcane.active { transform: rotate(0) scale(1); }
