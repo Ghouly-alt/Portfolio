@@ -135,7 +135,7 @@ kbd{display:inline-block;min-width:26px;padding:2px 7px;border:1px solid var(--l
 </style>
 </head>
 <body>
-<canvas id="scene"></canvas>
+<canvas id="scene" tabindex="-1" style="outline:none"></canvas>
 
 <div id="hud">
   <div id="brand">LEGACY<span>GYM</span><small>PORTFOLIO · BTS SIO</small></div>
@@ -217,7 +217,7 @@ function projectSection(p){ return { label:p.title, html:`<h3>${p.title}</h3><p>
 const ZONES = [
   { id:'accueil', key:'1', name:'Accueil', subtitle:'Qui suis-je ?', pos:[-6.5, 25.4], spawn:[-2, 25.5, 1.4],
     sections:[
-      { label:'Présentation', html:'<h3>Loïc Bodet — alternant en informatique</h3><p>Actuellement en BTS SIO option SISR en alternance. Passionné par l\'informatique et l\'environnement Linux, autonome et rapide à comprendre, je m\'appuie sur une solide expérience de terrain pour faire preuve de rigueur et d\'adaptabilité.</p><p>Et en dehors de l\'informatique : la musculation, ma grande passion — d\'où cette salle.</p><p><button class="btn" style="font-size:14px;padding:10px 20px" onclick="closePanel();startCinematic()">▶ Revoir mon histoire (cinématique)</button></p>' },
+      { label:'Présentation', html:'<h3>Loïc Bodet — alternant en informatique</h3><p>Actuellement en BTS SIO option SISR en alternance. Passionné par l\'informatique et l\'environnement Linux, autonome et rapide à comprendre, je m\'appuie sur une solide expérience de terrain pour faire preuve de rigueur et d\'adaptabilité.</p><p>Et en dehors de l\'informatique : la musculation, ma grande passion — d\'où cette salle.</p><p><button class="btn" style="font-size:14px;padding:10px 20px" onclick="closePanel(false);startCinematic()">▶ Revoir mon histoire (cinématique)</button></p>' },
       { label:'Mon entreprise', html:`
         <h3>INEO RHT</h3>
         <div class="chain"><b>Groupe Bouygues</b><i>›</i><b>Equans</b><i>›</i><b>INEO RHT</b><i>›</i><b class="me">Moi : support IT</b></div>
@@ -1047,8 +1047,16 @@ function openPanel(z){
     tabs.appendChild(b); if(i===0) b.click(); });
   panel.style.display='flex';
 }
-function closePanel(){ panel.style.display='none'; panelOpen=false; }
-document.getElementById('close').onclick=closePanel;
+function refocus(){
+  // rend le contrôle à la salle : focus clavier + verrouillage de la souris
+  if(document.activeElement && document.activeElement!==document.body && document.activeElement.blur) document.activeElement.blur();
+  try{ canvas.focus({preventScroll:true}); }catch(e){}
+  if(started && !cine.active && !panelOpen && !globeOpen && !document.pointerLockElement && matchMedia('(hover:hover)').matches){
+    try{ const p=canvas.requestPointerLock(); if(p&&p.catch) p.catch(()=>{}); }catch(e){}
+  }
+}
+function closePanel(relock){ panel.style.display='none'; panelOpen=false; if(relock!==false) refocus(); }
+document.getElementById('close').onclick=()=>closePanel();
 panel.addEventListener('click',e=>{ if(e.target===panel) closePanel(); });
 
 document.getElementById('enter').onclick=()=>{
@@ -1063,7 +1071,7 @@ const CINE_CAM={x:-5.4,z:23.1,yaw:Math.PI/2,pitch:-.06};
 function cineUI(on){ ['lbTop','lbBot'].forEach(id=>document.getElementById(id).style.display=on?'block':'none');
   document.getElementById('cinebar').style.display=on?'flex':'none'; document.getElementById('spaceTip').style.display=on?'block':'none'; document.getElementById('hud').style.display=on?'none':'block'; if(!on) bubble.style.display='none'; }
 function startCinematic(){
-  if(panelOpen) closePanel(); if(document.pointerLockElement) document.exitPointerLock();
+  if(panelOpen) closePanel(false); if(document.pointerLockElement) document.exitPointerLock();
   for(const k in keys) keys[k]=false;
   Object.assign(cine,{active:true,phase:'fly',t:0,idx:0,speaker:null,typing:false,from:{x:player.x,z:player.z,yaw:player.yaw,pitch:player.pitch}});
   cineUI(true);
@@ -1188,7 +1196,7 @@ function ll2v(lat,lon,r){ const ph=(90-lat)*Math.PI/180, th=(lon+180)*Math.PI/18
 
 let G=null;
 function openGlobe(){
-  closePanel(); if(document.pointerLockElement) document.exitPointerLock();
+  closePanel(false); if(document.pointerLockElement) document.exitPointerLock();
   for(const k in keys) keys[k]=false;
   document.getElementById('globe').style.display='block'; globeOpen=true;
   if(!G) initGlobe(); else G.resize();
@@ -1196,7 +1204,7 @@ function openGlobe(){
   G.focus(HOME,true); G.camDist=1.25; G.camTarget=3.4; G.auto=false; G.introT=0;
   document.getElementById('gCard').style.display='none';
 }
-function closeGlobe(){ document.getElementById('globe').style.display='none'; globeOpen=false; }
+function closeGlobe(){ document.getElementById('globe').style.display='none'; globeOpen=false; refocus(); }
 document.getElementById('gClose').onclick=closeGlobe;
 
 function initGlobe(){
