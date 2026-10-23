@@ -243,6 +243,7 @@ kbd{display:inline-block;min-width:26px;padding:2px 7px;border:1px solid var(--l
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 <script>
 /* =====================================================================
    CONTENU DU PORTFOLIO — c'est ici qu'on modifie les textes et boutons
@@ -902,6 +903,18 @@ function buildForce(){
   box(5,.03,2.5,new THREE.MeshStandardMaterial({color:0x151517,roughness:1}),6,.02,4.5);
   for(let i=0;i<5;i++){ const k=new THREE.Group(); const b=new THREE.Mesh(new THREE.SphereGeometry(.14+i*.02,16,12),M.black); b.position.y=.15+i*.02; k.add(b);
     const h=new THREE.Mesh(new THREE.TorusGeometry(.09,.02,8,16,Math.PI),M.black); h.position.y=.3+i*.04; k.add(h); place(k,4.2+i*.7,3.6); }
+  addTrainer();
+}
+
+/* Coach stylisé (modèle Blender) sur le tapis de sol, face à l'entrée */
+function addTrainer(){
+  if(!THREE.GLTFLoader) return;
+  new THREE.GLTFLoader().load('assets/wii-fit-trainer.glb',gltf=>{
+    const m=gltf.scene; m.position.set(7.6,.035,4.5); m.rotation.y=0; scene.add(m);
+    m.traverse(o=>{ if(o.isMesh) o.material.roughness=.6; });
+    colliderRect(7.6-.45,4.5-.3,7.6+.45,4.5+.3);
+    animated.push(t=>{ m.position.y=.035+Math.sin(t*1.6)*.006; m.rotation.y=Math.sin(t*.5)*.08; });
+  },undefined,()=>{});
 }
 
 /* ---------- Spa ---------- */
