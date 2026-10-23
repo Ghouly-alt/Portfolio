@@ -122,6 +122,27 @@ kbd{display:inline-block;min-width:26px;padding:2px 7px;border:1px solid var(--l
 #content a{color:var(--accent2)}
 #content .todo{border:1px dashed var(--line);border-radius:10px;padding:14px;color:var(--muted)}
 #content iframe{width:100%;height:60vh;border:1px solid var(--line);border-radius:10px;background:#fff}
+/* CV et tableau E5 intégrés au style du site */
+.cv-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.cv-head h3{margin:0;font:700 30px Oswald,sans-serif;letter-spacing:.04em}
+.cv-head small{color:var(--muted);display:block;font-size:14px;letter-spacing:.08em;text-transform:uppercase}
+.cv-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:14px}
+@media (max-width:640px){.cv-grid{grid-template-columns:1fr}}
+.cv-box{background:#1d1e24;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.cv-box h4{margin:0 0 8px;font:600 14px Oswald,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.cv-box ul{list-style:none;padding:0;margin:0}.cv-box li{margin:3px 0}
+.cv-job{border-left:2px solid var(--accent);padding:0 0 0 12px;margin:0 0 12px}
+.cv-job .when{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-weight:600}.cv-job .when i{color:var(--muted);font-weight:400}
+.cv-job b{color:var(--accent2);display:block}
+.e5-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:8px 0}
+.e5{border-collapse:collapse;width:100%;min-width:640px;font-size:13px}
+.e5 th,.e5 td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
+.e5 thead th{color:var(--muted);font-weight:600;font-size:12px;background:#1d1e24;text-align:center}
+.e5 thead th:first-child{text-align:left}
+.e5 td.sep{background:#1d1e24;font:600 13px Oswald,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);text-align:center}
+.e5 td.d{white-space:nowrap;color:var(--muted)}
+.e5 td.k{text-align:center;width:72px}
+.e5 td.k.on{background:rgba(255,106,26,.16);color:var(--accent);font-weight:700}
 
 /* Tactile */
 #touch{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);display:none;gap:10px;z-index:6}
@@ -325,7 +346,28 @@ const ZONES = [
         <p>Au sein de l'entreprise, je m'occupe des <b>160 collaborateurs</b> équipés de matériel informatique : j'interviens en tant que <b>support hardware</b>, et parfois <b>software</b>.</p>
         <div><span class="stat"><strong>160</strong>collaborateurs équipés</span><span class="stat"><strong>Hardware</strong>support principal</span><span class="stat"><strong>Software</strong>support ponctuel</span></div>` },
       { label:'Parcours', html:'<h3>Formation</h3><p><b>BTS SIO — option SISR</b><br>Nexa Digital School · 2025 – 2027 (alternance)</p><p><b>Bac S</b><br>Lycée Marie de Champagne, Troyes · 2020</p><h3>Expériences</h3><p><b>2025 – 2026 · Gestionnaire IT (alternance)</b> — INEO RHT, Villeurbanne<br>Gestion des appareils informatiques des collaborateurs.</p><p><b>2022 – 2023 · Employé polyvalent</b> — Carrefour Market, Reims<br>Caisse, mise en rayon, réassort, facing.</p><p><b>2021 – 2024 · Manutentionnaire (intérim)</b> — Reims<br>Mise en place des salles de concert à l\'Arena de Reims, travail en équipe sur chantier.</p>' },
-      { label:'Mon CV', html:'<p><a href="CV%20Bodet%20Loic.pdf" target="_blank">Ouvrir mon CV (PDF)</a></p><iframe src="CV%20Bodet%20Loic.pdf" title="CV"></iframe>' },
+      { label:'Mon CV', html:`
+        <div class="cv-head"><div><h3>Bodet Loïc</h3><small>Alternant informatique</small></div><a href="CV%20Bodet%20Loic.pdf" target="_blank">Ouvrir le CV (PDF)</a></div>
+        <div class="cv-box"><h4>À propos</h4>Actuellement en BTS SIO et en alternance. Passionné par l'informatique et l'environnement Linux. Autonome et doté d'une capacité de compréhension rapide, je m'appuie sur une solide expérience de terrain pour faire preuve de rigueur et d'adaptabilité.</div>
+        <div class="cv-grid">
+          <div>
+            <div class="cv-box"><h4>Coordonnées</h4><ul><li>📱 06.16.46.39.08</li><li>✉ <a href="mailto:loic95110@gmail.com">loic95110@gmail.com</a></li><li>📍 Villeurbanne</li></ul></div>
+            <div class="cv-box"><h4>Langues</h4>Français · Anglais B2</div>
+            <div class="cv-box"><h4>Compétences</h4><ul><li>• Sociable</li><li>• Optimiste</li><li>• Rigoureux</li><li>• Curieux</li><li>• Discipliné</li></ul></div>
+            <div class="cv-box"><h4>Centres d'intérêt</h4><ul><li>🎮 Jeux vidéo</li><li>💻 Technologies</li><li>🏋 Musculation et nutrition</li><li>🎧 Musique</li></ul></div>
+          </div>
+          <div>
+            <div class="cv-box"><h4>Expériences professionnelles</h4>
+              <div class="cv-job"><div class="when"><span>2025 – 2026</span><i>INEO RHT · Villeurbanne</i></div><b>Gestionnaire IT</b>Gestion des appareils informatiques des collaborateurs.</div>
+              <div class="cv-job"><div class="when"><span>2021 – 2024</span><i>Intérimaire · Reims</i></div><b>Manutentionnaire</b>Mise en place des salles de concert à l'Arena de Reims. Travail en équipe sur chantier.</div>
+              <div class="cv-job"><div class="when"><span>2022 – 2023</span><i>Carrefour Market · Reims</i></div><b>Employé polyvalent</b>Caisse, remise en rayon, réassort, facing.</div>
+            </div>
+            <div class="cv-box"><h4>Formations</h4>
+              <div class="cv-job"><b>BTS SIO (SISR)</b><i style="color:var(--muted)">Nexa Digital School · 2025 – 2027</i></div>
+              <div class="cv-job"><b>Bac S</b><i style="color:var(--muted)">Marie de Champagne, Troyes · 2020</i></div>
+            </div>
+          </div>
+        </div>` },
       { label:'Contact', html:()=>`
         <div class="li-card">
           <div class="li-banner"></div>
@@ -354,7 +396,24 @@ const ZONES = [
     ]},
   { id:'force', key:'3', name:'Espace Force', subtitle:'Compétences & projets', pos:[11, 0], spawn:[8, 6, -0.46],
     sections:[
-      { label:'Tableau E5', html:'<p><a href="E5%20-%20Tableau%20de%20synth%C3%A8se.pdf" target="_blank">Ouvrir le tableau de synthèse E5 (PDF)</a></p><iframe src="E5%20-%20Tableau%20de%20synth%C3%A8se.pdf" title="E5"></iframe>' },
+      { label:'Tableau E5', html:(()=>{
+          const COLS=['Gérer le patrimoine informatique','Répondre aux incidents et demandes','Développer la présence en ligne','Travailler en mode projet','Mettre à disposition un service','Organiser son développement pro.'];
+          const row=(t,d,on)=>`<tr><td>${t}</td><td class="d">${d}</td>`+COLS.map((c,i)=>on.includes(i)?`<td class="k on" title="${c}">✔</td>`:`<td class="k"></td>`).join('')+'</tr>';
+          const sep=t=>`<tr><td class="sep" colspan="${COLS.length+2}">${t}</td></tr>`;
+          return `<p>BTS Services Informatiques aux Organisations — session 2026 · BODET Loïc · Nexa Digital School · option SISR · <a href="E5%20-%20Tableau%20de%20synth%C3%A8se.pdf" target="_blank">Ouvrir le tableau (PDF)</a></p>
+          <div class="e5-wrap"><table class="e5"><thead><tr><th>Réalisations professionnelles</th><th>Période</th>${COLS.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>`+
+          sep('Réalisations en cours de formation')+
+          row('<a href="https://drive.google.com/drive/folders/17k6Yh1YECzoqbg8lJewWjeEWQFlthh7E?usp=drive_link" target="_blank">Global Swiss Bourdin</a>','20/05/26 – 21/05/26',[0,1])+
+          row('TP Réseaux sur Cisco (protocoles RIP et OSPF)','16/05/26 – 20/05/26',[2,3,4])+
+          sep('Réalisations en milieu professionnel — première année')+
+          row('Gestion du parc : commandes nouveaux arrivants / adaptations des moyens, respect des règles internes, gestion des incidents (matériel), suivi des accès serveurs (dont sauvegarde)','27/08/25 – en cours',[0])+
+          row('Système de gestion de tickets via formulaire SharePoint','—',[1])+
+          row('Kiséo (prise en main admin / migration des comptes) — Migration NEO','26/02/26 – 19/04/26',[4])+
+          row('E-learning Equans · identification de relais / sachants dans le monde Equans','27/08/25 – en cours',[5])+
+          row('Projet de développement du SharePoint de l\'entreprise','23/05/26 – en cours',[2,3])+
+          sep('Réalisations en milieu professionnel — seconde année')+
+          `<tr><td colspan="${COLS.length+2}" style="color:var(--muted)">À venir.</td></tr></tbody></table></div>`;
+        })() },
       { label:'Compétences', html:'<div class="todo">Réseau, système, développement, cybersécurité…</div>' },
       { label:'Projets', html:'<div class="todo">Réalisations professionnelles à détailler.</div>' }
     ]},
