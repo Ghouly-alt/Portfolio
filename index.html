@@ -906,12 +906,12 @@ function buildForce(){
   addTrainer();
 }
 
-/* Coach stylisé (modèle Blender) sur le tapis de sol, face à l'entrée */
+/* Coach (modèle Blender HD allégé, source dans blender/) sur le tapis de sol, face à l'entrée */
 function addTrainer(){
   if(!THREE.GLTFLoader) return;
   new THREE.GLTFLoader().load('assets/wii-fit-trainer.glb',gltf=>{
     const m=gltf.scene; m.position.set(7.6,.035,4.5); m.rotation.y=0; scene.add(m);
-    m.traverse(o=>{ if(o.isMesh) o.material.roughness=.6; });
+    m.traverse(o=>{ if(o.isMesh) o.material.roughness=/skin|hair|shorts/.test(o.material.name)?.85:.6; });
     colliderRect(7.6-.45,4.5-.3,7.6+.45,4.5+.3);
     animated.push(t=>{ m.position.y=.035+Math.sin(t*1.6)*.006; m.rotation.y=Math.sin(t*.5)*.08; });
   },undefined,()=>{});
