@@ -4,7 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Loïc Bodet — Portfolio · La Faille</title>
-<meta name="description" content="Portfolio de Loïc Bodet, alternant BTS SIO SISR, sur le thème de League of Legends.">
+<meta name="description" content="Portfolio de Loïc Bodet, alternant Gestionnaire IT chez INEO RHT et étudiant en BTS SIO option SISR : projets, tableau E5, veille technologique.">
+<meta name="theme-color" content="#010a13">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='6' fill='%23010a13'/%3E%3Cpolygon points='20,3 35,11.5 35,28.5 20,37 5,28.5 5,11.5' fill='none' stroke='%23c8aa6e' stroke-width='3'/%3E%3Cpolygon points='20,11 28,15.5 28,24.5 20,29 12,24.5 12,15.5' fill='%230ac8b9'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="https://portfolio-bodet-loic.vercel.app/">
+<meta property="og:title" content="Loïc Bodet — Portfolio BTS SIO SISR">
+<meta property="og:description" content="Alternant Gestionnaire IT chez INEO RHT : Active Directory, NAS, réseau Cisco, SharePoint. Projets, tableau E5 et veille technologique.">
+<meta property="og:image" content="https://portfolio-bodet-loic.vercel.app/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Loïc Bodet, portfolio BTS SIO SISR">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -65,7 +77,25 @@ main{max-width:1280px;margin:auto;padding:0 20px 80px}
 .hero-in{position:relative;max-width:1280px;margin:auto;width:100%;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
 .hero h1{font-size:clamp(40px,7vw,92px);font-weight:900;letter-spacing:.06em;text-shadow:0 0 40px #c8aa6e44}
 .hero h1 span{display:block;font-size:.34em;letter-spacing:.32em;color:var(--gold);font-weight:500;margin-bottom:12px}
-.hero p{margin:20px 0 34px;max-width:520px;font-size:18px}
+.hero p{margin:20px 0 34px;max-width:560px;font-size:18px}
+.hero p.pitch{font-size:clamp(18px,2vw,22px);line-height:1.5;margin-bottom:10px;color:var(--gold-hi)}
+.hero p.pitch b{color:var(--cyan);font-weight:600}
+.hero p.sub-pitch{margin-top:0;font-size:14px;letter-spacing:.06em;color:var(--muted)}
+/* ---------- Écran de chargement ---------- */
+#loader{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:20px;text-align:center;
+  background:radial-gradient(circle at 50% 40%,#0f2a4a,#010a13 70%);transition:opacity .6s,visibility .6s;cursor:pointer}
+#loader[hidden]{display:none}
+#loader.done{opacity:0;visibility:hidden}
+#loader svg{width:110px;height:110px;filter:drop-shadow(0 0 24px #0ac8b988);animation:spin 6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loader .l-title{font:700 13px var(--serif);letter-spacing:.4em;color:var(--gold)}
+#loader .l-name{font:900 clamp(28px,5vw,44px) var(--serif);letter-spacing:.1em;color:var(--gold-hi)}
+#loader .l-bar{width:min(360px,80vw);height:4px;background:#1e2328;border:1px solid var(--line)}
+#loader .l-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold-lo),var(--gold-hi));animation:load 2s ease forwards}
+@keyframes load{to{width:100%}}
+#loader .l-tip{max-width:520px;font-size:15px;color:var(--text)}
+#loader .l-tip b{color:var(--cyan);font:700 11px var(--sans);letter-spacing:.2em;display:block;margin-bottom:6px}
+#loader .l-skip{font-size:12px;color:var(--muted)}
 .cta{display:flex;gap:16px;flex-wrap:wrap}
 .emblem{justify-self:center;width:min(340px,70vw);filter:drop-shadow(0 0 30px #0ac8b966);animation:float 6s ease-in-out infinite}
 @keyframes float{50%{transform:translateY(-14px)}}
@@ -152,6 +182,25 @@ main{max-width:1280px;margin:auto;padding:0 20px 80px}
 .quest-media.diag{align-items:center;padding:10px}
 .quest-media.diag svg{width:100%;height:auto}
 #quests .grid{align-items:start}
+.qgroup[hidden],#quests [data-p][hidden]{display:none}
+#qfilters button b{color:var(--cyan);margin-right:4px}
+#qfilters button[aria-pressed=true] b{color:var(--bg)}
+.cmr{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0 6px}
+.cmr div{position:relative;background:var(--panel2);border:1px solid var(--line);border-top:2px solid var(--gold);padding:14px 14px 12px}
+.cmr div:last-child{border-top-color:var(--cyan)}
+.cmr .step{position:absolute;top:10px;right:12px;font-size:14px;color:var(--gold)}
+.cmr b{font:700 13px var(--serif);letter-spacing:.06em;color:var(--gold-hi)}
+.cmr p{font-size:14px;margin-top:6px}
+@media(max-width:700px){.cmr{grid-template-columns:1fr}}
+.shot svg{width:100%;height:auto;display:block;background:#010a13;border:1px solid var(--gold-lo)}
+.skill-card .vcat-head{margin-bottom:12px}
+.skill-card .vcat-head h3{font-size:18px}
+.skill-list{list-style:none;padding:0!important}
+.skill-list li{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 12px;padding:9px 0;border-top:1px solid var(--line)}
+.skill-list .sk{font-weight:600;color:var(--gold-hi)}
+.skill-list .sk-proj{display:flex;flex-wrap:wrap;gap:6px}
+.skill-list .e5-link{margin:0}
+.skill-list .sk-note{font-size:13px;color:var(--muted);font-style:italic}
 .quest-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin:6px 0}
 .quest-top small{color:var(--muted);font-size:13px}
 .e5chips{display:flex;gap:6px;margin-top:14px;flex-wrap:wrap}
@@ -283,7 +332,8 @@ footer{border-top:1px solid var(--line);padding:26px 20px;text-align:center;font
       <div>
         <div class="eyebrow">Bienvenue sur la Faille</div>
         <h1 id="h-accueil"><span>L'INVOCATEUR</span>LOÏC BODET</h1>
-        <p>Alternant Gestionnaire IT chez INEO RHT et étudiant en BTS SIO option SISR. Choisis ton onglet, entre en partie et découvre mon parcours, mes projets et mes compétences.</p>
+        <p class="pitch">J'accompagne <b>160 collaborateurs</b>, j'administre un <b>NAS de 10 To</b> et je participe à la <b>refonte des droits de l'Active Directory</b> chez INEO RHT.</p>
+        <p class="sub-pitch">Alternant Gestionnaire IT · BTS SIO option SISR · Nexa Digital School</p>
         <div class="cta">
           <a class="btn" href="#projets" data-go="projets">▶ Voir mes projets</a>
           <a class="btn ghost" href="CV%20Bodet%20Loic.pdf" target="_blank" rel="noopener">Télécharger mon CV</a>
@@ -324,12 +374,18 @@ footer{border-top:1px solid var(--line);padding:26px 20px;text-align:center;font
   <div id="m-formation"></div>
   <h3 class="subhead">Expériences</h3>
   <div id="m-experience"></div>
+
+  <h3 class="subhead">Mes compétences</h3>
+  <p class="lead" style="margin:-4px 0 18px">Chaque compétence renvoie aux projets où je l'ai mise en pratique.</p>
+  <div class="grid g2" id="skills"></div>
 </section>
 
 <!-- ======== PROJETS ======== -->
 <section class="page" id="projets" aria-labelledby="h-projets">
   <div class="head"><div class="eyebrow">Tableau des quêtes</div><h2 class="title" id="h-projets">Mes projets</h2>
-    <p class="lead">Clique sur une quête pour ouvrir sa fiche détaillée.</p></div>
+    <p class="lead">Clique sur une quête pour ouvrir sa fiche détaillée, ou filtre par compétence du référentiel E5.</p></div>
+  <div class="filters" id="qfilters" role="group" aria-label="Filtrer les projets par compétence E5"></div>
+  <p id="qcount" class="mock-note" style="text-align:left;margin:-12px 0 20px" aria-live="polite"></p>
   <div id="quests"></div>
 </section>
 
@@ -389,6 +445,15 @@ footer{border-top:1px solid var(--line);padding:26px 20px;text-align:center;font
 </main>
 
 <footer>Portfolio personnel de Loïc Bodet. Site de fan inspiré de l'univers de League of Legends, non affilié à Riot Games ; aucun visuel officiel n'est utilisé.</footer>
+
+<div id="loader" role="status" aria-live="polite" hidden>
+  <svg viewBox="0 0 40 40" aria-hidden="true"><polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="none" stroke="#c8aa6e" stroke-width="1.5"/><polygon points="20,10 29,15 29,25 20,30 11,25 11,15" fill="#0ac8b9" opacity=".85"/></svg>
+  <div class="l-title">CHARGEMENT DE LA PARTIE</div>
+  <div class="l-name">LOÏC BODET</div>
+  <div class="l-bar"><i></i></div>
+  <p class="l-tip"><b>ASTUCE</b><span id="l-tip"></span></p>
+  <span class="l-skip">Clique ou appuie sur une touche pour passer</span>
+</div>
 
 <dialog id="dlg" aria-labelledby="dlg-t"><button class="x" id="dlg-x" aria-label="Fermer">✕</button><div class="in" id="dlg-in"></div></dialog>
 
@@ -485,6 +550,108 @@ const AGDLP_SVG = `<svg class="agdlp" viewBox="0 0 640 170" role="img" aria-labe
   <text x="320" y="164" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#8a8f9e">« membre de » →</text>
 </svg>`;
 
+/* VISUELS des cartes projets (schémas SVG, sans données confidentielles) */
+const svgBox = (x,y,w,h,label,sub,accent)=>`<g><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="4" fill="#0a1428" stroke="${accent||'#c8aa6e'}" stroke-width="1.5"/>
+  <text x="${x+w/2}" y="${y+(sub?h/2-2:h/2+4)}" text-anchor="middle" font-family="Inter,sans-serif" font-weight="600" font-size="12" fill="#f0e6d2">${label}</text>
+  ${sub?`<text x="${x+w/2}" y="${y+h/2+14}" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#8a8f9e">${sub}</text>`:''}</g>`;
+const svgLine = (x1,y1,x2,y2,c)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c||'#785a28'}" stroke-width="2"/>`;
+const svgWrap = (inner,label)=>`<svg viewBox="0 0 400 190" role="img" aria-label="${label}">${inner}</svg>`;
+const VISUALS = {
+  // AP 1 : hôte Proxmox, VLAN 800, contrôleur de domaine et poste client
+  infra: svgWrap(`<rect x="20" y="14" width="360" height="162" rx="6" fill="none" stroke="#463714" stroke-dasharray="5 4"/>
+    <text x="32" y="32" font-family="Inter,sans-serif" font-size="10" letter-spacing="2" fill="#c8aa6e">PROXMOX VE · VLAN 800</text>
+    ${svgBox(40,56,140,52,'AD-DC','Windows Server 2022')}${svgBox(220,56,140,52,'Client2','Poste du domaine')}
+    ${svgLine(180,82,220,82,'#0ac8b9')}
+    ${svgBox(110,126,180,36,'gsblolo.local · 8 services','', '#0ac8b9')}${svgLine(110,108,140,126)}${svgLine(290,108,260,126)}`,
+    'Schéma de l\'infrastructure GSB sous Proxmox'),
+  // TP Cisco : trois routeurs en triangle
+  routage: svgWrap(`${svgLine(200,46,90,140,'#0ac8b9')}${svgLine(200,46,310,140,'#0ac8b9')}${svgLine(90,140,310,140,'#c8aa6e')}
+    ${[[200,46,'R1'],[90,140,'R2'],[310,140,'R3']].map(([x,y,n])=>`<g><circle cx="${x}" cy="${y}" r="24" fill="#0a1428" stroke="#c8aa6e" stroke-width="2"/>
+      <path d="M${x-10} ${y}h20M${x} ${y-10}v20" stroke="#0ac8b9" stroke-width="2"/><text x="${x}" y="${y+40}" text-anchor="middle" font-family="Cinzel,serif" font-weight="700" font-size="13" fill="#f0e6d2">${n}</text></g>`).join('')}
+    <text x="122" y="88" font-family="Inter,sans-serif" font-size="11" fill="#0ac8b9" transform="rotate(-40 122 88)">OSPF</text>
+    <text x="262" y="78" font-family="Inter,sans-serif" font-size="11" fill="#0ac8b9" transform="rotate(40 262 78)">OSPF</text>
+    <text x="200" y="134" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#c8aa6e">RIP</text>`,
+    'Schéma de trois routeurs Cisco reliés en RIP et OSPF'),
+  // Tickets : formulaire SharePoint et liste de demandes
+  tickets: svgWrap(`<rect x="24" y="16" width="170" height="160" rx="6" fill="#f3f2f1"/>
+    <rect x="24" y="16" width="170" height="26" rx="6" fill="#0f6cbd"/><text x="36" y="33" font-family="Inter,sans-serif" font-weight="600" font-size="11" fill="#fff">Demande d'assistance</text>
+    ${['Nom','Catégorie','Description'].map((l,i)=>`<text x="36" y="${60+i*34}" font-family="Inter,sans-serif" font-size="9" fill="#605e5c">${l}</text><rect x="36" y="${64+i*34}" width="146" height="${i===2?26:14}" rx="2" fill="#fff" stroke="#c8c6c4"/>`).join('')}
+    <rect x="36" y="156" width="56" height="14" rx="2" fill="#0f6cbd"/><text x="64" y="166" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#fff">Envoyer</text>
+    ${[['Écran HS','Résolu','#0ac8b9'],['Accès dossier','En cours','#c8aa6e'],['PC lent','Nouveau','#f0e6d2']].map(([t,s,c],i)=>`<g><rect x="214" y="${26+i*50}" width="162" height="40" rx="4" fill="#0a1428" stroke="#463714"/>
+      <text x="226" y="${43+i*50}" font-family="Inter,sans-serif" font-weight="600" font-size="11" fill="#f0e6d2">${t}</text>
+      <text x="226" y="${57+i*50}" font-family="Inter,sans-serif" font-size="9.5" fill="${c}">● ${s}</text></g>`).join('')}`,
+    'Maquette d\'un formulaire SharePoint de demande d\'assistance et de la liste des tickets'),
+  // SharePoint : page d'accueil d'un intranet
+  intranet: svgWrap(`<rect x="24" y="14" width="352" height="162" rx="6" fill="#f3f2f1"/>
+    <rect x="24" y="14" width="352" height="24" rx="6" fill="#0f6cbd"/><circle cx="40" cy="26" r="6" fill="#fff" opacity=".9"/>
+    <text x="54" y="30" font-family="Inter,sans-serif" font-weight="600" font-size="11" fill="#fff">Intranet de l'entreprise</text>
+    <rect x="40" y="50" width="200" height="66" rx="4" fill="#c7e0f4"/><text x="52" y="72" font-family="Inter,sans-serif" font-weight="600" font-size="12" fill="#103a5c">Actualités</text>
+    <rect x="52" y="82" width="140" height="6" rx="3" fill="#8ab8de"/><rect x="52" y="94" width="110" height="6" rx="3" fill="#8ab8de"/>
+    ${[['Documents',50],['Outils',92],['Contacts',134]].map(([t,y])=>`<rect x="254" y="${y}" width="106" height="34" rx="4" fill="#fff" stroke="#c8c6c4"/><text x="307" y="${y+21}" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#323130">${t}</text>`).join('')}
+    ${[0,1,2].map(i=>`<rect x="${40+i*68}" y="128" width="60" height="38" rx="4" fill="#fff" stroke="#c8c6c4"/>`).join('')}`,
+    'Maquette de la page d\'accueil d\'un intranet SharePoint'),
+  // GSB : parc et incidents
+  parc: svgWrap(`${svgBox(150,18,100,40,'Serveur','', '#0ac8b9')}${svgLine(200,58,200,84)}${svgBox(130,84,140,30,'Commutateur')}
+    ${[40,130,220,310].map((x,i)=>`${svgLine(200,114,x+25,140)}<g><rect x="${x}" y="140" width="50" height="32" rx="3" fill="#0a1428" stroke="#c8aa6e"/>
+      <rect x="${x+8}" y="146" width="34" height="18" fill="#0f1e36"/>${i===2?`<circle cx="${x+46}" cy="${144}" r="8" fill="#e84057"/><text x="${x+46}" y="148" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="11" fill="#fff">!</text>`:''}</g>`).join('')}
+    <text x="20" y="34" font-family="Inter,sans-serif" font-size="10" letter-spacing="2" fill="#c8aa6e">PARC GSB</text>
+    <text x="380" y="34" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="#e84057">1 incident</text>`,
+    'Schéma d\'un parc informatique avec un poste en incident')
+};
+
+/* CONTEXTE → MISSION → RÉSULTAT de chaque projet (clé = id du projet) */
+const CMR = {
+  p1:{c:'Besoin personnel : suivre mes séances de musculation et savoir quoi viser à la séance suivante, depuis mon téléphone.',
+      m:'Concevoir et développer seul une application web complète : saisie des séances, algorithme de progression, statistiques, sauvegarde et synchronisation.',
+      r:'Application utilisée à la salle, avec plus de 360 exercices et une progression calculée automatiquement.'},
+  p2:{c:'L\'organisation GSB a besoin d\'un annuaire centralisé pour l\'authentification et la gestion des postes de ses 8 services.',
+      m:'Virtualiser l\'infrastructure sous Proxmox, installer Windows Server 2022, créer le domaine Active Directory et automatiser la création des comptes en PowerShell.',
+      r:'Point 1 terminé : domaine gsblolo.local opérationnel, comptes importés par script, poste client joint au domaine.'},
+  nas:{c:'Une agence de l\'entreprise n\'avait pas d\'espace centralisé pour sauvegarder ses archives.',
+      m:'Mettre en place un NAS Synology d\'environ 10 To et l\'administrer : comptes, groupes, dossiers partagés et droits d\'accès.',
+      r:'NAS en production : environ 9 To d\'archives centralisées, accès contrôlés par groupe.'},
+  agdlp:{c:'Les droits sur les dossiers partagés étaient donnés utilisateur par utilisateur : difficile à maintenir et à auditer.',
+      m:'Réorganiser les accès selon la méthode AGDLP : groupes globaux par service, groupes de domaine local par ressource, permissions NTFS sur ces groupes.',
+      r:'En cours : chaque arrivée, départ ou changement de poste se gérera par un simple ajout ou retrait de groupe.'},
+  tickets:{c:'Besoin de centraliser et de suivre les demandes d\'assistance des collaborateurs.',
+      m:'Mettre en place un formulaire SharePoint par lequel les collaborateurs déposent leurs demandes.',
+      r:'Les demandes arrivent au même endroit, peuvent être priorisées et gardent une trace.'},
+  sharepoint:{c:'L\'entreprise veut développer son SharePoint interne pour regrouper informations et documents.',
+      m:'Participer au développement du site, en mode projet.',
+      r:'Projet en cours.'},
+  gsb:{c:'Mission en formation dans le contexte de l\'organisation Global Swiss Bourdin.',
+      m:'Gérer le patrimoine informatique et répondre aux incidents et aux demandes d\'assistance.',
+      r:'Mission réalisée en deux jours, documentation disponible sur Google Drive.'},
+  cisco:{c:'TP de formation sur le routage entre plusieurs réseaux.',
+      m:'Configurer le routage dynamique sur des équipements Cisco, avec RIP puis OSPF.',
+      r:'Routage fonctionnel entre les réseaux, vérifié par les tables de routage et des tests de connectivité.'}
+};
+
+/* COMPÉTENCES — p : projets où la compétence est mise en pratique · note : contexte sans fiche projet */
+const SKILLS = [
+  {icon:'🖥', cat:'Systèmes & annuaire', items:[
+    {n:'Windows Server 2022', p:['p2']}, {n:'Active Directory (AD DS)', p:['p2','agdlp']}, {n:'AGDLP et permissions NTFS', p:['agdlp']},
+    {n:'PowerShell', p:['p2']}, {n:'DNS / DHCP', p:['p2']}, {n:'Linux', note:'Usage personnel'}]},
+  {icon:'💾', cat:'Virtualisation & stockage', items:[
+    {n:'Proxmox VE', p:['p2']}, {n:'NAS Synology (DSM)', p:['nas']}, {n:'Sauvegarde et archivage', p:['nas']}]},
+  {icon:'🌐', cat:'Réseau', items:[
+    {n:'Cisco IOS', p:['cisco']}, {n:'Routage RIP / OSPF', p:['cisco']}, {n:'VLAN et adressage IP', p:['p2']}]},
+  {icon:'🛠', cat:'Support & Microsoft 365', items:[
+    {n:'SharePoint', p:['tickets','sharepoint']}, {n:'Support matériel et logiciel', note:'160 collaborateurs chez INEO RHT'}, {n:'Gestion de parc', note:'Au quotidien en alternance'}]},
+  {icon:'⌨', cat:'Développement web', items:[
+    {n:'HTML / CSS / JavaScript', p:['p1']}, {n:'Graphiques SVG et API Web', p:['p1']}]}
+];
+
+/* ÉCRAN DE CHARGEMENT — astuces affichées au hasard */
+const TIPS = [
+  'Loïc accompagne au quotidien les 160 collaborateurs équipés d\'INEO RHT.',
+  'Le NAS administré par Loïc centralise près de 9 To d\'archives.',
+  'Carnet Fonte, l\'appli de Loïc, connaît plus de 360 exercices de musculation.',
+  'Loïc prépare les certifications Microsoft Azure en parallèle du BTS.',
+  'Dans l\'onglet Tableau E5, chaque réalisation ouvre sa fiche projet.',
+  'Dans l\'onglet Projets, filtre par compétence pour voir où chacune est validée.'
+];
+
 const PROJECTS = [
   {id:'p1', ctx:'perso', title:'Carnet Fonte', role:'Application web', state:'win', status:'Utilisable', mockup:true, period:'Projet personnel',
    short:'Application de suivi de musculation qui calcule seule la charge et les répétitions de la prochaine séance.',
@@ -498,7 +665,7 @@ const PROJECTS = [
 <li><b>Historique et records</b> (1RM estimé avec la formule d'Epley) et statistiques dessinées en SVG à la main.</li>
 <li><b>Données</b> : sauvegarde locale, synchronisation avec fusion des modifications, fonctionnement hors ligne, export et import JSON.</li>
 <li><b>Mode démo</b> : 8 semaines de séances simulées, thème clair / sombre, accessibilité clavier et ARIA.</li></ul>`},
-  {id:'p2', ctx:'formation', title:'AP 1 · Infrastructure GSB', role:'Réseau & système', period:'Atelier professionnel', state:'now', status:'Étape 1 terminée',
+  {id:'p2', ctx:'formation', visual:'infra', title:'AP 1 · Infrastructure GSB', role:'Réseau & système', period:'Atelier professionnel', state:'now', status:'Étape 1 terminée',
    short:'Annuaire Active Directory pour l\'organisation GSB : 8 services, comptes créés par script PowerShell.',
    tech:'Proxmox VE, Windows Server 2022, Active Directory (AD DS), DNS, DHCP, PowerShell, VLAN',
    html:`<p>Pour l'organisation <b>GSB</b>, je mets en place un annuaire <b>Active Directory</b> qui centralise l'authentification et la gestion des postes des 8 services : Accueil, Communication, Comptabilité, Développement, DSI, Labo-recherche, Réseaux &amp; Systèmes et RH. Le premier point de l'AP est <b>terminé</b>.</p>
@@ -545,20 +712,20 @@ ${AGDLP_SVG}
 <li>Les droits d'un dossier se lisent directement dans ses groupes : l'audit est beaucoup plus simple.</li>
 <li>Chacun n'a que les accès nécessaires à son poste (principe du moindre privilège).</li></ul>
 <p class="mock-note">Les informations de l'entreprise sont confidentielles : le schéma ci-dessus est un exemple de principe, les noms de groupes sont fictifs.</p>`},
-  {id:'tickets', ctx:'pro', title:'Gestion des tickets via SharePoint', role:'Support utilisateurs', state:'win', status:'Réalisé', period:'Première année', e5:[1],
+  {id:'tickets', ctx:'pro', visual:'tickets', title:'Gestion des tickets via SharePoint', role:'Support utilisateurs', state:'win', status:'Réalisé', period:'Première année', e5:[1],
    short:'Système de demandes d\'assistance par formulaire SharePoint pour centraliser et suivre les demandes des collaborateurs.',
    tech:'SharePoint, formulaires, Microsoft 365',
    html:`<p>Pour mieux suivre les demandes d'assistance, j'ai mis en place un <b>système de tickets basé sur un formulaire SharePoint</b> : les collaborateurs déposent leur demande au même endroit, ce qui permet de les centraliser, de les prioriser et d'en garder une trace.</p>`},
-  {id:'sharepoint', ctx:'pro', title:'Développement du SharePoint de l\'entreprise', role:'Présence en ligne', state:'now', status:'En cours', period:'Depuis le 23/05/26', e5:[2,3],
+  {id:'sharepoint', ctx:'pro', visual:'intranet', title:'Développement du SharePoint de l\'entreprise', role:'Présence en ligne', state:'now', status:'En cours', period:'Depuis le 23/05/26', e5:[2,3],
    short:'Projet de développement du site SharePoint interne de l\'entreprise, mené en mode projet.',
    tech:'SharePoint Online, Microsoft 365',
    html:`<p>Je participe au <b>développement du SharePoint de l'entreprise</b>, l'espace interne qui regroupe informations et documents pour les collaborateurs. Ce projet mobilise la présence en ligne de l'organisation et le travail en mode projet.</p>`},
-  {id:'gsb', ctx:'formation', title:'Global Swiss Bourdin', role:'Mission en formation', state:'win', status:'Terminé', period:'20/05/26 – 21/05/26', e5:[0,1],
+  {id:'gsb', ctx:'formation', visual:'parc', title:'Global Swiss Bourdin', role:'Mission en formation', state:'win', status:'Terminé', period:'20/05/26 – 21/05/26', e5:[0,1],
    short:'Mission sur le contexte de l\'organisation GSB : gestion du patrimoine informatique et réponse aux incidents et demandes.',
    tech:'Voir la documentation',
    html:`<p>Mission réalisée en formation dans le contexte de l'organisation <b>Global Swiss Bourdin</b>, autour de la gestion du patrimoine informatique et de la réponse aux incidents et aux demandes d'assistance.</p>
 <p><a href="https://drive.google.com/drive/folders/17k6Yh1YECzoqbg8lJewWjeEWQFlthh7E?usp=drive_link" target="_blank" rel="noopener">Ouvrir la documentation (Google Drive)</a></p>`},
-  {id:'cisco', ctx:'formation', title:'TP Réseaux Cisco : RIP et OSPF', role:'Routage', state:'win', status:'Terminé', period:'16/05/26 – 20/05/26', e5:[2,3,4],
+  {id:'cisco', ctx:'formation', visual:'routage', title:'TP Réseaux Cisco : RIP et OSPF', role:'Routage', state:'win', status:'Terminé', period:'16/05/26 – 20/05/26', e5:[2,3,4],
    short:'Configuration du routage dynamique sur des équipements Cisco avec les protocoles RIP et OSPF.',
    tech:'Cisco IOS, RIP, OSPF',
    html:`<p>Travaux pratiques de <b>routage dynamique</b> sur des équipements Cisco : configuration des protocoles <b>RIP</b> puis <b>OSPF</b>, vérification des tables de routage et de la connectivité entre réseaux.</p>`}
@@ -707,23 +874,49 @@ const stateTag = p=>`<span class="tag ${p.state}">${p.state==='win'?'✔':'●'}
 const e5Chips = p=>p.e5 ? `<div class="e5chips" aria-label="Compétences E5">${p.e5.map(i=>`<span title="${E5_COLS[i]}">C${i+1}</span>`).join('')}</div>` : '';
 const questMedia = p=> p.mockup ? `<div class="quest-media">${PHONE_SEANCE}</div>`
   : p.img ? `<div class="quest-media img"><img src="${p.img}" alt="${p.imgAlt||''}" loading="lazy"></div>`
-  : p.diagram ? `<div class="quest-media diag">${AGDLP_SVG}</div>` : '';
-$('#quests').innerHTML = PROJECT_CTX.map(c=>`<h3 class="subhead">${c.label}</h3><div class="grid g2">`+
+  : p.diagram ? `<div class="quest-media diag">${AGDLP_SVG}</div>`
+  : p.visual ? `<div class="quest-media diag">${VISUALS[p.visual]}</div>` : '';
+$('#quests').innerHTML = PROJECT_CTX.map(c=>`<section class="qgroup" data-ctx="${c.id}"><h3 class="subhead">${c.label}</h3><div class="grid g2">`+
   PROJECTS.filter(p=>p.ctx===c.id).map(p=>
-  `<article class="card link" tabindex="0" role="button" data-p="${p.id}" aria-label="Ouvrir la fiche ${p.title}">
+  `<article class="card link" tabindex="0" role="button" data-p="${p.id}" data-e5="${(p.e5||[]).join(' ')}" aria-label="Ouvrir la fiche ${p.title}">
     ${questMedia(p)}
     <div class="quest-top">${stateTag(p)}<small>${p.period||''}</small></div>
     <h3 style="margin-top:10px">${p.title}</h3><small style="color:var(--cyan)">${p.role}</small>
     <p>${p.short}</p>${e5Chips(p)}
-  </article>`).join('')+'</div>').join('');
+  </article>`).join('')+'</div></section>').join('');
+
+// Filtre des projets par compétence E5
+const qf = $('#qfilters');
+qf.innerHTML = `<button type="button" data-c="all" aria-pressed="true">✦ Tous les projets</button>`+
+  E5_COLS.map((c,i)=>`<button type="button" data-c="${i}" aria-pressed="false" title="${c}"><b>C${i+1}</b> ${c}</button>`).join('');
+qf.addEventListener('click',e=>{
+  const b=e.target.closest('[data-c]'); if(!b) return;
+  const c=b.dataset.c;
+  qf.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  document.querySelectorAll('#quests [data-p]').forEach(card=>card.hidden = c!=='all' && !card.dataset.e5.split(' ').includes(c));
+  document.querySelectorAll('.qgroup').forEach(g=>g.hidden = !g.querySelector('[data-p]:not([hidden])'));
+  $('#qcount').textContent = c==='all' ? '' : `${document.querySelectorAll('#quests [data-p]:not([hidden])').length} projet(s) valident ${E5_COLS[c].toLowerCase()} (C${+c+1}).`;
+  armReveal($('#quests'));
+});
+
 const dlg=$('#dlg');
 function openProject(id){
   const p=PROJECTS.find(x=>x.id===id); if(!p) return;
-  const media = p.mockup ? `<h3>Aperçu de l'application</h3><div class="phones">${PHONE_SEANCE}${PHONE_STATS}</div><p class="mock-note">Écrans de la séance en direct et des statistiques (maquette de l'interface, données de démonstration).</p>` : '';
+  const cmr = CMR[p.id] ? `<div class="cmr">${[['Contexte','c','?'],['Mission','m','⚑'],['Résultat','r','✔']].map(([t,k,i],n)=>
+    `<div><span class="step" aria-hidden="true">${i}</span><b>${n+1}. ${t}</b><p>${CMR[p.id][k]}</p></div>`).join('')}</div>` : '';
+  const media = p.mockup ? `<h3>Aperçu de l'application</h3><div class="phones">${PHONE_SEANCE}${PHONE_STATS}</div><p class="mock-note">Écrans de la séance en direct et des statistiques (maquette de l'interface, données de démonstration).</p>`
+    : p.visual ? `<div class="shot">${VISUALS[p.visual]}</div>` : '';
   const comp = p.e5 ? `<h3>Compétences E5 mobilisées</h3><ul>${p.e5.map(i=>`<li><b>C${i+1}</b> — ${E5_COLS[i]}</li>`).join('')}</ul>` : '';
-  $('#dlg-in').innerHTML=`<h2 id="dlg-t">${p.title}</h2><div class="quest-top">${stateTag(p)}<small>${p.period||''}</small></div>${media}${p.html}${comp}<h3>Technos / outils</h3><p>${p.tech}</p>`;
+  $('#dlg-in').innerHTML=`<h2 id="dlg-t">${p.title}</h2><div class="quest-top">${stateTag(p)}<small>${p.period||''}</small></div>${cmr}${media}<h3>En détail</h3>${p.html}${comp}<h3>Technos / outils</h3><p>${p.tech}</p>`;
   dlg.showModal();
 }
+
+// Compétences (Parcours) : un clic sur un projet ouvre sa fiche
+$('#skills').innerHTML = SKILLS.map(g=>`<div class="card skill-card"><div class="vcat-head"><div class="ico" aria-hidden="true">${g.icon}</div><h3>${g.cat}</h3></div>
+  <ul class="skill-list">${g.items.map(s=>`<li><span class="sk">${s.n}</span>${s.p
+    ? `<span class="sk-proj">${s.p.map(id=>`<button type="button" class="e5-link" data-p="${id}">${PROJECTS.find(x=>x.id===id).title}</button>`).join('')}</span>`
+    : `<span class="sk-note">${s.note}</span>`}</li>`).join('')}</ul></div>`).join('');
+$('#skills').addEventListener('click',e=>{const b=e.target.closest('[data-p]'); if(b) openProject(b.dataset.p)});
 $('#quests').addEventListener('click',e=>{const c=e.target.closest('[data-p]'); if(c) openProject(c.dataset.p)});
 $('#e5t').addEventListener('click',e=>{const b=e.target.closest('.e5-link'); if(b) openProject(b.dataset.p)});
 $('#quests').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.dataset.p){e.preventDefault();openProject(e.target.dataset.p)}});
@@ -758,6 +951,20 @@ $('#e5t').innerHTML = `<thead><tr><th>Réalisations professionnelles</th><th>Pé
 })();
 
 show(location.hash.slice(1));
+
+// Écran de chargement : une seule fois par session, passable au clic ou au clavier
+(function(){
+  let seen=false;
+  try{ seen = sessionStorage.getItem('loaderSeen')==='1'; sessionStorage.setItem('loaderSeen','1'); }catch(e){}
+  if(seen) return;
+  const L=$('#loader');
+  $('#l-tip').textContent = TIPS[Math.floor(Math.random()*TIPS.length)];
+  L.hidden=false;
+  const close=()=>{ L.classList.add('done'); removeEventListener('keydown',close); setTimeout(()=>L.hidden=true,700); };
+  L.addEventListener('click',close);
+  addEventListener('keydown',close);
+  setTimeout(close, REDUCED ? 900 : 2400);
+})();
 </script>
 </body>
 </html>
