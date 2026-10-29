@@ -1,64 +1,57 @@
-# DESIGN.md — Portfolio de Loïc Bodet (« La Faille »)
+# DESIGN.md — Portfolio de Loïc Bodet
 
-Direction : on garde l'identité existante (nuit bleue, or, cyan « hextech », titres en capitales à empattements) mais on la discipline. Peu d'ornements, une hiérarchie nette, une interface lisible pour des recruteurs.
+Direction : éditorial monochrome, inspiré de la mise en page de christendijoux.com (fond noir, blanc cassé, titres condensés très fins, étiquettes en police mono, filets fins). On reprend le style, pas le contenu ni le code : tout le texte est celui de Loïc.
 
-> Cette direction part du code existant et des règles de lisibilité, pas d'une comparaison avec des sites réels (aucun outil de recherche de références n'était connecté).
+Le site tient sur une seule page qui défile, découpée en six sections numérotées « [ 01 / 06 ] » : Parcours, Projets, Tableau E5, Veille, Roadmap, Contact.
 
-Contrainte d'accessibilité : l'auteur est daltonien. Aucune information ne repose sur la couleur seule : chaque état a un texte et un symbole (✔ terminé, ● en cours, ○ à venir). Les catégories de veille sont identifiées par leur nom et leur icône, la teinte n'est qu'un renfort. Le site est en thème sombre uniquement.
+Contrainte d'accessibilité : l'auteur est daltonien. Le site n'utilise aucune teinte : la hiérarchie passe par la luminosité, la taille et la police. Chaque état a un texte et un symbole (✔ terminé, ● en cours, ○ à venir, ! incident). Thème sombre uniquement.
 
 ## Couleurs
 
 | Jeton | Valeur | Rôle |
 |---|---|---|
-| `--bg` | `#010a13` | Fond de page |
-| `--panel` | `#0a1428` | Surface des cartes |
-| `--panel2` | `#0f1e36` | Surface relevée (en-têtes, survol, tableaux) |
-| `--text` | `#d8d4c8` | Texte courant (≈ 13:1 sur `--bg`) |
-| `--text-dim` | `#aab0be` | Texte secondaire |
-| `--muted` | `#98a0b3` | Légendes, métadonnées (≈ 7:1 sur `--panel`) |
-| `--gold` | `#c8aa6e` | Couleur de marque : filets, étiquettes, boutons principaux |
-| `--gold-hi` | `#f0e6d2` | Titres, texte sur fond sombre à fort accent |
-| `--gold-lo` | `#785a28` | Filets décoratifs uniquement |
-| `--cyan` | `#0ac8b9` | Accent d'action : liens, état « terminé », focus |
-| `--red` | `#e84057` | Alerte (toujours accompagnée d'un « ! » ou d'un texte) |
-| `--border` | `#22304b` | Séparations discrètes |
-| `--border-strong` | `#5f709a` | Contour des contrôles interactifs (≥ 3:1) |
+| `--bg` | `#050505` | Fond de page |
+| `--panel` | `#0e0e0e` | Surface des schémas |
+| `--fg` | `#f2f2ee` | Texte principal, titres, boutons pleins (≈ 18:1 sur `--bg`) |
+| `--dim` | `#f2f2eecc` | Texte courant secondaire (≈ 11:1) |
+| `--muted` | `#8c8c88` | Légendes, métadonnées (≈ 6:1) |
+| `--faint` | `#5a5a57` | Décor uniquement : numéros du menu, flèches, mots en creux du bandeau. Jamais pour une information seule. |
+| `--line` | `#ffffff1a` | Filets et séparations |
+| `--line2` | `#ffffff33` | Contour des boutons, étiquettes et cadres |
 
-Règles : un seul accent d'action (cyan), un seul accent de marque (or). Le rouge ne sert qu'aux alertes. Contraste du texte ≥ 4,5:1, gros texte ≥ 3:1.
+Règles : pas de couleur d'accent. L'état actif ou sélectionné s'inverse (fond `--fg`, texte `--bg`). Contraste du texte ≥ 4,5:1.
 
 ## Typographie
 
-- **Titres** : Cinzel (500, 700, 900), réservée aux `h1`–`h3`, au logo et aux chiffres clés.
-- **Interface et texte** : Inter (400, 500, 600, 700) pour le corps, la navigation, les boutons, les étiquettes et les filtres. On évite les petites capitales Cinzel : illisibles en dessous de 14 px.
-- Échelle : 12 · 14 · 16 · 18 · 22 · `clamp(28, 4vw, 44)` · `clamp(40, 7vw, 88)` (héros). Corps 16 px / 1,65. Lignes de 60 à 75 caractères (`.lead` limité à 720 px).
-- Capitales espacées : réservées aux sur-titres (`.eyebrow`, 12 px, +0,2 em) et aux boutons (+0,06 em).
+- **Titres** : Big Shoulders Display 200 à 400, en capitales, interligne 0,9. Section `clamp(52, 9vw, 128)`, héros `clamp(48, 7vw, 96)`, titres de cartes `clamp(28, 3.4vw, 46)`.
+- **Nom géant** : Unbounded 900 (« LOÏC » horizontal, « BODET » vertical), uniquement dans le héros.
+- **Texte** : Geist 300 à 500, 16 px / 1,6. Chapeaux (`.lead`) en Geist 300 `clamp(20, 2.2vw, 30)`.
+- **Étiquettes** : Geist Mono 400, 10 à 12 px, capitales, espacement +0,12 em. Menu, sur-titres, métadonnées, boutons, filtres.
 
-## Espacement
+## Mise en page
 
-Échelle de 4 : `--s1` 4 · `--s2` 8 · `--s3` 12 · `--s4` 16 · `--s5` 24 · `--s6` 32 · `--s7` 48 · `--s8` 72. Largeur de contenu 1200 px, marges latérales 20 px (16 px sur mobile). Entre deux sections : `--s8` ; entre deux cartes : `--s5`.
-
-## Forme et profondeur
-
-- Un seul motif de forme : le **coin coupé** (14 px) en haut à droite des cartes et en bas à droite des boutons principaux, souligné d'un filet doré. Les hexagones restent réservés aux icônes et à la feuille de route.
-- Rayons : `--r1` 2 px (étiquettes, filtres), `--r2` 6 px (maquettes, boîte de dialogue). Pas d'autre rayon.
-- Ombres : aucune sur les cartes (le contour porte la hiérarchie) ; une ombre douce au survol des cartes de veille et sous la boîte de dialogue.
+- Marges latérales `--pad` : `clamp(16px, 2.6vw, 40px)`. Sections : 90 px de haut et de bas, séparées par un filet `--line`.
+- Grilles à filets plutôt que cartes : listes en lignes (parcours, veille, roadmap, contact), blocs à bordures partagées (chiffres clés, compétences, légende E5).
+- Aucun rayon, aucune ombre, sauf les maquettes de téléphone de Carnet Fonte (écran arrondi).
 
 ## Composants
 
-- **Bouton principal** : fond or, texte `--bg`, Inter 700 13 px capitales, coin coupé. Survol : plus clair, remonte de 1 px. Focus : anneau cyan 2 px. Actif : revient à sa place.
-- **Bouton secondaire (`ghost`)** : transparent, contour `--border-strong`, texte `--gold-hi`. Survol : contour or.
-- **Lien** : cyan, souligné au survol et au focus.
-- **Navigation** : Inter 600 13 px, onglet actif souligné par un filet or de 2 px collé au bas de l'en-tête. Sur mobile, la barre défile horizontalement avec un dégradé qui signale la suite.
-- **Carte** : fond `--panel`, contour `--border`, filet doré en haut, coin coupé. Carte cliquable : contour or et remontée de 2 px au survol, anneau cyan au focus.
-- **Étiquette d'état** : Inter 700 11 px, symbole + texte (`✔ Terminé` cyan, `● En cours` or clair, `○ À venir` pointillé gris).
-- **Filtre** : contour `--border-strong`, actif = fond or et texte sombre (écart de luminosité, pas de teinte).
-- **Tableau (E5, fiches)** : en-tête `--panel2`, lignes séparées par `--border`, cellule validée avec ✔ et fond cyan léger.
-- **Dialogue** : fond `--panel`, contour or, fermeture 40 × 40 px.
+- **En-tête** : fixe, 56 px. À gauche « LOÏC.BODET », au centre le menu numéroté avec la marque « LB », à droite le bouton CV. Sous 1100 px, bouton « Menu » qui déplie la liste.
+- **Bandeau + ligne d'infos** : appel au contact encadré, puis quatre colonnes mono (nom, ville, rôle, heure locale de Paris).
+- **Bouton** : Geist Mono 11 px, contour `--line2`. Variante `light` : fond `--fg`, texte `--bg`. Survol : contour `--fg`.
+- **Étiquette (`.tag`)** et **filtre** : contour `--line2`. Actif ou survolé : inversion.
+- **Projets** : piste horizontale à défilement aimanté, une carte par projet avec mosaïque de pixels gris (générée à partir de l'identifiant), boutons ← → et compteur « 01 / 08 ». Filtre par compétence E5.
+- **Fiche projet** : boîte de dialogue noire à contour `--line2`. Bloc Contexte / Mission / Résultat en trois colonnes, schémas SVG monochromes.
+- **Tableau E5** : cellule validée inversée (fond `--fg`) avec ✔ et le nom de la compétence pour les lecteurs d'écran.
 
-## Images et icônes
+## Animations
 
-Un seul jeu d'icônes : SVG au trait (24 × 24, épaisseur 1,75, extrémités arrondies, `currentColor`). Plus d'emojis dans l'interface (les maquettes de l'application Carnet Fonte les gardent car elles reproduisent un écran de téléphone). Captures et schémas : bordure `--gold-lo`, fond `--bg`.
+- Trame de points (halftone) dans le héros : une sphère éclairée qui tourne, les points grossissent sous la souris.
+- Bandeau de mots qui défile entre le héros et le parcours.
+- Globe en points dans la Roadmap : Villeurbanne, Berlin et Zurich, reliés par des arcs en pointillés.
+- Apparition douce des blocs au défilement.
+- Tout s'arrête avec `prefers-reduced-motion` : la trame et le globe s'affichent alors figés.
 
 ## À éviter
 
-Dégradés violet-bleu, effet verre partout, texte en dégradé, emojis comme icônes, trois cartes identiques alignées sans variation, étiquettes de 11 px en Cinzel, information portée par la seule couleur.
+Toute teinte (or, cyan, rouge…), dégradés colorés, effet verre partout, emojis comme icônes d'interface (les maquettes de téléphone les gardent car elles reproduisent un écran), cartes arrondies à ombre portée, information portée par la seule couleur.
