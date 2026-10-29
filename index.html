@@ -90,32 +90,47 @@ main{max-width:1280px;margin:auto;padding:0 20px 80px}
 .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
 .chip{padding:6px 14px;border:1px solid var(--gold-lo);background:#c8aa6e12;color:var(--gold-hi);font-size:14px}
 
-/* ---------- Champion ---------- */
-.champ{display:grid;grid-template-columns:340px 1fr;gap:30px;align-items:start}
-@media(max-width:900px){.champ{grid-template-columns:1fr}}
-.portrait{aspect-ratio:3/4;display:grid;place-items:center;text-align:center;border:1px solid var(--gold);
-  background:radial-gradient(circle at 50% 35%,#0397ab55,transparent 60%),linear-gradient(#0f1e36,#010a13);position:relative;
-  clip-path:polygon(0 0,calc(100% - 24px) 0,100% 24px,100% 100%,24px 100%,0 calc(100% - 24px))}
-.portrait .mono{font:900 96px var(--serif);color:var(--gold-hi);text-shadow:0 0 30px #0ac8b9aa}
-.portrait .cap{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(transparent,#010a13f0)}
-.portrait .cap b{font:700 22px var(--serif);color:var(--gold-hi);letter-spacing:.1em}
-.portrait .cap span{display:block;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--cyan)}
-.spells{display:grid;gap:12px;margin-top:6px}
-.spell{display:grid;grid-template-columns:56px 1fr;gap:16px;align-items:center;padding:14px;border:1px solid var(--line);background:var(--panel)}
-.spell .key{width:56px;height:56px;display:grid;place-items:center;font:900 22px var(--serif);color:var(--gold-hi);border:2px solid var(--gold);background:#010a13;
-  clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);border:0;background:linear-gradient(135deg,var(--gold-lo),var(--gold))}
-.spell .key.ult{background:linear-gradient(135deg,#0397ab,var(--cyan));color:#010a13}
-.spell h4{font-size:15px}
-.spell p{font-size:14px;color:var(--text);opacity:.88}
+/* ---------- Apparition au défilement ---------- */
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.reveal.seen{opacity:1;transform:none}
+.reveal.from-l{transform:translateX(-40px)}
+.reveal.from-l.seen{transform:none}
 
 /* ---------- Historique ---------- */
-.match{display:grid;grid-template-columns:8px 1fr auto;gap:18px;align-items:center;margin-bottom:14px;background:var(--panel);border:1px solid var(--line);padding:18px 22px 18px 0}
-.match::before{content:"";grid-column:1;align-self:stretch;margin:-18px 0;background:var(--gold)}
-.match.win::before{background:var(--cyan)}
-.match h3{font-size:17px}
-.match small{color:var(--muted)}
-.match .when{text-align:right;font-size:13px;color:var(--muted);white-space:nowrap}
-@media(max-width:600px){.match{grid-template-columns:8px 1fr}.match .when{grid-column:2;text-align:left}}
+.subhead{font-size:20px;margin:34px 0 16px;display:flex;align-items:center;gap:12px}
+.subhead::after{content:"";flex:1;height:1px;background:var(--line)}
+.guild{margin-bottom:10px}
+.guild-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.guild h3{font-size:26px;margin:0}
+.match{display:grid;grid-template-columns:170px 1fr;margin-bottom:14px;background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--gold)}
+.match.win{border-left-color:var(--cyan)}
+.match .side{padding:20px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:10px;align-items:flex-start;background:#010a1366}
+.match .side time{font:700 16px var(--serif);color:var(--gold-hi);letter-spacing:.04em}
+.match .body{padding:20px 24px}
+.match h3{font-size:18px;margin-bottom:4px}
+.match .org{font-size:14px;color:var(--cyan);font-weight:600}
+.match .desc{font-size:15px;margin-top:6px;opacity:.9}
+@media(max-width:600px){.match{grid-template-columns:1fr}.match .side{flex-direction:row;justify-content:space-between;align-items:center;border-right:0;border-bottom:1px solid var(--line);padding:14px 20px}}
+
+/* ---------- Veille ---------- */
+.win-card{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--gold-lo);text-decoration:none;color:var(--text);transition:transform .25s,border-color .25s,box-shadow .25s;cursor:pointer}
+.win-card:hover,.win-card:focus-visible{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 10px 30px #0ac8b922;color:var(--text)}
+.win-bar{display:flex;align-items:center;gap:8px;padding:9px 14px;background:linear-gradient(90deg,#1e2328,#0f1e36);border-bottom:1px solid var(--gold-lo);font:700 11px var(--serif);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.win-bar .dots{margin-left:auto;display:flex;gap:5px}
+.win-bar .dots i{width:9px;height:9px;transform:rotate(45deg);border:1px solid var(--gold-lo)}
+.win-body{padding:20px;flex:1;display:flex;flex-direction:column;gap:8px}
+.win-body h3{font-size:17px}
+.win-body p{font-size:14px;opacity:.9}
+.win-foot{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--muted);margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.filters button{font:600 12px var(--sans);letter-spacing:.1em;text-transform:uppercase;padding:9px 16px;background:var(--panel);color:var(--text);border:1px solid var(--line);cursor:pointer}
+.filters button:hover{border-color:var(--gold)}
+.filters button[aria-pressed=true]{background:linear-gradient(#f0e6d2,#c8aa6e);color:var(--bg);border-color:var(--gold)}
+.vcat{margin-bottom:40px}
+.vcat-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.vcat-head .ico{width:46px;height:46px;flex:none;display:grid;place-items:center;font-size:20px;background:linear-gradient(135deg,var(--gold-lo),var(--gold));clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.vcat-head h3{font-size:22px}
+.vcat-head small{display:block;color:var(--muted);font-size:13px}
 .chain{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:14px 0}
 .chain b{padding:8px 16px;border:1px solid var(--gold-lo);font-weight:600}
 .chain b.me{background:linear-gradient(#f0e6d2,#c8aa6e);color:var(--bg);border-color:var(--gold)}
@@ -219,49 +234,29 @@ footer{border-top:1px solid var(--line);padding:26px 20px;text-align:center;font
 
   <div class="head"><div class="eyebrow">Sélection de l'onglet</div><h2 class="title">Choisis ta destination</h2></div>
   <div class="grid g3" id="shortcuts"></div>
-</section>
 
-<!-- ======== CHAMPION ======== -->
-<section class="page" id="champion" aria-labelledby="h-champion">
-  <div class="head"><div class="eyebrow">Sélection du champion</div><h2 class="title" id="h-champion">Mon champion</h2>
-    <p class="lead">Alternant en informatique, passionné par Linux, autonome et rapide à comprendre. Je m'appuie sur une solide expérience de terrain pour faire preuve de rigueur et d'adaptabilité.</p></div>
-  <div class="champ">
-    <div>
-      <div class="portrait"><div class="mono">LB</div><div class="cap"><b>Loïc Bodet</b><span>Gestionnaire IT · Support</span></div></div>
-      <div class="chips" aria-label="Qualités">
-        <span class="chip">🤝 Sociable</span><span class="chip">☀ Optimiste</span><span class="chip">🎯 Rigoureux</span><span class="chip">🔍 Curieux</span><span class="chip">🛡 Discipliné</span>
-      </div>
-      <p style="margin-top:18px"><a class="btn" href="CV%20Bodet%20Loic.pdf" target="_blank" rel="noopener">Ouvrir mon CV (PDF)</a></p>
-    </div>
-    <div>
-      <h3 style="margin-bottom:12px">Compétences</h3>
-      <div class="spells">
-        <div class="spell"><div class="key">P</div><div><h4>Passif — Esprit Linux</h4><p>Passionné par l'environnement Linux, que j'utilise comme terrain d'apprentissage au quotidien.</p></div></div>
-        <div class="spell"><div class="key">Q</div><div><h4>Annuaire Active Directory</h4><p>Création d'une forêt, d'OU et de groupes de sécurité, jonction de postes clients (domaine gsblolo.local).</p></div></div>
-        <div class="spell"><div class="key">W</div><div><h4>Virtualisation Proxmox</h4><p>Création de VM (UEFI, TPM, VLAN) et installation de Windows Server 2022.</p></div></div>
-        <div class="spell"><div class="key">E</div><div><h4>Support IT</h4><p>Support hardware et ponctuellement software pour 160 collaborateurs équipés chez INEO RHT.</p></div></div>
-        <div class="spell"><div class="key ult">R</div><div><h4>Ultime — Automatisation PowerShell</h4><p>Script d'import de comptes à partir d'un CSV : identifiants, doublons, mot de passe à changer à la première connexion.</p></div></div>
-      </div>
-      <h3 style="margin:30px 0 12px">Hors de la Faille</h3>
-      <div class="chips"><span class="chip">🎮 Jeux vidéo</span><span class="chip">💻 Technologies</span><span class="chip">🏋 Musculation et nutrition</span><span class="chip">🎧 Musique</span><span class="chip">🌍 Anglais B2</span></div>
-    </div>
-  </div>
+  <div class="head"><div class="eyebrow">Éclaireur · dernières trouvailles</div><h2 class="title">Aperçu de ma veille</h2>
+    <p class="lead">Trois sujets récents de ma veille technologique. La suite, classée par spécialité, est dans l'onglet Veille.</p></div>
+  <div class="grid g3" id="veille-preview"></div>
+  <p style="margin-top:26px"><a class="btn ghost" href="#veille" data-go="veille">Toute ma veille →</a></p>
 </section>
 
 <!-- ======== PARCOURS ======== -->
 <section class="page" id="parcours" aria-labelledby="h-parcours">
   <div class="head"><div class="eyebrow">Historique des parties</div><h2 class="title" id="h-parcours">Mon parcours</h2>
-    <p class="lead">Formations et expériences, de la plus récente à la plus ancienne.</p></div>
+    <p class="lead">Mon entreprise actuelle, puis mes formations et expériences, de la plus récente à la plus ancienne.</p></div>
 
-  <article class="match" style="border-color:var(--gold-lo)"><span></span><div style="grid-column:2/-1">
-    <span class="tag now">★ Ma guilde actuelle</span>
-    <h3 style="margin:8px 0 0;font-size:24px">INEO RHT</h3>
+  <article class="card guild">
+    <div class="guild-top"><h3>INEO RHT</h3><span class="tag now">★ Ma guilde actuelle</span></div>
     <div class="chain"><b>Groupe Bouygues</b><i>›</i><b>Equans</b><i>›</i><b>INEO RHT</b><i>›</i><b class="me">Moi : support IT</b></div>
     <p>INEO RHT est une société du groupe Equans, lui-même filiale du groupe Bouygues. Elle est spécialisée dans la mise en place de pylônes électriques à haute tension. J'y suis le support informatique des collaborateurs équipés : hardware en priorité, software ponctuellement.</p>
     <div class="stats"><div><strong>160</strong><span>Collaborateurs équipés</span></div><div><strong>HW</strong><span>Support principal</span></div><div><strong>SW</strong><span>Support ponctuel</span></div></div>
-  </div></article>
+  </article>
 
-  <div id="matches"></div>
+  <h3 class="subhead">Formations</h3>
+  <div id="m-formation"></div>
+  <h3 class="subhead">Expériences</h3>
+  <div id="m-experience"></div>
 </section>
 
 <!-- ======== PROJETS ======== -->
@@ -283,11 +278,12 @@ footer{border-top:1px solid var(--line);padding:26px 20px;text-align:center;font
 <!-- ======== VEILLE ======== -->
 <section class="page" id="veille" aria-labelledby="h-veille">
   <div class="head"><div class="eyebrow">Bibliothèque de Runeterra</div><h2 class="title" id="h-veille">Veille technologique</h2>
-    <p class="lead">Mon éclaireur : les sujets que je suis, mes sources et ma synthèse.</p></div>
-  <div class="grid g3">
-    <div class="card"><span class="tag todo">À compléter</span><h3 style="margin-top:10px">Sujet de veille</h3><p>Le thème choisi et pourquoi il compte pour mon métier.</p></div>
-    <div class="card"><span class="tag todo">À compléter</span><h3 style="margin-top:10px">Sources</h3><p>Sites, newsletters et flux RSS suivis régulièrement.</p></div>
-    <div class="card"><span class="tag todo">À compléter</span><h3 style="margin-top:10px">Synthèse</h3><p>Ce que j'ai retenu et comment je l'applique.</p></div>
+    <p class="lead">Les sujets que je suis, classés par spécialité, avec mes sources. Filtre par spécialité pour n'afficher qu'une catégorie.</p></div>
+  <div class="filters" id="vfilters" role="group" aria-label="Filtrer par spécialité"></div>
+  <div id="vcats"></div>
+  <div class="card">
+    <h3>Mes sources</h3>
+    <div class="chips" id="vsources"></div>
   </div>
 </section>
 
@@ -333,8 +329,7 @@ footer{border-top:1px solid var(--line);padding:26px 20px;text-align:center;font
 /* ===== DONNÉES (à modifier ici) ===== */
 const TABS = [
   {id:'accueil',  label:'Accueil',   icon:'⌂', desc:'Le point de départ.'},
-  {id:'champion', label:'Champion',  icon:'⚔', desc:'Présentation, compétences et CV.'},
-  {id:'parcours', label:'Parcours',  icon:'⏱', desc:'Formations, expériences et entreprise INEO RHT.'},
+  {id:'parcours', label:'Parcours',  icon:'⏱', desc:'Mon entreprise INEO RHT, mes formations et expériences.'},
   {id:'projets',  label:'Projets',   icon:'🗺', desc:'Mes quêtes en cours et terminées.'},
   {id:'e5',       label:'Tableau E5',icon:'✔', desc:'Synthèse de mes réalisations pour l\'épreuve E5.'},
   {id:'veille',   label:'Veille',    icon:'📚', desc:'Ma veille technologique.'},
@@ -342,13 +337,45 @@ const TABS = [
   {id:'contact',  label:'Contact',   icon:'✉', desc:'Me joindre.'}
 ];
 
+// type : 'formation' ou 'experience' · done : true = terminé (Victoire), false = en cours
 const MATCHES = [
-  {win:false, title:'BTS SIO — option SISR', sub:'Nexa Digital School', when:'2025 – 2027', tag:'En cours', icon:'●'},
-  {win:false, title:'Gestionnaire IT (alternance)', sub:'INEO RHT · Villeurbanne — gestion des appareils informatiques des collaborateurs', when:'2025 – 2026', tag:'En cours', icon:'●'},
-  {win:true,  title:'Employé polyvalent', sub:'Carrefour Market · Reims — caisse, mise en rayon, réassort, facing', when:'2022 – 2023', tag:'Victoire', icon:'✔'},
-  {win:true,  title:'Manutentionnaire (intérim)', sub:'Reims — mise en place des salles de concert à l\'Arena de Reims, travail en équipe sur chantier', when:'2021 – 2024', tag:'Victoire', icon:'✔'},
-  {win:true,  title:'Baccalauréat S', sub:'Lycée Marie de Champagne · Troyes', when:'2020', tag:'Victoire', icon:'✔'}
+  {type:'formation',  done:false, when:'2025 – 2027', title:'BTS SIO — option SISR', org:'Nexa Digital School', desc:'Services Informatiques aux Organisations, en alternance chez INEO RHT.'},
+  {type:'formation',  done:true,  when:'2020',        title:'Baccalauréat S', org:'Lycée Marie de Champagne · Troyes', desc:''},
+  {type:'experience', done:false, when:'2025 – 2026', title:'Gestionnaire IT (alternance)', org:'INEO RHT · Villeurbanne', desc:'Gestion des appareils informatiques des collaborateurs.'},
+  {type:'experience', done:true,  when:'2022 – 2023', title:'Employé polyvalent', org:'Carrefour Market · Reims', desc:'Caisse, mise en rayon, réassort, facing.'},
+  {type:'experience', done:true,  when:'2021 – 2024', title:'Manutentionnaire (intérim)', org:'Arena de Reims', desc:'Mise en place des salles de concert, travail en équipe sur chantier.'}
 ];
+
+/* VEILLE — cat : clé de VEILLE_CATS · preview : true = affiché dans l'aperçu de l'accueil (3 maximum) */
+const VEILLE_CATS = [
+  {id:'cyber',   icon:'🛡', label:'Cybersécurité',            sub:'Menaces, réglementation, authentification'},
+  {id:'systeme', icon:'🖥', label:'Systèmes & virtualisation', sub:'Postes, serveurs, hyperviseurs'},
+  {id:'cloud',   icon:'☁', label:'Cloud & Microsoft Azure',  sub:'Identité, services cloud, certifications'},
+  {id:'reseau',  icon:'🌐', label:'Réseaux',                  sub:'Infrastructures et protocoles'}
+];
+const VEILLE = [
+  {cat:'systeme', preview:true, title:'Fin du support de Windows 10', source:'Microsoft',
+   text:'Depuis le 14 octobre 2025, Windows 10 ne reçoit plus de mises à jour de sécurité gratuites. Les parcs doivent passer à Windows 11, qui exige notamment une puce TPM 2.0.'},
+  {cat:'cyber', preview:true, title:'Directive européenne NIS2', source:'ANSSI',
+   text:'NIS2 étend les obligations de cybersécurité à beaucoup plus d\'entreprises et d\'administrations : gestion des risques, déclaration des incidents, responsabilité de la direction.'},
+  {cat:'systeme', preview:true, title:'Proxmox VE, alternative à VMware', source:'Proxmox · presse IT',
+   text:'Après le rachat de VMware par Broadcom et le changement de licences, de nombreuses entreprises étudient Proxmox VE, l\'hyperviseur open source que j\'utilise en AP.'},
+  {cat:'cyber', title:'Passkeys : la fin des mots de passe ?', source:'FIDO Alliance · CNIL',
+   text:'Les clés d\'accès (norme FIDO2) remplacent le mot de passe par une clé stockée sur l\'appareil, déverrouillée par biométrie ou code. Elles résistent à l\'hameçonnage.'},
+  {cat:'cyber', title:'Suivi des alertes CERT-FR', source:'CERT-FR',
+   text:'Le CERT-FR publie les alertes et avis de sécurité sur les vulnérabilités critiques : une source à surveiller pour appliquer les correctifs à temps.'},
+  {cat:'systeme', title:'Windows Server 2025', source:'Microsoft Learn',
+   text:'Nouvelle version LTSC de Windows Server, avec des évolutions pour Active Directory, le hotpatching et l\'intégration hybride avec Azure.'},
+  {cat:'cloud', title:'Microsoft Entra ID (ex-Azure AD)', source:'Microsoft Learn',
+   text:'L\'annuaire cloud de Microsoft a été renommé Entra ID. Il prolonge l\'Active Directory local pour gérer identités, accès conditionnel et authentification multifacteur.'},
+  {cat:'cloud', title:'Parcours de certifications Azure', source:'Microsoft Learn',
+   text:'AZ-900 pour les fondamentaux du cloud, puis AZ-104 pour l\'administration Azure : le chemin que je vise en parallèle du BTS.'},
+  {cat:'reseau', title:'Wi-Fi 7 (802.11be)', source:'Wi-Fi Alliance',
+   text:'Canaux jusqu\'à 320 MHz et transmission sur plusieurs bandes à la fois (MLO) : plus de débit et moins de latence pour les réseaux d\'entreprise.'},
+  {cat:'reseau', title:'Déploiement d\'IPv6', source:'Arcep',
+   text:'Face à l\'épuisement des adresses IPv4, l\'Arcep suit la progression d\'IPv6 chez les opérateurs et encourage les entreprises à préparer la transition.'}
+];
+const VEILLE_SOURCES = ['CERT-FR','ANSSI','CNIL','Microsoft Learn','Arcep','LeMagIT','01net','Korben','Flux RSS'];
 
 const PROJECTS = [
   {id:'p1', title:'Carnet Fonte', role:'Application web', progress:85, status:'Utilisable',
@@ -419,6 +446,8 @@ function show(id){
   nav.querySelectorAll('button').forEach(b=>{ if(b.dataset.go===id) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
   document.title = (id==='accueil'?'Loïc Bodet — Portfolio':TABS.find(t=>t.id===id).label+' · Loïc Bodet')+' · La Faille';
   window.scrollTo({top:0});
+  if(id==='veille'){ filterVeille(pendingFilter||'all'); pendingFilter=null; }
+  armReveal(document.getElementById(id));
   if(id==='projets') requestAnimationFrame(()=>document.querySelectorAll('#quests .prog i').forEach(i=>i.style.width=i.dataset.w+'%'));
   else document.querySelectorAll('#quests .prog i').forEach(i=>i.style.width='0');
 }
@@ -427,13 +456,64 @@ document.addEventListener('click',e=>{
   e.preventDefault(); location.hash=el.dataset.go;
 });
 document.addEventListener('keydown',e=>{
-  if((e.key==='Enter'||e.key===' ')&&e.target.matches('.card.link[data-go]')){e.preventDefault();location.hash=e.target.dataset.go}
+  if((e.key==='Enter'||e.key===' ')&&e.target.matches('[role=link][data-go]')){
+    e.preventDefault(); if(e.target.dataset.vcat) pendingFilter=e.target.dataset.vcat; location.hash=e.target.dataset.go;
+  }
 });
 addEventListener('hashchange',()=>show(location.hash.slice(1)));
 
 // Parcours
-$('#matches').innerHTML = MATCHES.map(m=>
-  `<article class="match ${m.win?'win':''}"><span></span><div><h3>${m.title}</h3><small>${m.sub}</small></div><div class="when"><span class="tag ${m.win?'win':'now'}">${m.icon} ${m.tag}</span><br>${m.when}</div></article>`).join('');
+const matchHTML = m=>`<article class="match ${m.done?'win':''}">
+  <div class="side"><time>${m.when}</time><span class="tag ${m.done?'win':'now'}">${m.done?'✔ Victoire':'● En cours'}</span></div>
+  <div class="body"><h3>${m.title}</h3><div class="org">${m.org}</div>${m.desc?`<p class="desc">${m.desc}</p>`:''}</div></article>`;
+$('#m-formation').innerHTML = MATCHES.filter(m=>m.type==='formation').map(matchHTML).join('');
+$('#m-experience').innerHTML = MATCHES.filter(m=>m.type==='experience').map(matchHTML).join('');
+
+// Veille
+const catOf = id=>VEILLE_CATS.find(c=>c.id===id);
+const vCard = v=>`<article class="win-card" tabindex="0" role="link" data-go="veille" data-vcat="${v.cat}">
+  <div class="win-bar"><span aria-hidden="true">${catOf(v.cat).icon}</span>${catOf(v.cat).label}<span class="dots" aria-hidden="true"><i></i><i></i></span></div>
+  <div class="win-body"><h3>${v.title}</h3><p>${v.text}</p><div class="win-foot"><span>Source : ${v.source}</span></div></div></article>`;
+$('#veille-preview').innerHTML = VEILLE.filter(v=>v.preview).slice(0,3).map(vCard).join('');
+$('#vcats').innerHTML = VEILLE_CATS.map(c=>`<section class="vcat" data-cat="${c.id}">
+  <div class="vcat-head"><div class="ico" aria-hidden="true">${c.icon}</div><div><h3>${c.label}</h3><small>${c.sub} · ${VEILLE.filter(v=>v.cat===c.id).length} sujet(s)</small></div></div>
+  <div class="grid g3">${VEILLE.filter(v=>v.cat===c.id).map(vCard).join('')}</div></section>`).join('');
+$('#vcats').querySelectorAll('.win-card').forEach(c=>{c.removeAttribute('data-go');c.removeAttribute('role');c.removeAttribute('tabindex');c.style.cursor='default'});
+$('#vsources').innerHTML = VEILLE_SOURCES.map(s=>`<span class="chip">${s}</span>`).join('');
+const vf = $('#vfilters');
+vf.innerHTML = [{id:'all',icon:'✦',label:'Tout'},...VEILLE_CATS].map((c,i)=>`<button type="button" data-f="${c.id}" aria-pressed="${i===0}">${c.icon} ${c.label}</button>`).join('');
+function filterVeille(f){
+  vf.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.f===f));
+  document.querySelectorAll('.vcat').forEach(s=>s.hidden = f!=='all' && s.dataset.cat!==f);
+  armReveal($('#vcats'));
+}
+vf.addEventListener('click',e=>{const b=e.target.closest('[data-f]'); if(b) filterVeille(b.dataset.f)});
+// Un clic sur un aperçu de l'accueil ouvre la veille filtrée sur sa spécialité
+document.addEventListener('click',e=>{const c=e.target.closest('#veille-preview [data-vcat]'); if(c) pendingFilter=c.dataset.vcat},true);
+let pendingFilter=null;
+
+// Apparition fluide au défilement
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const io = 'IntersectionObserver' in window ? new IntersectionObserver(entries=>entries.forEach(en=>{
+  if(!en.isIntersecting) return;
+  en.target.classList.add('seen'); io.unobserve(en.target);
+}),{threshold:.12,rootMargin:'0px 0px -6% 0px'}) : null;
+// Une fois apparu, on retire la classe pour que les survols restent réactifs
+document.addEventListener('transitionend',e=>{
+  if(e.propertyName==='opacity' && e.target.classList.contains('seen')){e.target.classList.remove('reveal','seen','from-l');e.target.style.removeProperty('--d')}
+});
+function armReveal(root){
+  if(REDUCED||!io) return;
+  root.querySelectorAll('.head,.card,.match,.rung,.win-card,.legend,.scroll,.flags>div,.subhead,.filters,.vcat-head,.contact>a').forEach(el=>{
+    if(el.closest('[hidden]')) return;
+    const sibs=[...el.parentElement.children].filter(x=>x.matches(el.tagName));
+    el.classList.remove('seen');
+    el.classList.add('reveal');
+    if(el.matches('.match,.rung')) el.classList.add('from-l');
+    el.style.setProperty('--d',(Math.max(0,sibs.indexOf(el))%4*0.09)+'s');
+    io.observe(el);
+  });
+}
 
 // Projets
 $('#quests').innerHTML = PROJECTS.map(p=>
