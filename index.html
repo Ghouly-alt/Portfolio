@@ -151,6 +151,7 @@ main{max-width:1280px;margin:auto;padding:0 20px 80px}
 .quest-media.img img{width:100%;height:100%;object-fit:cover;object-position:left top}
 .quest-media.diag{align-items:center;padding:10px}
 .quest-media.diag svg{width:100%;height:auto}
+#quests .grid{align-items:start}
 .quest-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin:6px 0}
 .quest-top small{color:var(--muted);font-size:13px}
 .e5chips{display:flex;gap:6px;margin-top:14px;flex-wrap:wrap}
@@ -544,14 +545,6 @@ ${AGDLP_SVG}
 <li>Les droits d'un dossier se lisent directement dans ses groupes : l'audit est beaucoup plus simple.</li>
 <li>Chacun n'a que les accès nécessaires à son poste (principe du moindre privilège).</li></ul>
 <p class="mock-note">Les informations de l'entreprise sont confidentielles : le schéma ci-dessus est un exemple de principe, les noms de groupes sont fictifs.</p>`},
-  {id:'parc', ctx:'pro', title:'Gestion du parc informatique', role:'Support & patrimoine', state:'now', status:'En cours', period:'Depuis le 27/08/25', e5:[0],
-   short:'Gestion du matériel des 160 collaborateurs équipés : commandes, adaptations, incidents matériels et suivi des accès serveurs.',
-   tech:'Gestion de parc, support matériel, règles internes du groupe, sauvegardes',
-   html:`<p>Chez INEO RHT, je gère le matériel informatique des <b>160 collaborateurs équipés</b>.</p><ul>
-<li><b>Commandes</b> du matériel des nouveaux arrivants et <b>adaptation des moyens</b> selon les besoins des postes.</li>
-<li><b>Respect des règles internes</b> du groupe dans l'attribution du matériel.</li>
-<li><b>Gestion des incidents matériels</b> : diagnostic, réparation ou remplacement.</li>
-<li><b>Suivi des accès aux serveurs</b>, dont les sauvegardes.</li></ul>`},
   {id:'tickets', ctx:'pro', title:'Gestion des tickets via SharePoint', role:'Support utilisateurs', state:'win', status:'Réalisé', period:'Première année', e5:[1],
    short:'Système de demandes d\'assistance par formulaire SharePoint pour centraliser et suivre les demandes des collaborateurs.',
    tech:'SharePoint, formulaires, Microsoft 365',
@@ -560,10 +553,6 @@ ${AGDLP_SVG}
    short:'Projet de développement du site SharePoint interne de l\'entreprise, mené en mode projet.',
    tech:'SharePoint Online, Microsoft 365',
    html:`<p>Je participe au <b>développement du SharePoint de l'entreprise</b>, l'espace interne qui regroupe informations et documents pour les collaborateurs. Ce projet mobilise la présence en ligne de l'organisation et le travail en mode projet.</p>`},
-  {id:'elearning', ctx:'pro', title:'E-learning et réseau de sachants Equans', role:'Développement professionnel', state:'now', status:'En cours', period:'Depuis le 27/08/25', e5:[5],
-   short:'Formations en ligne du groupe Equans et identification de relais et de sachants pour progresser.',
-   tech:'Plateforme e-learning Equans',
-   html:`<p>Je suis les modules d'<b>e-learning du groupe Equans</b> et j'identifie des <b>relais et sachants</b> dans le monde Equans : des personnes ressources vers qui me tourner pour monter en compétences.</p>`},
   {id:'gsb', ctx:'formation', title:'Global Swiss Bourdin', role:'Mission en formation', state:'win', status:'Terminé', period:'20/05/26 – 21/05/26', e5:[0,1],
    short:'Mission sur le contexte de l\'organisation GSB : gestion du patrimoine informatique et réponse aux incidents et demandes.',
    tech:'Voir la documentation',
@@ -581,10 +570,10 @@ const E5_ROWS = [
   {p:'gsb', t:'<a href="https://drive.google.com/drive/folders/17k6Yh1YECzoqbg8lJewWjeEWQFlthh7E?usp=drive_link" target="_blank" rel="noopener">Global Swiss Bourdin</a>', d:'20/05/26 – 21/05/26', on:[0,1]},
   {p:'cisco', t:'TP Réseaux sur Cisco (protocoles RIP et OSPF)', d:'16/05/26 – 20/05/26', on:[2,3,4]},
   {sep:'Réalisations en milieu professionnel — première année'},
-  {p:'parc', t:'Gestion du parc : commandes des nouveaux arrivants, adaptation des moyens, respect des règles internes, gestion des incidents matériel, suivi des accès serveurs (dont sauvegarde)', d:'27/08/25 – en cours', on:[0]},
+  {t:'Gestion du parc : commandes des nouveaux arrivants, adaptation des moyens, respect des règles internes, gestion des incidents matériel, suivi des accès serveurs (dont sauvegarde)', d:'27/08/25 – en cours', on:[0]},
   {p:'tickets', t:'Système de gestion de tickets via formulaire SharePoint', d:'—', on:[1]},
   {t:'Kiséo (prise en main admin, migration des comptes) — Migration NEO', d:'26/02/26 – 19/04/26', on:[4]},
-  {p:'elearning', t:'E-learning Equans : identification de relais / sachants dans le monde Equans', d:'27/08/25 – en cours', on:[5]},
+  {t:'E-learning Equans : identification de relais / sachants dans le monde Equans', d:'27/08/25 – en cours', on:[5]},
   {p:'sharepoint', t:'Projet de développement du SharePoint de l\'entreprise', d:'23/05/26 – en cours', on:[2,3]},
   {sep:'Réalisations en milieu professionnel — seconde année'},
   {todo:'À venir.'}
