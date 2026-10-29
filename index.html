@@ -112,7 +112,59 @@ main{max-width:1280px;margin:auto;padding:0 20px 80px}
 .match .desc{font-size:15px;margin-top:6px;opacity:.9}
 @media(max-width:600px){.match{grid-template-columns:1fr}.match .side{flex-direction:row;justify-content:space-between;align-items:center;border-right:0;border-bottom:1px solid var(--line);padding:14px 20px}}
 
+/* ---------- Maquette téléphone (Carnet Fonte) ---------- */
+.phones{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin:18px 0 6px}
+.phone{width:230px;flex:none;border-radius:30px;padding:9px;background:linear-gradient(145deg,#2a2f36,#0c0f13);box-shadow:0 0 0 1px #463714,0 18px 40px #000a}
+.phone .scr{border-radius:22px;overflow:hidden;background:#111418;color:#e8e6e3;font:12px/1.35 var(--sans);height:490px;display:flex;flex-direction:column}
+.phone .notch{height:20px;display:flex;justify-content:center;align-items:center}
+.phone .notch i{width:62px;height:6px;border-radius:6px;background:#000}
+.app-top{padding:6px 14px 10px;display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid #22272e}
+.app-top b{font-size:15px;color:#fff}
+.app-top small{color:#9aa0a6;display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.app-top .chrono{font:700 16px ui-monospace,Consolas,monospace;color:#ff8a3d}
+.app-body{padding:10px 12px;display:flex;flex-direction:column;gap:9px;flex:1;overflow:hidden}
+.ex{background:#1a1e24;border-radius:12px;padding:10px}
+.ex h5{font:600 12.5px var(--sans);color:#fff;margin-bottom:2px}
+.ex .last{font-size:10px;color:#9aa0a6;margin-bottom:6px}
+.set{display:grid;grid-template-columns:18px 1fr 1fr 34px 20px;gap:4px;align-items:center;padding:4px 0;border-top:1px solid #262b33;font-variant-numeric:tabular-nums}
+.set.hd{border:0;font-size:9px;color:#7d848c;text-transform:uppercase;letter-spacing:.06em}
+.set .ok{width:18px;height:18px;border-radius:5px;display:grid;place-items:center;background:#2fbf71;color:#08130c;font-weight:700;font-size:11px}
+.set .ok.no{background:#262b33;color:#7d848c}
+.set.cur{background:#ff8a3d14;border-radius:6px}
+.hint{font-size:10.5px;background:#ff8a3d1f;color:#ffb27a;border-radius:8px;padding:7px 9px}
+.hint b{color:#ffcfa8}
+.rest{margin-top:auto;display:flex;align-items:center;justify-content:space-between;background:#ff8a3d;color:#1a0d03;border-radius:12px;padding:9px 12px;font-weight:700}
+.rest span{font:700 18px ui-monospace,Consolas,monospace}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kpis div{background:#1a1e24;border-radius:10px;padding:8px}
+.kpis b{display:block;font-size:16px;color:#fff}
+.kpis small{font-size:9.5px;color:#9aa0a6}
+.chart{background:#1a1e24;border-radius:12px;padding:10px}
+.chart h6{font:600 11px var(--sans);color:#cfd3d7;margin-bottom:6px}
+.tabbar{display:flex;justify-content:space-around;border-top:1px solid #22272e;padding:8px 0 10px;font-size:9px;color:#7d848c;text-align:center}
+.tabbar span.on{color:#ff8a3d}
+.tabbar i{display:block;font-style:normal;font-size:14px}
+.mock-note{text-align:center;font-size:12px;color:var(--muted)}
+.quest-media{display:flex;justify-content:center;margin:-6px -6px 16px;padding:18px 0 0;background:radial-gradient(circle at 50% 70%,#ff8a3d22,transparent 60%);overflow:hidden;height:250px}
+.quest-media .phone{transform:scale(.62);transform-origin:top center}
+
 /* ---------- Veille ---------- */
+.win-visual{position:relative;height:120px;overflow:hidden;border-bottom:1px solid var(--gold-lo);display:flex;align-items:flex-end;justify-content:space-between;padding:12px 16px}
+.win-visual svg.pat{position:absolute;inset:0;width:100%;height:100%;opacity:.35}
+.win-visual .big{position:relative;font-size:40px;filter:drop-shadow(0 0 14px currentColor);line-height:1}
+.win-visual .date{position:relative;font:700 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;background:#010a13cc;border:1px solid var(--gold-lo);color:var(--gold-hi)}
+.win-visual .new{position:absolute;top:12px;left:16px;font:700 10px var(--sans);letter-spacing:.16em;padding:3px 8px;background:var(--cyan);color:#010a13}
+.v-cyber{background:linear-gradient(135deg,#3a0d18,#0a1428 70%);color:#ff6b81}
+.v-agents{background:linear-gradient(135deg,#053b40,#0a1428 70%);color:#0ac8b9}
+.v-regl{background:linear-gradient(135deg,#3d2c0a,#0a1428 70%);color:#f0c870}
+.win-foot a{color:var(--cyan);text-decoration:none;font-weight:600}
+.win-foot a:hover{color:var(--gold-hi)}
+.preview-grid{display:grid;gap:22px;grid-template-columns:1.4fr 1fr;grid-template-rows:auto auto}
+.preview-grid .win-card:first-child{grid-row:span 2}
+.preview-grid .win-card:first-child .win-visual{height:100%;min-height:200px;flex:1}
+.preview-grid .win-card:first-child .win-body h3{font-size:22px}
+.preview-grid .win-card:not(:first-child) .win-visual{height:90px}
+@media(max-width:800px){.preview-grid{grid-template-columns:1fr}.preview-grid .win-card:first-child{grid-row:auto}.preview-grid .win-card:first-child .win-visual{min-height:140px}}
 .win-card{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--gold-lo);text-decoration:none;color:var(--text);transition:transform .25s,border-color .25s,box-shadow .25s;cursor:pointer}
 .win-card:hover,.win-card:focus-visible{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 10px 30px #0ac8b922;color:var(--text)}
 .win-bar{display:flex;align-items:center;gap:8px;padding:9px 14px;background:linear-gradient(90deg,#1e2328,#0f1e36);border-bottom:1px solid var(--gold-lo);font:700 11px var(--serif);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
@@ -140,9 +192,6 @@ main{max-width:1280px;margin:auto;padding:0 20px 80px}
 .stats div span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 
 /* ---------- Projets ---------- */
-.prog{height:8px;background:#010a13;border:1px solid var(--line);margin:14px 0 6px}
-.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--gold-lo),var(--gold-hi));width:0;transition:width 1.2s ease}
-.prog.cy i{background:linear-gradient(90deg,var(--blue),var(--cyan))}
 dialog{margin:auto;max-width:min(860px,94vw);max-height:90vh;width:100%;background:var(--panel);color:var(--text);border:1px solid var(--gold);padding:0}
 dialog::backdrop{background:#010a13cc;backdrop-filter:blur(4px)}
 dialog .in{padding:34px;overflow:auto;max-height:90vh}
@@ -236,8 +285,8 @@ footer{border-top:1px solid var(--line);padding:26px 20px;text-align:center;font
   <div class="grid g3" id="shortcuts"></div>
 
   <div class="head"><div class="eyebrow">Éclaireur · dernières trouvailles</div><h2 class="title">Aperçu de ma veille</h2>
-    <p class="lead">Trois sujets récents de ma veille technologique. La suite, classée par spécialité, est dans l'onglet Veille.</p></div>
-  <div class="grid g3" id="veille-preview"></div>
+    <p class="lead">Trois actualités récentes autour de l'IA qui changent le métier de l'informatique. La suite, classée par spécialité, est dans l'onglet Veille.</p></div>
+  <div class="preview-grid" id="veille-preview"></div>
   <p style="margin-top:26px"><a class="btn ghost" href="#veille" data-go="veille">Toute ma veille →</a></p>
 </section>
 
@@ -278,7 +327,7 @@ footer{border-top:1px solid var(--line);padding:26px 20px;text-align:center;font
 <!-- ======== VEILLE ======== -->
 <section class="page" id="veille" aria-labelledby="h-veille">
   <div class="head"><div class="eyebrow">Bibliothèque de Runeterra</div><h2 class="title" id="h-veille">Veille technologique</h2>
-    <p class="lead">Les sujets que je suis, classés par spécialité, avec mes sources. Filtre par spécialité pour n'afficher qu'une catégorie.</p></div>
+    <p class="lead">Les actualités marquantes des six derniers mois autour de l'intelligence artificielle, classées par spécialité, avec un lien vers chaque source. Filtre par spécialité pour n'afficher qu'une catégorie.</p></div>
   <div class="filters" id="vfilters" role="group" aria-label="Filtrer par spécialité"></div>
   <div id="vcats"></div>
   <div class="card">
@@ -346,39 +395,43 @@ const MATCHES = [
   {type:'experience', done:true,  when:'2021 – 2024', title:'Manutentionnaire (intérim)', org:'Arena de Reims', desc:'Mise en place des salles de concert, travail en équipe sur chantier.'}
 ];
 
-/* VEILLE — cat : clé de VEILLE_CATS · preview : true = affiché dans l'aperçu de l'accueil (3 maximum) */
+/* VEILLE — actualités de moins de 6 mois (date au format AAAA-MM-JJ) · cat : clé de VEILLE_CATS
+   preview : true = affiché dans l'aperçu de l'accueil (3 maximum, le premier est mis en avant) */
 const VEILLE_CATS = [
-  {id:'cyber',   icon:'🛡', label:'Cybersécurité',            sub:'Menaces, réglementation, authentification'},
-  {id:'systeme', icon:'🖥', label:'Systèmes & virtualisation', sub:'Postes, serveurs, hyperviseurs'},
-  {id:'cloud',   icon:'☁', label:'Cloud & Microsoft Azure',  sub:'Identité, services cloud, certifications'},
-  {id:'reseau',  icon:'🌐', label:'Réseaux',                  sub:'Infrastructures et protocoles'}
+  {id:'cyber',  icon:'🛡', label:'Cybersécurité & IA',          sub:'L\'IA comme arme et comme bouclier'},
+  {id:'agents', icon:'🤖', label:'Agents IA en entreprise',      sub:'Des assistants qui agissent seuls dans le SI'},
+  {id:'regl',   icon:'⚖', label:'Réglementation & souveraineté', sub:'Lois, accords et interdictions autour de l\'IA'}
 ];
 const VEILLE = [
-  {cat:'systeme', preview:true, title:'Fin du support de Windows 10', source:'Microsoft',
-   text:'Depuis le 14 octobre 2025, Windows 10 ne reçoit plus de mises à jour de sécurité gratuites. Les parcs doivent passer à Windows 11, qui exige notamment une puce TPM 2.0.'},
-  {cat:'cyber', preview:true, title:'Directive européenne NIS2', source:'ANSSI',
-   text:'NIS2 étend les obligations de cybersécurité à beaucoup plus d\'entreprises et d\'administrations : gestion des risques, déclaration des incidents, responsabilité de la direction.'},
-  {cat:'systeme', preview:true, title:'Proxmox VE, alternative à VMware', source:'Proxmox · presse IT',
-   text:'Après le rachat de VMware par Broadcom et le changement de licences, de nombreuses entreprises étudient Proxmox VE, l\'hyperviseur open source que j\'utilise en AP.'},
-  {cat:'cyber', title:'Passkeys : la fin des mots de passe ?', source:'FIDO Alliance · CNIL',
-   text:'Les clés d\'accès (norme FIDO2) remplacent le mot de passe par une clé stockée sur l\'appareil, déverrouillée par biométrie ou code. Elles résistent à l\'hameçonnage.'},
-  {cat:'cyber', title:'Suivi des alertes CERT-FR', source:'CERT-FR',
-   text:'Le CERT-FR publie les alertes et avis de sécurité sur les vulnérabilités critiques : une source à surveiller pour appliquer les correctifs à temps.'},
-  {cat:'systeme', title:'Windows Server 2025', source:'Microsoft Learn',
-   text:'Nouvelle version LTSC de Windows Server, avec des évolutions pour Active Directory, le hotpatching et l\'intégration hybride avec Azure.'},
-  {cat:'cloud', title:'Microsoft Entra ID (ex-Azure AD)', source:'Microsoft Learn',
-   text:'L\'annuaire cloud de Microsoft a été renommé Entra ID. Il prolonge l\'Active Directory local pour gérer identités, accès conditionnel et authentification multifacteur.'},
-  {cat:'cloud', title:'Parcours de certifications Azure', source:'Microsoft Learn',
-   text:'AZ-900 pour les fondamentaux du cloud, puis AZ-104 pour l\'administration Azure : le chemin que je vise en parallèle du BTS.'},
-  {cat:'reseau', title:'Wi-Fi 7 (802.11be)', source:'Wi-Fi Alliance',
-   text:'Canaux jusqu\'à 320 MHz et transmission sur plusieurs bandes à la fois (MLO) : plus de débit et moins de latence pour les réseaux d\'entreprise.'},
-  {cat:'reseau', title:'Déploiement d\'IPv6', source:'Arcep',
-   text:'Face à l\'épuisement des adresses IPv4, l\'Arcep suit la progression d\'IPv6 chez les opérateurs et encourage les entreprises à préparer la transition.'}
+  {cat:'agents', preview:true, date:'2026-09-29', title:'OpenAI lance Dots, des agents IA qui travaillent en continu',
+   text:'Présentés au DevDay, les « Dots » sont des agents persistants : chacun dispose de son propre ordinateur dans le cloud, se connecte à des milliers d\'applications et continue de travailler après la déconnexion de l\'utilisateur. Pour un service informatique, cela pose la question des droits et de la supervision de ces nouveaux « collaborateurs ».',
+   source:'SiliconANGLE', url:'https://siliconangle.com/2026/09/29/openai-launches-dots-always-on-ai-agents-in-chatgpt-with-their-own-cloud-computers/'},
+  {cat:'cyber', preview:true, date:'2026-10-19', title:'Microsoft : traiter les agents IA comme des menaces internes',
+   text:'Microsoft demande aux équipes sécurité de considérer les agents autonomes comme des employés à privilèges : ils peuvent se tromper, être manipulés ou compromis. Inventaire des agents, droits limités avant chaque action et surveillance continue deviennent la norme.',
+   source:'Dark Reading', url:'https://darkreading.com/cybersecurity-operations/ai-agents-insider-threats-inside-microsoft-unified-security-stack'},
+  {cat:'regl', preview:true, date:'2026-08-02', title:'AI Act : la transparence obligatoire, le haut risque repoussé',
+   text:'Depuis le 2 août 2026, chatbots et contenus générés par IA doivent être signalés comme tels. L\'« omnibus numérique » repousse en revanche au 2 décembre 2027 les obligations pour les systèmes d\'IA à haut risque.',
+   source:'Blog du Modérateur', url:'https://blogdumoderateur.com/ia-act-2-aout-2026'},
+  {cat:'cyber', date:'2026-10-08', title:'Anthropic ouvre un scanner de vulnérabilités gratuit par IA',
+   text:'OSS Scanner analyse gratuitement le code des projets open source critiques avec des modèles d\'IA, sur le modèle d\'OSS-Fuzz de Google. Les rapports ne sont pas relus par un humain : des milliers de failles signalées, mais une petite partie seulement corrigée.',
+   source:'The Hacker News', url:'https://thehackernews.com/2026/10/anthropic-launches-free-ai.html'},
+  {cat:'cyber', date:'2026-09-30', title:'Google réserve son nouveau modèle Gemini 4 Argon aux défenseurs',
+   text:'Conçu notamment pour la cyberdéfense (découverte de failles, correctifs automatiques), Gemini 4 Argon est d\'abord ouvert à des équipes de sécurité de confiance, le temps de valider ses garde-fous avant une diffusion plus large.',
+   source:'Google', url:'https://blog.google/innovation-and-ai/technology/ai/google-ai-updates-september-2026/'},
+  {cat:'agents', date:'2026-09-28', title:'Meta se lance sur le marché de l\'IA pour les entreprises',
+   text:'Avec Meta Enterprise Platform, Meta propose aux entreprises toute sa pile IA, dont son agent Muse et des outils de code. La concurrence s\'intensifie face à Microsoft, Google et OpenAI sur les agents professionnels.',
+   source:'Meta', url:'https://about.fb.com/news/2026/09/launching-meta-enterprise-platform/'},
+  {cat:'regl', date:'2026-10-20', title:'Les États-Unis bannissent DeepSeek des administrations civiles',
+   text:'Le département de la Sécurité intérieure ordonne de retirer les produits DeepSeek, y compris les outils tiers construits dessus, des systèmes des agences fédérales civiles, au nom de la sécurité de la chaîne d\'approvisionnement.',
+   source:'BleepingComputer', url:'https://bleepingcomputer.com/news/security/dhs-bans-deepseek-products-across-us-federal-civilian-agencies'},
+  {cat:'regl', date:'2026-09-29', title:'Accord volontaire sur la sécurité de l\'IA à la Maison Blanche',
+   text:'Les dirigeants des grands acteurs de l\'IA s\'engagent à faire auditer leurs systèmes par des tiers indépendants. L\'accord n\'est assorti d\'aucune sanction ni échéance, ce que critiquent de nombreux chercheurs.',
+   source:'SiliconANGLE', url:'https://siliconangle.com/2026/09/30/prominent-tech-ceos-sign-voluntary-white-house-ai-safety-accord/'}
 ];
-const VEILLE_SOURCES = ['CERT-FR','ANSSI','CNIL','Microsoft Learn','Arcep','LeMagIT','01net','Korben','Flux RSS'];
+const VEILLE_SOURCES = ['The Hacker News','BleepingComputer','Dark Reading','SiliconANGLE','Blog du Modérateur','CERT-FR','ANSSI','dcod.ch'];
 
 const PROJECTS = [
-  {id:'p1', title:'Carnet Fonte', role:'Application web', progress:85, status:'Utilisable',
+  {id:'p1', title:'Carnet Fonte', role:'Application web', state:'win', status:'Utilisable', mockup:true,
    short:'Application de suivi de musculation qui calcule seule la charge et les répétitions de la prochaine séance.',
    tech:'HTML, CSS, JavaScript (sans framework), SVG, Web Audio API, Wake Lock API, localStorage',
    html:`<p>Application web pensée pour le téléphone, utilisée directement à la salle : on y note ses séances et elle calcule la <b>charge et les répétitions à viser à la séance suivante</b>.</p>
@@ -390,7 +443,7 @@ const PROJECTS = [
 <li><b>Historique et records</b> (1RM estimé avec la formule d'Epley) et statistiques dessinées en SVG à la main.</li>
 <li><b>Données</b> : sauvegarde locale, synchronisation avec fusion des modifications, fonctionnement hors ligne, export et import JSON.</li>
 <li><b>Mode démo</b> : 8 semaines de séances simulées, thème clair / sombre, accessibilité clavier et ARIA.</li></ul>`},
-  {id:'p2', title:'AP 1 · Infrastructure GSB', role:'Réseau & système', progress:35, status:'Étape 1 terminée',
+  {id:'p2', title:'AP 1 · Infrastructure GSB', role:'Réseau & système', state:'now', status:'Étape 1 terminée',
    short:'Annuaire Active Directory pour l\'organisation GSB : 8 services, comptes créés par script PowerShell.',
    tech:'Proxmox VE, Windows Server 2022, Active Directory (AD DS), DNS, DHCP, PowerShell, VLAN',
    html:`<p>Pour l'organisation <b>GSB</b>, je mets en place un annuaire <b>Active Directory</b> qui centralise l'authentification et la gestion des postes des 8 services : Accueil, Communication, Comptabilité, Développement, DSI, Labo-recherche, Réseaux &amp; Systèmes et RH. Le premier point de l'AP est <b>terminé</b>.</p>
@@ -410,8 +463,8 @@ const PROJECTS = [
 <li>Script PowerShell d'import des comptes depuis un CSV (identifiant <code>initiale.nom</code>, vérification des doublons, mot de passe à changer à la première connexion, jamais stocké dans le dépôt).</li>
 <li>Jonction d'un poste client Windows au domaine et ouverture de session réussie.</li></ol>
 <h3>Pour aller plus loin</h3><p>Documentation de l'ajout d'un <b>contrôleur de domaine secondaire</b> sur une maquette : haute disponibilité, réplication AD, redondance DNS et basculement DHCP, avec tests de bascule.</p>`},
-  {id:'p3', title:'Projet 3', role:'À définir', progress:15, status:'Démarrage', short:'Description du projet à compléter.', tech:'À compléter', html:'<p>Fiche à compléter.</p>'},
-  {id:'p4', title:'Projet 4', role:'À définir', progress:80, status:'Bientôt terminé', short:'Description du projet à compléter.', tech:'À compléter', html:'<p>Fiche à compléter.</p>'}
+  {id:'p3', title:'Projet 3', role:'À définir', state:'now', status:'Démarrage', short:'Description du projet à compléter.', tech:'À compléter', html:'<p>Fiche à compléter.</p>'},
+  {id:'p4', title:'Projet 4', role:'À définir', state:'now', status:'Bientôt terminé', short:'Description du projet à compléter.', tech:'À compléter', html:'<p>Fiche à compléter.</p>'}
 ];
 
 const E5_COLS = ['Gérer le patrimoine informatique','Répondre aux incidents et demandes','Développer la présence en ligne','Travailler en mode projet','Mettre à disposition un service','Organiser son développement professionnel'];
@@ -448,8 +501,6 @@ function show(id){
   window.scrollTo({top:0});
   if(id==='veille'){ filterVeille(pendingFilter||'all'); pendingFilter=null; }
   armReveal(document.getElementById(id));
-  if(id==='projets') requestAnimationFrame(()=>document.querySelectorAll('#quests .prog i').forEach(i=>i.style.width=i.dataset.w+'%'));
-  else document.querySelectorAll('#quests .prog i').forEach(i=>i.style.width='0');
 }
 document.addEventListener('click',e=>{
   const el=e.target.closest('[data-go]'); if(!el) return;
@@ -471,14 +522,24 @@ $('#m-experience').innerHTML = MATCHES.filter(m=>m.type==='experience').map(matc
 
 // Veille
 const catOf = id=>VEILLE_CATS.find(c=>c.id===id);
-const vCard = v=>`<article class="win-card" tabindex="0" role="link" data-go="veille" data-vcat="${v.cat}">
+document.body.insertAdjacentHTML('beforeend',`<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><pattern id="hx" width="28" height="48" patternUnits="userSpaceOnUse"><path d="M14 0l14 8v16l-14 8L0 24V8zM14 32v16" fill="none" stroke="currentColor" stroke-width="1"/></pattern></defs></svg>`);
+const fmtDate = d=>new Date(d+'T12:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});
+const isNew = d=>(Date.now()-new Date(d+'T12:00:00'))/864e5 <= 21;
+// inPreview : carte cliquable de l'accueil (sans lien interne) · sinon carte complète avec lien vers l'article
+const vCard = (v,inPreview)=>`<article class="win-card" ${inPreview?`tabindex="0" role="link" data-go="veille" data-vcat="${v.cat}"`:'style="cursor:default"'}>
   <div class="win-bar"><span aria-hidden="true">${catOf(v.cat).icon}</span>${catOf(v.cat).label}<span class="dots" aria-hidden="true"><i></i><i></i></span></div>
-  <div class="win-body"><h3>${v.title}</h3><p>${v.text}</p><div class="win-foot"><span>Source : ${v.source}</span></div></div></article>`;
-$('#veille-preview').innerHTML = VEILLE.filter(v=>v.preview).slice(0,3).map(vCard).join('');
-$('#vcats').innerHTML = VEILLE_CATS.map(c=>`<section class="vcat" data-cat="${c.id}">
-  <div class="vcat-head"><div class="ico" aria-hidden="true">${c.icon}</div><div><h3>${c.label}</h3><small>${c.sub} · ${VEILLE.filter(v=>v.cat===c.id).length} sujet(s)</small></div></div>
-  <div class="grid g3">${VEILLE.filter(v=>v.cat===c.id).map(vCard).join('')}</div></section>`).join('');
-$('#vcats').querySelectorAll('.win-card').forEach(c=>{c.removeAttribute('data-go');c.removeAttribute('role');c.removeAttribute('tabindex');c.style.cursor='default'});
+  <div class="win-visual v-${v.cat}">
+    <svg class="pat" aria-hidden="true"><rect width="100%" height="100%" fill="url(#hx)"/></svg>
+    ${isNew(v.date)?'<span class="new">★ Nouveau</span>':''}
+    <span class="big" aria-hidden="true">${catOf(v.cat).icon}</span><time class="date" datetime="${v.date}">${fmtDate(v.date)}</time>
+  </div>
+  <div class="win-body"><h3>${v.title}</h3><p>${v.text}</p>
+    <div class="win-foot"><span>Source : ${v.source}</span>${inPreview?'<span>Voir la veille →</span>':`<a href="${v.url}" target="_blank" rel="noopener">Lire l'article ↗</a>`}</div></div></article>`;
+const byDate = (a,b)=>b.date.localeCompare(a.date);
+$('#veille-preview').innerHTML = VEILLE.filter(v=>v.preview).slice(0,3).map(v=>vCard(v,true)).join('');
+$('#vcats').innerHTML = VEILLE_CATS.map(c=>{ const items=VEILLE.filter(v=>v.cat===c.id).sort(byDate); return `<section class="vcat" data-cat="${c.id}">
+  <div class="vcat-head"><div class="ico" aria-hidden="true">${c.icon}</div><div><h3>${c.label}</h3><small>${c.sub} · ${items.length} actualité(s)</small></div></div>
+  <div class="grid g3">${items.map(v=>vCard(v,false)).join('')}</div></section>`}).join('');
 $('#vsources').innerHTML = VEILLE_SOURCES.map(s=>`<span class="chip">${s}</span>`).join('');
 const vf = $('#vfilters');
 vf.innerHTML = [{id:'all',icon:'✦',label:'Tout'},...VEILLE_CATS].map((c,i)=>`<button type="button" data-f="${c.id}" aria-pressed="${i===0}">${c.icon} ${c.label}</button>`).join('');
@@ -515,19 +576,48 @@ function armReveal(root){
   });
 }
 
+// Maquettes de l'appli Carnet Fonte (écrans reconstitués en HTML/CSS)
+const phone = (body,tab)=>`<div class="phone" aria-hidden="true"><div class="scr"><div class="notch"><i></i></div>${body}
+  <div class="tabbar">${[['🏋','Séance'],['📋','Routines'],['📈','Stats'],['🕑','Historique']].map(([i,l])=>`<span class="${l===tab?'on':''}"><i>${i}</i>${l}</span>`).join('')}</div></div></div>`;
+const PHONE_SEANCE = phone(`
+  <div class="app-top"><div><small>Séance en cours</small><b>Push · Pecs / Épaules</b></div><span class="chrono">42:15</span></div>
+  <div class="app-body">
+    <div class="ex"><h5>Développé couché — Barre</h5><div class="last">Dernière fois : 80 kg × 8 · 8 · 7</div>
+      <div class="set hd"><span>#</span><span>Kg</span><span>Reps</span><span>RPE</span><span></span></div>
+      <div class="set"><span>1</span><span>80</span><span>8</span><span>7</span><span class="ok">✓</span></div>
+      <div class="set"><span>2</span><span>80</span><span>8</span><span>8</span><span class="ok">✓</span></div>
+      <div class="set cur"><span>3</span><span>80</span><span>8</span><span>9</span><span class="ok no">✓</span></div>
+    </div>
+    <div class="hint">▲ Prochaine séance : <b>82,5 kg × 6–8</b> (haut de fourchette atteint)</div>
+    <div class="ex"><h5>Développé militaire — Haltères</h5><div class="last">Dernière fois : 24 kg × 10 · 9 · 9</div></div>
+    <div class="rest">⏱ Repos <span>1:45</span></div>
+  </div>`,'Séance');
+const bars=[38,42,40,47,51,49,55,58,54,61,64,68];
+const PHONE_STATS = phone(`
+  <div class="app-top"><div><small>Statistiques</small><b>12 dernières semaines</b></div><span class="chrono">🔥 9</span></div>
+  <div class="app-body">
+    <div class="kpis"><div><b>102 kg</b><small>1RM estimé couché</small></div><div><b>+12 %</b><small>Volume vs mois dernier</small></div></div>
+    <div class="chart"><h6>Volume par semaine (t)</h6>
+      <svg viewBox="0 0 200 80" width="100%">${bars.map((v,i)=>`<rect x="${i*16.6+2}" y="${78-v}" width="11" height="${v}" rx="2" fill="${i===11?'#ff8a3d':'#3a4250'}"/>`).join('')}</svg></div>
+    <div class="chart"><h6>Progression — Développé couché</h6>
+      <svg viewBox="0 0 200 70" width="100%"><polyline fill="none" stroke="#2fbf71" stroke-width="2.5" points="0,60 25,57 50,52 75,53 100,44 125,40 150,33 175,27 200,20"/>
+      ${[[0,60],[50,52],[100,44],[150,33],[200,20]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="3" fill="#2fbf71"/>`).join('')}</svg></div>
+    <div class="hint">🏆 Nouveau record : <b>85 kg × 6</b> au développé couché</div>
+  </div>`,'Stats');
+
 // Projets
 $('#quests').innerHTML = PROJECTS.map(p=>
   `<article class="card link" tabindex="0" role="button" data-p="${p.id}" aria-label="Ouvrir la fiche ${p.title}">
-    <span class="tag ${p.progress>=80?'win':'now'}">${p.progress>=80?'✔':'●'} ${p.status}</span>
+    ${p.mockup?`<div class="quest-media">${PHONE_SEANCE}</div>`:''}
+    <span class="tag ${p.state}">${p.state==='win'?'✔':'●'} ${p.status}</span>
     <h3 style="margin-top:10px">${p.title}</h3><small style="color:var(--cyan)">${p.role}</small>
     <p>${p.short}</p>
-    <div class="prog ${p.progress>=80?'cy':''}" role="progressbar" aria-valuenow="${p.progress}" aria-valuemin="0" aria-valuemax="100"><i data-w="${p.progress}"></i></div>
-    <small style="color:var(--muted)">Avancement : ${p.progress} %</small>
   </article>`).join('');
 const dlg=$('#dlg');
 function openProject(id){
   const p=PROJECTS.find(x=>x.id===id); if(!p) return;
-  $('#dlg-in').innerHTML=`<h2 id="dlg-t">${p.title}</h2><span class="tag now">${p.status} — ${p.progress} %</span>${p.html}<h3>Technos / outils</h3><p>${p.tech}</p>`;
+  const media = p.mockup ? `<h3>Aperçu de l'application</h3><div class="phones">${PHONE_SEANCE}${PHONE_STATS}</div><p class="mock-note">Écrans de la séance en direct et des statistiques (maquette de l'interface, données de démonstration).</p>` : '';
+  $('#dlg-in').innerHTML=`<h2 id="dlg-t">${p.title}</h2><span class="tag ${p.state}">${p.state==='win'?'✔':'●'} ${p.status}</span>${media}${p.html}<h3>Technos / outils</h3><p>${p.tech}</p>`;
   dlg.showModal();
 }
 $('#quests').addEventListener('click',e=>{const c=e.target.closest('[data-p]'); if(c) openProject(c.dataset.p)});
