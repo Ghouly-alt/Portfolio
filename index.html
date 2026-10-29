@@ -154,6 +154,9 @@ main{max-width:1280px;margin:auto;padding:0 20px 80px}
 .win-visual .big{position:relative;font-size:40px;filter:drop-shadow(0 0 14px currentColor);line-height:1}
 .win-visual .date{position:relative;font:700 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;background:#010a13cc;border:1px solid var(--gold-lo);color:var(--gold-hi)}
 .win-visual .new{position:absolute;top:12px;left:16px;font:700 10px var(--sans);letter-spacing:.16em;padding:3px 8px;background:var(--cyan);color:#010a13}
+.win-visual .ia{position:absolute;top:12px;right:16px;font:700 10px var(--sans);letter-spacing:.16em;padding:3px 8px;border:1px solid currentColor;background:#010a13cc}
+.v-systeme{background:linear-gradient(135deg,#0d2547,#0a1428 70%);color:#6fa8ff}
+.v-cloud{background:linear-gradient(135deg,#2a1747,#0a1428 70%);color:#b48cff}
 .v-cyber{background:linear-gradient(135deg,#3a0d18,#0a1428 70%);color:#ff6b81}
 .v-agents{background:linear-gradient(135deg,#053b40,#0a1428 70%);color:#0ac8b9}
 .v-regl{background:linear-gradient(135deg,#3d2c0a,#0a1428 70%);color:#f0c870}
@@ -285,7 +288,7 @@ footer{border-top:1px solid var(--line);padding:26px 20px;text-align:center;font
   <div class="grid g3" id="shortcuts"></div>
 
   <div class="head"><div class="eyebrow">Éclaireur · dernières trouvailles</div><h2 class="title">Aperçu de ma veille</h2>
-    <p class="lead">Trois actualités récentes autour de l'IA qui changent le métier de l'informatique. La suite, classée par spécialité, est dans l'onglet Veille.</p></div>
+    <p class="lead">Trois actualités récentes qui touchent le métier de l'informatique, IA comprise. La suite, classée par spécialité, est dans l'onglet Veille.</p></div>
   <div class="preview-grid" id="veille-preview"></div>
   <p style="margin-top:26px"><a class="btn ghost" href="#veille" data-go="veille">Toute ma veille →</a></p>
 </section>
@@ -327,7 +330,7 @@ footer{border-top:1px solid var(--line);padding:26px 20px;text-align:center;font
 <!-- ======== VEILLE ======== -->
 <section class="page" id="veille" aria-labelledby="h-veille">
   <div class="head"><div class="eyebrow">Bibliothèque de Runeterra</div><h2 class="title" id="h-veille">Veille technologique</h2>
-    <p class="lead">Les actualités marquantes des six derniers mois autour de l'intelligence artificielle, classées par spécialité, avec un lien vers chaque source. Filtre par spécialité pour n'afficher qu'une catégorie.</p></div>
+    <p class="lead">Les actualités marquantes des six derniers mois (intelligence artificielle, systèmes, cybersécurité, cloud), classées par spécialité, avec un lien vers chaque source. Filtre par spécialité pour n'afficher qu'une catégorie.</p></div>
   <div class="filters" id="vfilters" role="group" aria-label="Filtrer par spécialité"></div>
   <div id="vcats"></div>
   <div class="card">
@@ -398,37 +401,55 @@ const MATCHES = [
 /* VEILLE — actualités de moins de 6 mois (date au format AAAA-MM-JJ) · cat : clé de VEILLE_CATS
    preview : true = affiché dans l'aperçu de l'accueil (3 maximum, le premier est mis en avant) */
 const VEILLE_CATS = [
-  {id:'cyber',  icon:'🛡', label:'Cybersécurité & IA',          sub:'L\'IA comme arme et comme bouclier'},
-  {id:'agents', icon:'🤖', label:'Agents IA en entreprise',      sub:'Des assistants qui agissent seuls dans le SI'},
-  {id:'regl',   icon:'⚖', label:'Réglementation & souveraineté', sub:'Lois, accords et interdictions autour de l\'IA'}
+  {id:'cyber',   icon:'🛡', label:'Cybersécurité',               sub:'Failles, attaques, défense, avec ou sans IA'},
+  {id:'systeme', icon:'🖥', label:'Systèmes & virtualisation',   sub:'Windows, Linux, hyperviseurs, mises à jour'},
+  {id:'cloud',   icon:'☁', label:'Cloud & infrastructures',     sub:'Datacenters, disponibilité, pannes'},
+  {id:'agents',  icon:'🤖', label:'Agents IA en entreprise',      sub:'Des assistants qui agissent seuls dans le SI'},
+  {id:'regl',    icon:'⚖', label:'Réglementation & souveraineté', sub:'Lois, accords et interdictions autour de l\'IA'}
 ];
 const VEILLE = [
-  {cat:'agents', preview:true, date:'2026-09-29', title:'OpenAI lance Dots, des agents IA qui travaillent en continu',
+  {ia:true, cat:'agents', preview:true, date:'2026-09-29', title:'OpenAI lance Dots, des agents IA qui travaillent en continu',
    text:'Présentés au DevDay, les « Dots » sont des agents persistants : chacun dispose de son propre ordinateur dans le cloud, se connecte à des milliers d\'applications et continue de travailler après la déconnexion de l\'utilisateur. Pour un service informatique, cela pose la question des droits et de la supervision de ces nouveaux « collaborateurs ».',
    source:'SiliconANGLE', url:'https://siliconangle.com/2026/09/29/openai-launches-dots-always-on-ai-agents-in-chatgpt-with-their-own-cloud-computers/'},
-  {cat:'cyber', preview:true, date:'2026-10-19', title:'Microsoft : traiter les agents IA comme des menaces internes',
+  {ia:true, cat:'cyber', preview:true, date:'2026-10-19', title:'Microsoft : traiter les agents IA comme des menaces internes',
    text:'Microsoft demande aux équipes sécurité de considérer les agents autonomes comme des employés à privilèges : ils peuvent se tromper, être manipulés ou compromis. Inventaire des agents, droits limités avant chaque action et surveillance continue deviennent la norme.',
    source:'Dark Reading', url:'https://darkreading.com/cybersecurity-operations/ai-agents-insider-threats-inside-microsoft-unified-security-stack'},
-  {cat:'regl', preview:true, date:'2026-08-02', title:'AI Act : la transparence obligatoire, le haut risque repoussé',
+  {ia:true, cat:'regl', date:'2026-08-02', title:'AI Act : la transparence obligatoire, le haut risque repoussé',
    text:'Depuis le 2 août 2026, chatbots et contenus générés par IA doivent être signalés comme tels. L\'« omnibus numérique » repousse en revanche au 2 décembre 2027 les obligations pour les systèmes d\'IA à haut risque.',
    source:'Blog du Modérateur', url:'https://blogdumoderateur.com/ia-act-2-aout-2026'},
-  {cat:'cyber', date:'2026-10-08', title:'Anthropic ouvre un scanner de vulnérabilités gratuit par IA',
+  {ia:true, cat:'cyber', date:'2026-10-08', title:'Anthropic ouvre un scanner de vulnérabilités gratuit par IA',
    text:'OSS Scanner analyse gratuitement le code des projets open source critiques avec des modèles d\'IA, sur le modèle d\'OSS-Fuzz de Google. Les rapports ne sont pas relus par un humain : des milliers de failles signalées, mais une petite partie seulement corrigée.',
    source:'The Hacker News', url:'https://thehackernews.com/2026/10/anthropic-launches-free-ai.html'},
-  {cat:'cyber', date:'2026-09-30', title:'Google réserve son nouveau modèle Gemini 4 Argon aux défenseurs',
+  {ia:true, cat:'cyber', date:'2026-09-30', title:'Google réserve son nouveau modèle Gemini 4 Argon aux défenseurs',
    text:'Conçu notamment pour la cyberdéfense (découverte de failles, correctifs automatiques), Gemini 4 Argon est d\'abord ouvert à des équipes de sécurité de confiance, le temps de valider ses garde-fous avant une diffusion plus large.',
    source:'Google', url:'https://blog.google/innovation-and-ai/technology/ai/google-ai-updates-september-2026/'},
-  {cat:'agents', date:'2026-09-28', title:'Meta se lance sur le marché de l\'IA pour les entreprises',
+  {ia:true, cat:'agents', date:'2026-09-28', title:'Meta se lance sur le marché de l\'IA pour les entreprises',
    text:'Avec Meta Enterprise Platform, Meta propose aux entreprises toute sa pile IA, dont son agent Muse et des outils de code. La concurrence s\'intensifie face à Microsoft, Google et OpenAI sur les agents professionnels.',
    source:'Meta', url:'https://about.fb.com/news/2026/09/launching-meta-enterprise-platform/'},
-  {cat:'regl', date:'2026-10-20', title:'Les États-Unis bannissent DeepSeek des administrations civiles',
+  {ia:true, cat:'regl', date:'2026-10-20', title:'Les États-Unis bannissent DeepSeek des administrations civiles',
    text:'Le département de la Sécurité intérieure ordonne de retirer les produits DeepSeek, y compris les outils tiers construits dessus, des systèmes des agences fédérales civiles, au nom de la sécurité de la chaîne d\'approvisionnement.',
    source:'BleepingComputer', url:'https://bleepingcomputer.com/news/security/dhs-bans-deepseek-products-across-us-federal-civilian-agencies'},
-  {cat:'regl', date:'2026-09-29', title:'Accord volontaire sur la sécurité de l\'IA à la Maison Blanche',
+  {ia:true, cat:'regl', date:'2026-09-29', title:'Accord volontaire sur la sécurité de l\'IA à la Maison Blanche',
    text:'Les dirigeants des grands acteurs de l\'IA s\'engagent à faire auditer leurs systèmes par des tiers indépendants. L\'accord n\'est assorti d\'aucune sanction ni échéance, ce que critiquent de nombreux chercheurs.',
-   source:'SiliconANGLE', url:'https://siliconangle.com/2026/09/30/prominent-tech-ceos-sign-voluntary-white-house-ai-safety-accord/'}
+   source:'SiliconANGLE', url:'https://siliconangle.com/2026/09/30/prominent-tech-ceos-sign-voluntary-white-house-ai-safety-accord/'},
+  /* --- Hors IA --- */
+  {cat:'systeme', preview:true, date:'2026-10-13', title:'Patch Tuesday record : plus de 1 400 failles corrigées',
+   text:'Microsoft a publié un nombre record de correctifs en octobre, dont une faille Windows déjà exploitée qui contourne la protection « Mark of the Web » et une faille critique du rôle Serveur DHCP exploitable à distance sans authentification. Mois de fin des mises à jour étendues (ESU) pour Windows Server 2012 et 2012 R2.',
+   source:'BleepingComputer', url:'https://www.bleepingcomputer.com/news/microsoft/microsoft-october-2026-patch-tuesday-fixes-1-411-flaws-3-zero-days/'},
+  {cat:'systeme', date:'2026-05-21', title:'Proxmox VE 9.2 et fin de support de Proxmox VE 8',
+   text:'Proxmox VE 9.2 passe sur Debian 13 et le noyau Linux 7.0 par défaut. Proxmox VE 8 n\'est plus maintenu depuis le 31 août 2026 : les serveurs encore en version 8 ne reçoivent plus de correctifs de sécurité et doivent être migrés.',
+   source:'Forum Proxmox', url:'https://forum.proxmox.com/threads/proxmox-virtual-environment-9-2-available.183742/'},
+  {cat:'cyber', date:'2026-09-07', title:'L\'ANSSI lance REACTIV pour les services de l\'État',
+   text:'À la demande du Premier ministre, l\'ANSSI met en place une capacité renforcée de réaction et d\'intervention : elle peut imposer des mesures d\'urgence aux ministères après une fuite de données ou une compromission.',
+   source:'IT-Connect', url:'https://www.it-connect.fr/anssi-reactiv-violations-donnees-services-etat/'},
+  {cat:'cyber', date:'2026-10-28', title:'Fuite de données à la Compagnie des transports strasbourgeois',
+   text:'La CTS confirme le vol de données d\'environ 230 000 comptes clients (identité, date de naissance, adresse). Un rappel concret de l\'importance de la segmentation, de la journalisation et de la notification à la CNIL sous 72 heures.',
+   source:'Anadolu', url:'https://www.aa.com.tr/fr/france/france-une-cyberattaque-contre-la-compagnie-des-transports-strasbourgeois-expose-les-donn%C3%A9es-de-230-000-clients/4104368'},
+  {cat:'cloud', date:'2026-05-07', title:'AWS : une panne de refroidissement paralyse une zone de us-east-1',
+   text:'Un incident thermique a coupé l\'alimentation d\'un bâtiment de la zone use1-az4 : instances EC2 et volumes EBS indisponibles pendant près d\'une journée, avec des services comme Coinbase touchés. Une bonne illustration de l\'intérêt de répartir ses ressources sur plusieurs zones.',
+   source:'DatacenterDynamics', url:'https://www.datacenterdynamics.com/en/news/aws-experiences-power-issues-at-northern-virginia-cloud-region/'}
 ];
-const VEILLE_SOURCES = ['The Hacker News','BleepingComputer','Dark Reading','SiliconANGLE','Blog du Modérateur','CERT-FR','ANSSI','dcod.ch'];
+const VEILLE_SOURCES = ['The Hacker News','BleepingComputer','Dark Reading','IT-Connect','SiliconANGLE','DatacenterDynamics','Blog du Modérateur','CERT-FR','ANSSI','dcod.ch'];
 
 const PROJECTS = [
   {id:'p1', title:'Carnet Fonte', role:'Application web', state:'win', status:'Utilisable', mockup:true,
@@ -530,7 +551,7 @@ const vCard = (v,inPreview)=>`<article class="win-card" ${inPreview?`tabindex="0
   <div class="win-bar"><span aria-hidden="true">${catOf(v.cat).icon}</span>${catOf(v.cat).label}<span class="dots" aria-hidden="true"><i></i><i></i></span></div>
   <div class="win-visual v-${v.cat}">
     <svg class="pat" aria-hidden="true"><rect width="100%" height="100%" fill="url(#hx)"/></svg>
-    ${isNew(v.date)?'<span class="new">★ Nouveau</span>':''}
+    ${isNew(v.date)?'<span class="new">★ Nouveau</span>':''}${v.ia?'<span class="ia">IA</span>':''}
     <span class="big" aria-hidden="true">${catOf(v.cat).icon}</span><time class="date" datetime="${v.date}">${fmtDate(v.date)}</time>
   </div>
   <div class="win-body"><h3>${v.title}</h3><p>${v.text}</p>
