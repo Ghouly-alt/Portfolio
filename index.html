@@ -147,6 +147,18 @@ main{max-width:1280px;margin:auto;padding:0 20px 80px}
 .mock-note{text-align:center;font-size:12px;color:var(--muted)}
 .quest-media{display:flex;justify-content:center;margin:-6px -6px 16px;padding:18px 0 0;background:radial-gradient(circle at 50% 70%,#ff8a3d22,transparent 60%);overflow:hidden;height:250px}
 .quest-media .phone{transform:scale(.62);transform-origin:top center}
+.quest-media.img,.quest-media.diag{padding:0;height:200px;background:#010a13;border-bottom:1px solid var(--line)}
+.quest-media.img img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.quest-media.diag{align-items:center;padding:10px}
+.quest-media.diag svg{width:100%;height:auto}
+.quest-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin:6px 0}
+.quest-top small{color:var(--muted);font-size:13px}
+.e5chips{display:flex;gap:6px;margin-top:14px;flex-wrap:wrap}
+.e5chips span{font:700 11px var(--sans);letter-spacing:.08em;padding:3px 9px;border:1px solid var(--cyan);color:var(--cyan);background:#0ac8b912}
+.shot{margin:16px 0}
+.shot img{width:100%;border:1px solid var(--gold-lo);display:block}
+.shot figcaption{font-size:12px;color:var(--muted);margin-top:6px;text-align:center}
+svg.agdlp{width:100%;height:auto;margin:6px 0 10px;display:block}
 
 /* ---------- Veille ---------- */
 .win-visual{position:relative;height:120px;overflow:hidden;border-bottom:1px solid var(--gold-lo);display:flex;align-items:flex-end;justify-content:space-between;padding:12px 16px}
@@ -217,6 +229,8 @@ table.e5{border-collapse:collapse;width:100%;min-width:760px;font-size:14px;back
 .e5 td.k{text-align:center;width:46px;color:var(--line)}
 .e5 td.k.on{color:var(--cyan);font-weight:700;background:#0ac8b912}
 .e5 td.sep{background:#c8aa6e18;color:var(--gold);font:700 12px var(--serif);letter-spacing:.16em;text-transform:uppercase}
+.e5-link{display:inline-block;margin-top:6px;background:none;border:1px solid var(--gold-lo);color:var(--gold);font:600 11px var(--sans);letter-spacing:.08em;padding:3px 9px;cursor:pointer}
+.e5-link:hover{border-color:var(--gold);color:var(--gold-hi)}
 .legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:6px 24px;margin:18px 0;font-size:14px}
 .legend b{color:var(--cyan);margin-right:6px}
 
@@ -315,7 +329,7 @@ footer{border-top:1px solid var(--line);padding:26px 20px;text-align:center;font
 <section class="page" id="projets" aria-labelledby="h-projets">
   <div class="head"><div class="eyebrow">Tableau des quêtes</div><h2 class="title" id="h-projets">Mes projets</h2>
     <p class="lead">Clique sur une quête pour ouvrir sa fiche détaillée.</p></div>
-  <div class="grid g2" id="quests"></div>
+  <div id="quests"></div>
 </section>
 
 <!-- ======== E5 ======== -->
@@ -451,8 +465,27 @@ const VEILLE = [
 ];
 const VEILLE_SOURCES = ['The Hacker News','BleepingComputer','Dark Reading','IT-Connect','SiliconANGLE','DatacenterDynamics','Blog du Modérateur','CERT-FR','ANSSI','dcod.ch'];
 
+/* PROJETS — ctx : clé de PROJECT_CTX · e5 : colonnes du tableau E5 validées (0 = C1 … 5 = C6) */
+const PROJECT_CTX = [
+  {id:'pro',       label:'En entreprise · INEO RHT'},
+  {id:'formation', label:'En formation'},
+  {id:'perso',     label:'Projets personnels'}
+];
+// Schéma de principe AGDLP (noms de groupes fictifs)
+const AGDLP_SVG = `<svg class="agdlp" viewBox="0 0 640 170" role="img" aria-label="Schéma AGDLP : comptes, groupe global, groupe de domaine local, permissions sur le dossier">
+  ${[['A','Comptes','m.dupont · s.martin',20],['G','Groupe global','GG_Comptabilite',180],['DL','Domaine local','DL_Compta_Modif',340],['P','Permissions NTFS','Dossier Compta : Modifier',500]].map(([k,t,s,x],i)=>`
+  <g transform="translate(${x},30)">
+    <rect width="120" height="110" rx="4" fill="#0a1428" stroke="${i===3?'#0ac8b9':'#c8aa6e'}" stroke-width="1.5"/>
+    <polygon points="60,10 78,20 78,40 60,50 42,40 42,20" fill="${i===3?'#0ac8b9':'#c8aa6e'}"/>
+    <text x="60" y="35" text-anchor="middle" font-family="Cinzel,serif" font-weight="900" font-size="15" fill="#010a13">${k}</text>
+    <text x="60" y="72" text-anchor="middle" font-family="Inter,sans-serif" font-weight="600" font-size="12" fill="#f0e6d2">${t}</text>
+    <text x="60" y="92" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#8a8f9e">${s}</text>
+  </g>${i<3?`<path d="M${x+126} 85h28" stroke="#c8aa6e" stroke-width="2"/><polygon points="${x+154},80 ${x+162},85 ${x+154},90" fill="#c8aa6e"/>`:''}`).join('')}
+  <text x="320" y="164" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#8a8f9e">« membre de » →</text>
+</svg>`;
+
 const PROJECTS = [
-  {id:'p1', title:'Carnet Fonte', role:'Application web', state:'win', status:'Utilisable', mockup:true,
+  {id:'p1', ctx:'perso', title:'Carnet Fonte', role:'Application web', state:'win', status:'Utilisable', mockup:true, period:'Projet personnel',
    short:'Application de suivi de musculation qui calcule seule la charge et les répétitions de la prochaine séance.',
    tech:'HTML, CSS, JavaScript (sans framework), SVG, Web Audio API, Wake Lock API, localStorage',
    html:`<p>Application web pensée pour le téléphone, utilisée directement à la salle : on y note ses séances et elle calcule la <b>charge et les répétitions à viser à la séance suivante</b>.</p>
@@ -464,7 +497,7 @@ const PROJECTS = [
 <li><b>Historique et records</b> (1RM estimé avec la formule d'Epley) et statistiques dessinées en SVG à la main.</li>
 <li><b>Données</b> : sauvegarde locale, synchronisation avec fusion des modifications, fonctionnement hors ligne, export et import JSON.</li>
 <li><b>Mode démo</b> : 8 semaines de séances simulées, thème clair / sombre, accessibilité clavier et ARIA.</li></ul>`},
-  {id:'p2', title:'AP 1 · Infrastructure GSB', role:'Réseau & système', state:'now', status:'Étape 1 terminée',
+  {id:'p2', ctx:'formation', title:'AP 1 · Infrastructure GSB', role:'Réseau & système', period:'Atelier professionnel', state:'now', status:'Étape 1 terminée',
    short:'Annuaire Active Directory pour l\'organisation GSB : 8 services, comptes créés par script PowerShell.',
    tech:'Proxmox VE, Windows Server 2022, Active Directory (AD DS), DNS, DHCP, PowerShell, VLAN',
    html:`<p>Pour l'organisation <b>GSB</b>, je mets en place un annuaire <b>Active Directory</b> qui centralise l'authentification et la gestion des postes des 8 services : Accueil, Communication, Comptabilité, Développement, DSI, Labo-recherche, Réseaux &amp; Systèmes et RH. Le premier point de l'AP est <b>terminé</b>.</p>
@@ -484,21 +517,75 @@ const PROJECTS = [
 <li>Script PowerShell d'import des comptes depuis un CSV (identifiant <code>initiale.nom</code>, vérification des doublons, mot de passe à changer à la première connexion, jamais stocké dans le dépôt).</li>
 <li>Jonction d'un poste client Windows au domaine et ouverture de session réussie.</li></ol>
 <h3>Pour aller plus loin</h3><p>Documentation de l'ajout d'un <b>contrôleur de domaine secondaire</b> sur une maquette : haute disponibilité, réplication AD, redondance DNS et basculement DHCP, avec tests de bascule.</p>`},
-  {id:'p3', title:'Projet 3', role:'À définir', state:'now', status:'Démarrage', short:'Description du projet à compléter.', tech:'À compléter', html:'<p>Fiche à compléter.</p>'},
-  {id:'p4', title:'Projet 4', role:'À définir', state:'now', status:'Bientôt terminé', short:'Description du projet à compléter.', tech:'À compléter', html:'<p>Fiche à compléter.</p>'}
+  {id:'nas', ctx:'pro', title:'NAS de sauvegarde des archives', role:'Stockage & sauvegarde', state:'win', status:'En production', period:'2026',
+   img:'assets/nas-synology.jpg', imgAlt:'Panneau de configuration Synology DSM du NAS, volume utilisé à 84 %',
+   short:'Mise en place et administration d\'un NAS Synology d\'environ 10 To qui centralise les archives d\'une agence de l\'entreprise.',
+   tech:'NAS Synology, DiskStation Manager (DSM), dossiers partagés, utilisateurs, groupes et privilèges',
+   html:`<p>Une agence de l'entreprise avait besoin d'un espace centralisé pour sauvegarder ses archives. J'ai mis en place un <b>NAS Synology d'environ 10 To</b> et j'en suis <b>l'administrateur</b>.</p>
+<figure class="shot"><img src="assets/nas-synology.jpg" alt="Panneau de configuration Synology DSM du NAS" loading="lazy"><figcaption>Panneau de configuration DSM et tableau de bord du NAS (nom du serveur et adresse IP masqués).</figcaption></figure>
+<h3>Ce que je gère</h3><ul>
+<li><b>Comptes utilisateurs et groupes</b> : création des comptes des collaborateurs de l'agence et regroupement par équipe.</li>
+<li><b>Dossiers partagés</b> : création de l'arborescence des archives.</li>
+<li><b>Droits d'accès</b> : attribution des privilèges (lecture ou lecture / écriture) aux groupes selon les besoins de chacun.</li>
+<li><b>Suivi du stockage</b> : surveillance de l'espace disque et de l'état du volume depuis le tableau de bord (environ 9 To utilisés sur près de 11 To) pour anticiper l'archivage ou l'extension.</li></ul>`},
+  {id:'agdlp', ctx:'pro', title:'Refonte des droits d\'accès dans l\'AD', role:'Active Directory', state:'now', status:'En cours', period:'2026', diagram:true,
+   short:'Remplacement des droits attribués un par un par une organisation en groupes (méthode AGDLP) sur les dossiers partagés de l\'entreprise.',
+   tech:'Active Directory, groupes globaux, groupes de domaine local, permissions NTFS, méthode AGDLP',
+   html:`<p>Les droits d'accès aux dossiers partagés de l'entreprise étaient donnés <b>individuellement</b>, utilisateur par utilisateur. Avec le temps, cela devient difficile à maintenir : on ne sait plus qui a accès à quoi, et un collaborateur qui change de poste ou quitte l'entreprise peut garder des accès.</p>
+<h3>La solution : la méthode AGDLP</h3>
+${AGDLP_SVG}
+<ol>
+<li><b>A</b> — les <b>comptes</b> utilisateurs…</li>
+<li><b>G</b> — …sont membres de <b>groupes globaux</b>, un par service ou par fonction ;</li>
+<li><b>DL</b> — ces groupes globaux sont membres de <b>groupes de domaine local</b>, un par ressource et par niveau d'accès (lecture, modification) ;</li>
+<li><b>P</b> — les <b>permissions NTFS</b> des dossiers ne sont données qu'aux groupes de domaine local.</li></ol>
+<h3>Ce que ça change</h3><ul>
+<li>Une arrivée, un départ ou un changement de poste se gère en ajoutant ou retirant l'utilisateur d'un seul groupe global.</li>
+<li>Les droits d'un dossier se lisent directement dans ses groupes : l'audit est beaucoup plus simple.</li>
+<li>Chacun n'a que les accès nécessaires à son poste (principe du moindre privilège).</li></ul>
+<p class="mock-note">Les informations de l'entreprise sont confidentielles : le schéma ci-dessus est un exemple de principe, les noms de groupes sont fictifs.</p>`},
+  {id:'parc', ctx:'pro', title:'Gestion du parc informatique', role:'Support & patrimoine', state:'now', status:'En cours', period:'Depuis le 27/08/25', e5:[0],
+   short:'Gestion du matériel des 160 collaborateurs équipés : commandes, adaptations, incidents matériels et suivi des accès serveurs.',
+   tech:'Gestion de parc, support matériel, règles internes du groupe, sauvegardes',
+   html:`<p>Chez INEO RHT, je gère le matériel informatique des <b>160 collaborateurs équipés</b>.</p><ul>
+<li><b>Commandes</b> du matériel des nouveaux arrivants et <b>adaptation des moyens</b> selon les besoins des postes.</li>
+<li><b>Respect des règles internes</b> du groupe dans l'attribution du matériel.</li>
+<li><b>Gestion des incidents matériels</b> : diagnostic, réparation ou remplacement.</li>
+<li><b>Suivi des accès aux serveurs</b>, dont les sauvegardes.</li></ul>`},
+  {id:'tickets', ctx:'pro', title:'Gestion des tickets via SharePoint', role:'Support utilisateurs', state:'win', status:'Réalisé', period:'Première année', e5:[1],
+   short:'Système de demandes d\'assistance par formulaire SharePoint pour centraliser et suivre les demandes des collaborateurs.',
+   tech:'SharePoint, formulaires, Microsoft 365',
+   html:`<p>Pour mieux suivre les demandes d'assistance, j'ai mis en place un <b>système de tickets basé sur un formulaire SharePoint</b> : les collaborateurs déposent leur demande au même endroit, ce qui permet de les centraliser, de les prioriser et d'en garder une trace.</p>`},
+  {id:'sharepoint', ctx:'pro', title:'Développement du SharePoint de l\'entreprise', role:'Présence en ligne', state:'now', status:'En cours', period:'Depuis le 23/05/26', e5:[2,3],
+   short:'Projet de développement du site SharePoint interne de l\'entreprise, mené en mode projet.',
+   tech:'SharePoint Online, Microsoft 365',
+   html:`<p>Je participe au <b>développement du SharePoint de l'entreprise</b>, l'espace interne qui regroupe informations et documents pour les collaborateurs. Ce projet mobilise la présence en ligne de l'organisation et le travail en mode projet.</p>`},
+  {id:'elearning', ctx:'pro', title:'E-learning et réseau de sachants Equans', role:'Développement professionnel', state:'now', status:'En cours', period:'Depuis le 27/08/25', e5:[5],
+   short:'Formations en ligne du groupe Equans et identification de relais et de sachants pour progresser.',
+   tech:'Plateforme e-learning Equans',
+   html:`<p>Je suis les modules d'<b>e-learning du groupe Equans</b> et j'identifie des <b>relais et sachants</b> dans le monde Equans : des personnes ressources vers qui me tourner pour monter en compétences.</p>`},
+  {id:'gsb', ctx:'formation', title:'Global Swiss Bourdin', role:'Mission en formation', state:'win', status:'Terminé', period:'20/05/26 – 21/05/26', e5:[0,1],
+   short:'Mission sur le contexte de l\'organisation GSB : gestion du patrimoine informatique et réponse aux incidents et demandes.',
+   tech:'Voir la documentation',
+   html:`<p>Mission réalisée en formation dans le contexte de l'organisation <b>Global Swiss Bourdin</b>, autour de la gestion du patrimoine informatique et de la réponse aux incidents et aux demandes d'assistance.</p>
+<p><a href="https://drive.google.com/drive/folders/17k6Yh1YECzoqbg8lJewWjeEWQFlthh7E?usp=drive_link" target="_blank" rel="noopener">Ouvrir la documentation (Google Drive)</a></p>`},
+  {id:'cisco', ctx:'formation', title:'TP Réseaux Cisco : RIP et OSPF', role:'Routage', state:'win', status:'Terminé', period:'16/05/26 – 20/05/26', e5:[2,3,4],
+   short:'Configuration du routage dynamique sur des équipements Cisco avec les protocoles RIP et OSPF.',
+   tech:'Cisco IOS, RIP, OSPF',
+   html:`<p>Travaux pratiques de <b>routage dynamique</b> sur des équipements Cisco : configuration des protocoles <b>RIP</b> puis <b>OSPF</b>, vérification des tables de routage et de la connectivité entre réseaux.</p>`}
 ];
 
 const E5_COLS = ['Gérer le patrimoine informatique','Répondre aux incidents et demandes','Développer la présence en ligne','Travailler en mode projet','Mettre à disposition un service','Organiser son développement professionnel'];
 const E5_ROWS = [
   {sep:'Réalisations en cours de formation'},
-  {t:'<a href="https://drive.google.com/drive/folders/17k6Yh1YECzoqbg8lJewWjeEWQFlthh7E?usp=drive_link" target="_blank" rel="noopener">Global Swiss Bourdin</a>', d:'20/05/26 – 21/05/26', on:[0,1]},
-  {t:'TP Réseaux sur Cisco (protocoles RIP et OSPF)', d:'16/05/26 – 20/05/26', on:[2,3,4]},
+  {p:'gsb', t:'<a href="https://drive.google.com/drive/folders/17k6Yh1YECzoqbg8lJewWjeEWQFlthh7E?usp=drive_link" target="_blank" rel="noopener">Global Swiss Bourdin</a>', d:'20/05/26 – 21/05/26', on:[0,1]},
+  {p:'cisco', t:'TP Réseaux sur Cisco (protocoles RIP et OSPF)', d:'16/05/26 – 20/05/26', on:[2,3,4]},
   {sep:'Réalisations en milieu professionnel — première année'},
-  {t:'Gestion du parc : commandes des nouveaux arrivants, adaptation des moyens, respect des règles internes, gestion des incidents matériel, suivi des accès serveurs (dont sauvegarde)', d:'27/08/25 – en cours', on:[0]},
-  {t:'Système de gestion de tickets via formulaire SharePoint', d:'—', on:[1]},
+  {p:'parc', t:'Gestion du parc : commandes des nouveaux arrivants, adaptation des moyens, respect des règles internes, gestion des incidents matériel, suivi des accès serveurs (dont sauvegarde)', d:'27/08/25 – en cours', on:[0]},
+  {p:'tickets', t:'Système de gestion de tickets via formulaire SharePoint', d:'—', on:[1]},
   {t:'Kiséo (prise en main admin, migration des comptes) — Migration NEO', d:'26/02/26 – 19/04/26', on:[4]},
-  {t:'E-learning Equans : identification de relais / sachants dans le monde Equans', d:'27/08/25 – en cours', on:[5]},
-  {t:'Projet de développement du SharePoint de l\'entreprise', d:'23/05/26 – en cours', on:[2,3]},
+  {p:'elearning', t:'E-learning Equans : identification de relais / sachants dans le monde Equans', d:'27/08/25 – en cours', on:[5]},
+  {p:'sharepoint', t:'Projet de développement du SharePoint de l\'entreprise', d:'23/05/26 – en cours', on:[2,3]},
   {sep:'Réalisations en milieu professionnel — seconde année'},
   {todo:'À venir.'}
 ];
@@ -627,21 +714,29 @@ const PHONE_STATS = phone(`
   </div>`,'Stats');
 
 // Projets
-$('#quests').innerHTML = PROJECTS.map(p=>
+const stateTag = p=>`<span class="tag ${p.state}">${p.state==='win'?'✔':'●'} ${p.status}</span>`;
+const e5Chips = p=>p.e5 ? `<div class="e5chips" aria-label="Compétences E5">${p.e5.map(i=>`<span title="${E5_COLS[i]}">C${i+1}</span>`).join('')}</div>` : '';
+const questMedia = p=> p.mockup ? `<div class="quest-media">${PHONE_SEANCE}</div>`
+  : p.img ? `<div class="quest-media img"><img src="${p.img}" alt="${p.imgAlt||''}" loading="lazy"></div>`
+  : p.diagram ? `<div class="quest-media diag">${AGDLP_SVG}</div>` : '';
+$('#quests').innerHTML = PROJECT_CTX.map(c=>`<h3 class="subhead">${c.label}</h3><div class="grid g2">`+
+  PROJECTS.filter(p=>p.ctx===c.id).map(p=>
   `<article class="card link" tabindex="0" role="button" data-p="${p.id}" aria-label="Ouvrir la fiche ${p.title}">
-    ${p.mockup?`<div class="quest-media">${PHONE_SEANCE}</div>`:''}
-    <span class="tag ${p.state}">${p.state==='win'?'✔':'●'} ${p.status}</span>
+    ${questMedia(p)}
+    <div class="quest-top">${stateTag(p)}<small>${p.period||''}</small></div>
     <h3 style="margin-top:10px">${p.title}</h3><small style="color:var(--cyan)">${p.role}</small>
-    <p>${p.short}</p>
-  </article>`).join('');
+    <p>${p.short}</p>${e5Chips(p)}
+  </article>`).join('')+'</div>').join('');
 const dlg=$('#dlg');
 function openProject(id){
   const p=PROJECTS.find(x=>x.id===id); if(!p) return;
   const media = p.mockup ? `<h3>Aperçu de l'application</h3><div class="phones">${PHONE_SEANCE}${PHONE_STATS}</div><p class="mock-note">Écrans de la séance en direct et des statistiques (maquette de l'interface, données de démonstration).</p>` : '';
-  $('#dlg-in').innerHTML=`<h2 id="dlg-t">${p.title}</h2><span class="tag ${p.state}">${p.state==='win'?'✔':'●'} ${p.status}</span>${media}${p.html}<h3>Technos / outils</h3><p>${p.tech}</p>`;
+  const comp = p.e5 ? `<h3>Compétences E5 mobilisées</h3><ul>${p.e5.map(i=>`<li><b>C${i+1}</b> — ${E5_COLS[i]}</li>`).join('')}</ul>` : '';
+  $('#dlg-in').innerHTML=`<h2 id="dlg-t">${p.title}</h2><div class="quest-top">${stateTag(p)}<small>${p.period||''}</small></div>${media}${p.html}${comp}<h3>Technos / outils</h3><p>${p.tech}</p>`;
   dlg.showModal();
 }
 $('#quests').addEventListener('click',e=>{const c=e.target.closest('[data-p]'); if(c) openProject(c.dataset.p)});
+$('#e5t').addEventListener('click',e=>{const b=e.target.closest('.e5-link'); if(b) openProject(b.dataset.p)});
 $('#quests').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.dataset.p){e.preventDefault();openProject(e.target.dataset.p)}});
 $('#dlg-x').onclick=()=>dlg.close();
 dlg.addEventListener('click',e=>{if(e.target===dlg) dlg.close()});
@@ -651,7 +746,7 @@ $('#legend').innerHTML = E5_COLS.map((c,i)=>`<div><b>C${i+1}</b>${c}</div>`).joi
 $('#e5t').innerHTML = `<thead><tr><th>Réalisations professionnelles</th><th>Période</th>${E5_COLS.map((c,i)=>`<th title="${c}">C${i+1}</th>`).join('')}</tr></thead><tbody>`+
   E5_ROWS.map(r=> r.sep ? `<tr><td class="sep" colspan="${E5_COLS.length+2}">${r.sep}</td></tr>`
     : r.todo ? `<tr><td colspan="${E5_COLS.length+2}" style="color:var(--muted)">${r.todo}</td></tr>`
-    : `<tr><td>${r.t}</td><td>${r.d}</td>${E5_COLS.map((c,i)=>r.on.includes(i)?`<td class="k on" title="${c}"><span aria-hidden="true">✔</span><span style="position:absolute;left:-9999px">${c}</span></td>`:'<td class="k"><span aria-hidden="true">·</span></td>').join('')}</tr>`).join('')+'</tbody>';
+    : `<tr><td>${r.t}${r.p?` <button type="button" class="e5-link" data-p="${r.p}">Voir la fiche →</button>`:''}</td><td>${r.d}</td>${E5_COLS.map((c,i)=>r.on.includes(i)?`<td class="k on" title="${c}"><span aria-hidden="true">✔</span><span style="position:absolute;left:-9999px">${c}</span></td>`:'<td class="k"><span aria-hidden="true">·</span></td>').join('')}</tr>`).join('')+'</tbody>';
 
 // Braises animées (hero)
 (function(){
