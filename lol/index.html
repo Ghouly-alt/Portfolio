@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Loïc Bodet — Portfolio · La Faille</title>
+<meta name="description" content="Portfolio de Loïc Bodet, alternant BTS SIO SISR, sur le thème de League of Legends.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#010a13; --bg2:#091428; --panel:#0a1428; --panel2:#0f1e36;
+  --gold:#c8aa6e; --gold-hi:#f0e6d2; --gold-lo:#785a28; --line:#463714;
+  --cyan:#0ac8b9; --blue:#0397ab; --text:#cdbe91; --muted:#8a8f9e; --red:#e84057;
+  --serif:'Cinzel','Trajan Pro',Georgia,serif; --sans:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font:16px/1.6 var(--sans);min-height:100vh;
+  background-image:radial-gradient(ellipse at 50% -10%,#10305a55,transparent 60%),radial-gradient(ellipse at 90% 100%,#0ac8b90f,transparent 50%);
+  background-attachment:fixed}
+a{color:var(--cyan)}
+a:hover{color:var(--gold-hi)}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+h1,h2,h3,h4{font-family:var(--serif);color:var(--gold-hi);letter-spacing:.04em;line-height:1.2}
+
+/* ---------- Barre de navigation ---------- */
+header{position:sticky;top:0;z-index:20;background:linear-gradient(#010a13f2,#010a13dd);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{max-width:1280px;margin:auto;display:flex;align-items:center;gap:24px;padding:0 20px;height:68px}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-weight:900;letter-spacing:.14em;color:var(--gold-hi);text-decoration:none;white-space:nowrap}
+.brand svg{width:30px;height:30px;flex:none}
+.brand small{display:block;font:500 10px var(--sans);letter-spacing:.2em;color:var(--gold);margin-top:-2px}
+nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1;justify-content:flex-end}
+nav::-webkit-scrollbar{display:none}
+nav button{background:none;border:0;color:var(--text);font:600 12px var(--serif);letter-spacing:.14em;text-transform:uppercase;padding:26px 14px 22px;cursor:pointer;position:relative;white-space:nowrap}
+nav button::after{content:"";position:absolute;left:14px;right:14px;bottom:14px;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .25s}
+nav button:hover,nav button[aria-current=page]{color:var(--gold-hi)}
+nav button:hover::after,nav button[aria-current=page]::after{transform:scaleX(1)}
+@media(max-width:900px){.bar{height:auto;flex-direction:column;align-items:stretch;gap:0;padding:8px 12px 0}nav{justify-content:flex-start}nav button{padding:14px 12px 12px}nav button::after{bottom:6px}}
+
+/* ---------- Boutons hextech ---------- */
+.btn{display:inline-flex;align-items:center;gap:10px;font:700 13px var(--serif);letter-spacing:.16em;text-transform:uppercase;text-decoration:none;cursor:pointer;
+  color:var(--bg);background:linear-gradient(#f0e6d2,#c8aa6e 60%,#a88a4a);border:0;padding:15px 30px;
+  clip-path:polygon(14px 0,100% 0,calc(100% - 14px) 100%,0 100%);transition:filter .2s,transform .2s}
+.btn:hover{filter:brightness(1.12);transform:translateY(-1px);color:var(--bg)}
+.btn.ghost{background:none;color:var(--gold-hi);box-shadow:inset 0 0 0 1px var(--gold-lo);clip-path:none;border:1px solid var(--gold-lo)}
+.btn.ghost:hover{border-color:var(--gold);color:var(--gold-hi)}
+
+/* ---------- Pages ---------- */
+main{max-width:1280px;margin:auto;padding:0 20px 80px}
+.page{display:none;animation:fade .5s ease}
+.page.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.eyebrow{font:600 12px var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--cyan)}
+.title{font-size:clamp(28px,4vw,46px);margin:6px 0 10px}
+.lead{max-width:720px;color:var(--text);opacity:.9}
+.head{padding:56px 0 30px;position:relative}
+.head::after{content:"";display:block;height:1px;margin-top:26px;background:linear-gradient(90deg,var(--gold),transparent)}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;min-height:calc(100vh - 68px);display:flex;align-items:center;margin:0 -20px;padding:0 20px;overflow:hidden}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 45%,#0397ab33,transparent 45%),linear-gradient(90deg,#010a13 15%,transparent 70%)}
+.hero-in{position:relative;max-width:1280px;margin:auto;width:100%;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(40px,7vw,92px);font-weight:900;letter-spacing:.06em;text-shadow:0 0 40px #c8aa6e44}
+.hero h1 span{display:block;font-size:.34em;letter-spacing:.32em;color:var(--gold);font-weight:500;margin-bottom:12px}
+.hero p{margin:20px 0 34px;max-width:520px;font-size:18px}
+.cta{display:flex;gap:16px;flex-wrap:wrap}
+.emblem{justify-self:center;width:min(340px,70vw);filter:drop-shadow(0 0 30px #0ac8b966);animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-14px)}}
+@media(max-width:900px){.hero-in{grid-template-columns:1fr}.emblem{display:none}}
+
+/* ---------- Cartes ---------- */
+.grid{display:grid;gap:22px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.card{position:relative;background:linear-gradient(160deg,var(--panel2),var(--panel));border:1px solid var(--line);padding:26px;
+  clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px))}
+.card::before{content:"";position:absolute;left:0;top:0;width:100%;height:2px;background:linear-gradient(90deg,var(--gold),transparent)}
+.card h3{font-size:19px;margin-bottom:8px}
+.card p+p,.card p+ul{margin-top:10px}
+.card ul{padding-left:18px}
+.card.link{cursor:pointer;transition:transform .2s,border-color .2s}
+.card.link:hover,.card.link:focus-visible{transform:translateY(-4px);border-color:var(--gold)}
+.tag{display:inline-flex;align-items:center;gap:6px;font:600 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border:1px solid var(--gold-lo);color:var(--gold)}
+.tag.win{border-color:var(--cyan);color:var(--cyan)}
+.tag.now{border-color:var(--gold-hi);color:var(--gold-hi)}
+.tag.todo{border-style:dashed;color:var(--muted);border-color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.chip{padding:6px 14px;border:1px solid var(--gold-lo);background:#c8aa6e12;color:var(--gold-hi);font-size:14px}
+
+/* ---------- Champion ---------- */
+.champ{display:grid;grid-template-columns:340px 1fr;gap:30px;align-items:start}
+@media(max-width:900px){.champ{grid-template-columns:1fr}}
+.portrait{aspect-ratio:3/4;display:grid;place-items:center;text-align:center;border:1px solid var(--gold);
+  background:radial-gradient(circle at 50% 35%,#0397ab55,transparent 60%),linear-gradient(#0f1e36,#010a13);position:relative;
+  clip-path:polygon(0 0,calc(100% - 24px) 0,100% 24px,100% 100%,24px 100%,0 calc(100% - 24px))}
+.portrait .mono{font:900 96px var(--serif);color:var(--gold-hi);text-shadow:0 0 30px #0ac8b9aa}
+.portrait .cap{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(transparent,#010a13f0)}
+.portrait .cap b{font:700 22px var(--serif);color:var(--gold-hi);letter-spacing:.1em}
+.portrait .cap span{display:block;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--cyan)}
+.spells{display:grid;gap:12px;margin-top:6px}
+.spell{display:grid;grid-template-columns:56px 1fr;gap:16px;align-items:center;padding:14px;border:1px solid var(--line);background:var(--panel)}
+.spell .key{width:56px;height:56px;display:grid;place-items:center;font:900 22px var(--serif);color:var(--gold-hi);border:2px solid var(--gold);background:#010a13;
+  clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);border:0;background:linear-gradient(135deg,var(--gold-lo),var(--gold))}
+.spell .key.ult{background:linear-gradient(135deg,#0397ab,var(--cyan));color:#010a13}
+.spell h4{font-size:15px}
+.spell p{font-size:14px;color:var(--text);opacity:.88}
+
+/* ---------- Historique ---------- */
+.match{display:grid;grid-template-columns:8px 1fr auto;gap:18px;align-items:center;margin-bottom:14px;background:var(--panel);border:1px solid var(--line);padding:18px 22px 18px 0}
+.match::before{content:"";grid-column:1;align-self:stretch;margin:-18px 0;background:var(--gold)}
+.match.win::before{background:var(--cyan)}
+.match h3{font-size:17px}
+.match small{color:var(--muted)}
+.match .when{text-align:right;font-size:13px;color:var(--muted);white-space:nowrap}
+@media(max-width:600px){.match{grid-template-columns:8px 1fr}.match .when{grid-column:2;text-align:left}}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:14px 0}
+.chain b{padding:8px 16px;border:1px solid var(--gold-lo);font-weight:600}
+.chain b.me{background:linear-gradient(#f0e6d2,#c8aa6e);color:var(--bg);border-color:var(--gold)}
+.chain i{color:var(--gold)}
+.stats{display:flex;gap:30px;flex-wrap:wrap;margin-top:16px}
+.stats div strong{display:block;font:900 30px var(--serif);color:var(--gold-hi)}
+.stats div span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+/* ---------- Projets ---------- */
+.prog{height:8px;background:#010a13;border:1px solid var(--line);margin:14px 0 6px}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--gold-lo),var(--gold-hi));width:0;transition:width 1.2s ease}
+.prog.cy i{background:linear-gradient(90deg,var(--blue),var(--cyan))}
+dialog{margin:auto;max-width:min(860px,94vw);max-height:90vh;width:100%;background:var(--panel);color:var(--text);border:1px solid var(--gold);padding:0}
+dialog::backdrop{background:#010a13cc;backdrop-filter:blur(4px)}
+dialog .in{padding:34px;overflow:auto;max-height:90vh}
+dialog h2{font-size:26px;margin-bottom:6px}
+dialog h3{font-size:17px;margin:22px 0 8px;color:var(--gold)}
+dialog ul,dialog ol{padding-left:20px}
+dialog li{margin:5px 0}
+dialog code{background:#010a13;padding:1px 6px;color:var(--cyan)}
+dialog table{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0}
+dialog td,dialog th{border:1px solid var(--line);padding:6px 10px;text-align:left}
+dialog th{color:var(--gold-hi)}
+.x{position:absolute;right:14px;top:12px;background:none;border:1px solid var(--gold-lo);color:var(--gold-hi);width:36px;height:36px;font-size:18px;cursor:pointer}
+.x:hover{border-color:var(--gold)}
+
+/* ---------- E5 ---------- */
+.scroll{overflow-x:auto;border:1px solid var(--line)}
+table.e5{border-collapse:collapse;width:100%;min-width:760px;font-size:14px;background:var(--panel)}
+.e5 th,.e5 td{border:1px solid var(--line);padding:10px 12px;vertical-align:top}
+.e5 th{background:var(--panel2);color:var(--gold-hi);font:600 12px var(--sans);letter-spacing:.06em}
+.e5 td.k{text-align:center;width:46px;color:var(--line)}
+.e5 td.k.on{color:var(--cyan);font-weight:700;background:#0ac8b912}
+.e5 td.sep{background:#c8aa6e18;color:var(--gold);font:700 12px var(--serif);letter-spacing:.16em;text-transform:uppercase}
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:6px 24px;margin:18px 0;font-size:14px}
+.legend b{color:var(--cyan);margin-right:6px}
+
+/* ---------- Roadmap ---------- */
+.ladder{position:relative;display:grid;gap:0;margin:10px 0 40px}
+.rung{display:grid;grid-template-columns:84px 1fr;gap:22px;align-items:center;position:relative;padding:14px 0}
+.rung:not(:last-child)::after{content:"";position:absolute;left:41px;top:78px;bottom:-14px;width:2px;background:linear-gradient(var(--gold-lo),var(--line))}
+.hex{width:84px;height:84px;display:grid;place-items:center;font:900 26px var(--serif);color:var(--bg);background:linear-gradient(135deg,var(--gold-lo),var(--gold));
+  clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.rung.now .hex{background:linear-gradient(135deg,var(--gold),var(--gold-hi));box-shadow:0 0 30px var(--gold)}
+.rung.todo .hex{background:#1e2a3d;color:var(--muted)}
+.rung h3{font-size:19px}
+.rung p{font-size:14px;opacity:.85;margin-top:2px}
+.flags div{padding:14px 18px;border:1px solid var(--line);background:var(--panel)}
+.flags b{display:block;font:700 15px var(--serif);color:var(--gold-hi)}
+.flags span{font-size:14px}
+
+/* ---------- Contact ---------- */
+.contact{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
+.contact a.card{text-decoration:none;color:var(--text)}
+.contact a.card:hover{border-color:var(--gold)}
+.contact .ico{font-size:30px;margin-bottom:8px}
+.contact b{display:block;font:700 18px var(--serif);color:var(--gold-hi)}
+
+.todo-box{border:1px dashed var(--gold-lo);padding:34px;text-align:center;color:var(--muted);background:#c8aa6e08}
+footer{border-top:1px solid var(--line);padding:26px 20px;text-align:center;font-size:12px;color:var(--muted);max-width:1280px;margin:auto}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <a class="brand" href="#accueil" data-go="accueil" aria-label="Retour à l'accueil">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="none" stroke="#c8aa6e" stroke-width="2.5"/><polygon points="20,10 29,15 29,25 20,30 11,25 11,15" fill="#0ac8b9" opacity=".85"/></svg>
+      <span>LOÏC BODET<small>PORTFOLIO · BTS SIO</small></span>
+    </a>
+    <nav id="nav" aria-label="Navigation principale"></nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ======== ACCUEIL ======== -->
+<section class="page" id="accueil" aria-labelledby="h-accueil">
+  <div class="hero">
+    <canvas id="embers" aria-hidden="true"></canvas>
+    <div class="hero-in">
+      <div>
+        <div class="eyebrow">Bienvenue sur la Faille</div>
+        <h1 id="h-accueil"><span>L'INVOCATEUR</span>LOÏC BODET</h1>
+        <p>Alternant Gestionnaire IT chez INEO RHT et étudiant en BTS SIO option SISR. Choisis ton onglet, entre en partie et découvre mon parcours, mes projets et mes compétences.</p>
+        <div class="cta">
+          <a class="btn" href="#projets" data-go="projets">▶ Voir mes projets</a>
+          <a class="btn ghost" href="../CV%20Bodet%20Loic.pdf" target="_blank" rel="noopener">Télécharger mon CV</a>
+        </div>
+      </div>
+      <svg class="emblem" viewBox="0 0 200 200" role="img" aria-label="Emblème hextech décoratif">
+        <polygon points="100,8 180,54 180,146 100,192 20,146 20,54" fill="none" stroke="#c8aa6e" stroke-width="3"/>
+        <polygon points="100,28 163,64 163,136 100,172 37,136 37,64" fill="#0a1428" stroke="#785a28" stroke-width="2"/>
+        <polygon points="100,52 142,76 142,124 100,148 58,124 58,76" fill="#0ac8b9" opacity=".18" stroke="#0ac8b9" stroke-width="2"/>
+        <polygon points="100,74 123,87 123,113 100,126 77,113 77,87" fill="#0ac8b9"/>
+        <path d="M100 8v20M180 54l-17 10M180 146l-17-10M100 192v-20M20 146l17-10M20 54l17 10" stroke="#f0e6d2" stroke-width="3"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="head"><div class="eyebrow">Sélection de l'onglet</div><h2 class="title">Choisis ta destination</h2></div>
+  <div class="grid g3" id="shortcuts"></div>
+</section>
+
+<!-- ======== CHAMPION ======== -->
+<section class="page" id="champion" aria-labelledby="h-champion">
+  <div class="head"><div class="eyebrow">Sélection du champion</div><h2 class="title" id="h-champion">Mon champion</h2>
+    <p class="lead">Alternant en informatique, passionné par Linux, autonome et rapide à comprendre. Je m'appuie sur une solide expérience de terrain pour faire preuve de rigueur et d'adaptabilité.</p></div>
+  <div class="champ">
+    <div>
+      <div class="portrait"><div class="mono">LB</div><div class="cap"><b>Loïc Bodet</b><span>Gestionnaire IT · Support</span></div></div>
+      <div class="chips" aria-label="Qualités">
+        <span class="chip">🤝 Sociable</span><span class="chip">☀ Optimiste</span><span class="chip">🎯 Rigoureux</span><span class="chip">🔍 Curieux</span><span class="chip">🛡 Discipliné</span>
+      </div>
+      <p style="margin-top:18px"><a class="btn" href="../CV%20Bodet%20Loic.pdf" target="_blank" rel="noopener">Ouvrir mon CV (PDF)</a></p>
+    </div>
+    <div>
+      <h3 style="margin-bottom:12px">Compétences</h3>
+      <div class="spells">
+        <div class="spell"><div class="key">P</div><div><h4>Passif — Esprit Linux</h4><p>Passionné par l'environnement Linux, que j'utilise comme terrain d'apprentissage au quotidien.</p></div></div>
+        <div class="spell"><div class="key">Q</div><div><h4>Annuaire Active Directory</h4><p>Création d'une forêt, d'OU et de groupes de sécurité, jonction de postes clients (domaine gsblolo.local).</p></div></div>
+        <div class="spell"><div class="key">W</div><div><h4>Virtualisation Proxmox</h4><p>Création de VM (UEFI, TPM, VLAN) et installation de Windows Server 2022.</p></div></div>
+        <div class="spell"><div class="key">E</div><div><h4>Support IT</h4><p>Support hardware et ponctuellement software pour 160 collaborateurs équipés chez INEO RHT.</p></div></div>
+        <div class="spell"><div class="key ult">R</div><div><h4>Ultime — Automatisation PowerShell</h4><p>Script d'import de comptes à partir d'un CSV : identifiants, doublons, mot de passe à changer à la première connexion.</p></div></div>
+      </div>
+      <h3 style="margin:30px 0 12px">Hors de la Faille</h3>
+      <div class="chips"><span class="chip">🎮 Jeux vidéo</span><span class="chip">💻 Technologies</span><span class="chip">🏋 Musculation et nutrition</span><span class="chip">🎧 Musique</span><span class="chip">🌍 Anglais B2</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== PARCOURS ======== -->
+<section class="page" id="parcours" aria-labelledby="h-parcours">
+  <div class="head"><div class="eyebrow">Historique des parties</div><h2 class="title" id="h-parcours">Mon parcours</h2>
+    <p class="lead">Formations et expériences, de la plus récente à la plus ancienne.</p></div>
+
+  <article class="match" style="border-color:var(--gold-lo)"><span></span><div style="grid-column:2/-1">
+    <span class="tag now">★ Ma guilde actuelle</span>
+    <h3 style="margin:8px 0 0;font-size:24px">INEO RHT</h3>
+    <div class="chain"><b>Groupe Bouygues</b><i>›</i><b>Equans</b><i>›</i><b>INEO RHT</b><i>›</i><b class="me">Moi : support IT</b></div>
+    <p>INEO RHT est une société du groupe Equans, lui-même filiale du groupe Bouygues. Elle est spécialisée dans la mise en place de pylônes électriques à haute tension. J'y suis le support informatique des collaborateurs équipés : hardware en priorité, software ponctuellement.</p>
+    <div class="stats"><div><strong>160</strong><span>Collaborateurs équipés</span></div><div><strong>HW</strong><span>Support principal</span></div><div><strong>SW</strong><span>Support ponctuel</span></div></div>
+  </div></article>
+
+  <div id="matches"></div>
+</section>
+
+<!-- ======== PROJETS ======== -->
+<section class="page" id="projets" aria-labelledby="h-projets">
+  <div class="head"><div class="eyebrow">Tableau des quêtes</div><h2 class="title" id="h-projets">Mes projets</h2>
+    <p class="lead">Clique sur une quête pour ouvrir sa fiche détaillée.</p></div>
+  <div class="grid g2" id="quests"></div>
+</section>
+
+<!-- ======== E5 ======== -->
+<section class="page" id="e5" aria-labelledby="h-e5">
+  <div class="head"><div class="eyebrow">Tableau de synthèse</div><h2 class="title" id="h-e5">Épreuve E5</h2>
+    <p class="lead">BTS Services Informatiques aux Organisations, session 2026 · option SISR · Nexa Digital School.</p>
+    <p style="margin-top:16px"><a class="btn ghost" href="../E5%20-%20Tableau%20de%20synth%C3%A8se.pdf" target="_blank" rel="noopener">Ouvrir le tableau (PDF)</a></p></div>
+  <div class="legend" id="legend"></div>
+  <div class="scroll"><table class="e5" id="e5t"></table></div>
+</section>
+
+<!-- ======== VEILLE ======== -->
+<section class="page" id="veille" aria-labelledby="h-veille">
+  <div class="head"><div class="eyebrow">Bibliothèque de Runeterra</div><h2 class="title" id="h-veille">Veille technologique</h2>
+    <p class="lead">Mon éclaireur : les sujets que je suis, mes sources et ma synthèse.</p></div>
+  <div class="grid g3">
+    <div class="card"><span class="tag todo">À compléter</span><h3 style="margin-top:10px">Sujet de veille</h3><p>Le thème choisi et pourquoi il compte pour mon métier.</p></div>
+    <div class="card"><span class="tag todo">À compléter</span><h3 style="margin-top:10px">Sources</h3><p>Sites, newsletters et flux RSS suivis régulièrement.</p></div>
+    <div class="card"><span class="tag todo">À compléter</span><h3 style="margin-top:10px">Synthèse</h3><p>Ce que j'ai retenu et comment je l'applique.</p></div>
+  </div>
+</section>
+
+<!-- ======== ROADMAP ======== -->
+<section class="page" id="roadmap" aria-labelledby="h-roadmap">
+  <div class="head"><div class="eyebrow">Ascension classée</div><h2 class="title" id="h-roadmap">Ma feuille de route</h2>
+    <p class="lead">Grimper les échelons, de mon BTS jusqu'à une carrière à l'international.</p></div>
+  <div class="ladder">
+    <div class="rung now"><div class="hex">1</div><div><span class="tag now">● En cours</span><h3>BTS SIO option SISR</h3><p>Nexa Digital School, en alternance chez INEO RHT (2025 – 2027).</p></div></div>
+    <div class="rung now"><div class="hex">2</div><div><span class="tag now">● En cours</span><h3>Certifications Microsoft Azure</h3><p>Cette année, en parallèle du BTS.</p></div></div>
+    <div class="rung todo"><div class="hex">3</div><div><span class="tag todo">○ À venir</span><h3>Licence pro Administration systèmes</h3><p>Après le BTS.</p></div></div>
+    <div class="rung todo"><div class="hex">4</div><div><span class="tag todo">○ À venir</span><h3>Master Administration systèmes &amp; Cybersécurité</h3><p>Pour aller plus loin dans l'infrastructure et la sécurité.</p></div></div>
+    <div class="rung todo"><div class="hex">★</div><div><span class="tag todo">○ Objectif</span><h3>Carrière à l'international</h3><p>Dans un pays très avancé technologiquement.</p></div></div>
+  </div>
+  <h3 style="margin-bottom:14px">Régions visées</h3>
+  <div class="grid g3 flags">
+    <div><b>Allemagne</b><span>Industrie et infrastructures</span></div>
+    <div><b>Suisse</b><span>Finance, hébergement, sécurité</span></div>
+    <div><b>Autres pays</b><span>À compléter</span></div>
+  </div>
+</section>
+
+<!-- ======== CONTACT ======== -->
+<section class="page" id="contact" aria-labelledby="h-contact">
+  <div class="head"><div class="eyebrow">Salon de jeu</div><h2 class="title" id="h-contact">Rejoins mon lobby</h2>
+    <p class="lead">Un stage, une alternance, une question : envoie-moi une invitation.</p></div>
+  <div class="contact">
+    <a class="card" href="https://www.linkedin.com/in/loic-bodet/" target="_blank" rel="noopener"><div class="ico">💼</div><b>LinkedIn</b>linkedin.com/in/loic-bodet</a>
+    <a class="card" href="mailto:loic95110@gmail.com"><div class="ico">✉</div><b>E-mail</b>loic95110@gmail.com</a>
+    <a class="card" href="https://github.com/Ghouly-alt" target="_blank" rel="noopener"><div class="ico">⌨</div><b>GitHub</b>github.com/Ghouly-alt</a>
+    <a class="card" href="../CV%20Bodet%20Loic.pdf" target="_blank" rel="noopener"><div class="ico">📄</div><b>Mon CV</b>Ouvrir le PDF</a>
+  </div>
+  <p style="margin-top:26px;color:var(--muted)">📍 Villeurbanne, Auvergne-Rhône-Alpes</p>
+</section>
+
+</main>
+
+<footer>Portfolio personnel de Loïc Bodet. Site de fan inspiré de l'univers de League of Legends, non affilié à Riot Games ; aucun visuel officiel n'est utilisé.</footer>
+
+<dialog id="dlg" aria-labelledby="dlg-t"><button class="x" id="dlg-x" aria-label="Fermer">✕</button><div class="in" id="dlg-in"></div></dialog>
+
+<script>
+/* ===== DONNÉES (à modifier ici) ===== */
+const TABS = [
+  {id:'accueil',  label:'Accueil',   icon:'⌂', desc:'Le point de départ.'},
+  {id:'champion', label:'Champion',  icon:'⚔', desc:'Présentation, compétences et CV.'},
+  {id:'parcours', label:'Parcours',  icon:'⏱', desc:'Formations, expériences et entreprise INEO RHT.'},
+  {id:'projets',  label:'Projets',   icon:'🗺', desc:'Mes quêtes en cours et terminées.'},
+  {id:'e5',       label:'Tableau E5',icon:'✔', desc:'Synthèse de mes réalisations pour l\'épreuve E5.'},
+  {id:'veille',   label:'Veille',    icon:'📚', desc:'Ma veille technologique.'},
+  {id:'roadmap',  label:'Roadmap',   icon:'🏆', desc:'Mon ascension : études et international.'},
+  {id:'contact',  label:'Contact',   icon:'✉', desc:'Me joindre.'}
+];
+
+const MATCHES = [
+  {win:false, title:'BTS SIO — option SISR', sub:'Nexa Digital School', when:'2025 – 2027', tag:'En cours', icon:'●'},
+  {win:false, title:'Gestionnaire IT (alternance)', sub:'INEO RHT · Villeurbanne — gestion des appareils informatiques des collaborateurs', when:'2025 – 2026', tag:'En cours', icon:'●'},
+  {win:true,  title:'Employé polyvalent', sub:'Carrefour Market · Reims — caisse, mise en rayon, réassort, facing', when:'2022 – 2023', tag:'Victoire', icon:'✔'},
+  {win:true,  title:'Manutentionnaire (intérim)', sub:'Reims — mise en place des salles de concert à l\'Arena de Reims, travail en équipe sur chantier', when:'2021 – 2024', tag:'Victoire', icon:'✔'},
+  {win:true,  title:'Baccalauréat S', sub:'Lycée Marie de Champagne · Troyes', when:'2020', tag:'Victoire', icon:'✔'}
+];
+
+const PROJECTS = [
+  {id:'p1', title:'Carnet Fonte', role:'Application web', progress:85, status:'Utilisable',
+   short:'Application de suivi de musculation qui calcule seule la charge et les répétitions de la prochaine séance.',
+   tech:'HTML, CSS, JavaScript (sans framework), SVG, Web Audio API, Wake Lock API, localStorage',
+   html:`<p>Application web pensée pour le téléphone, utilisée directement à la salle : on y note ses séances et elle calcule la <b>charge et les répétitions à viser à la séance suivante</b>.</p>
+<h3>Ce que j'ai réalisé</h3><ul>
+<li><b>Plus de 360 exercices</b> classés par groupe musculaire et par matériel, avec recherche insensible aux accents et exercices personnalisés.</li>
+<li><b>Séance en direct</b> : charge, répétitions et RPE par série, séries d'échauffement, rappel de la séance précédente, chrono et volume en temps réel.</li>
+<li><b>Minuteur de repos</b> automatique avec bip et vibration, écran maintenu allumé.</li>
+<li><b>Algorithme de progression</b> : double progression dans une fourchette de répétitions, décharge automatique de 10 % après deux échecs, détection des plateaux.</li>
+<li><b>Historique et records</b> (1RM estimé avec la formule d'Epley) et statistiques dessinées en SVG à la main.</li>
+<li><b>Données</b> : sauvegarde locale, synchronisation avec fusion des modifications, fonctionnement hors ligne, export et import JSON.</li>
+<li><b>Mode démo</b> : 8 semaines de séances simulées, thème clair / sombre, accessibilité clavier et ARIA.</li></ul>`},
+  {id:'p2', title:'AP 1 · Infrastructure GSB', role:'Réseau & système', progress:35, status:'Étape 1 terminée',
+   short:'Annuaire Active Directory pour l\'organisation GSB : 8 services, comptes créés par script PowerShell.',
+   tech:'Proxmox VE, Windows Server 2022, Active Directory (AD DS), DNS, DHCP, PowerShell, VLAN',
+   html:`<p>Pour l'organisation <b>GSB</b>, je mets en place un annuaire <b>Active Directory</b> qui centralise l'authentification et la gestion des postes des 8 services : Accueil, Communication, Comptabilité, Développement, DSI, Labo-recherche, Réseaux &amp; Systèmes et RH. Le premier point de l'AP est <b>terminé</b>.</p>
+<p><a href="https://github.com/Ghouly-alt/INFRA-SISR-Loic" target="_blank" rel="noopener">Documentation et captures sur GitHub (INFRA-SISR-Loic)</a></p>
+<h3>Environnement</h3>
+<table><tr><th>Élément</th><th>Valeur</th></tr>
+<tr><td>Hyperviseur</td><td>Proxmox VE (pool Lolo)</td></tr>
+<tr><td>Réseau / VLAN</td><td>10.2.121.0/24 · VLAN 800</td></tr>
+<tr><td>Contrôleur de domaine</td><td>VM 801 · AD-DC · 10.2.121.2 (AD DS + DNS)</td></tr>
+<tr><td>Poste client</td><td>VM 802 · Client2 · 10.2.121.30</td></tr>
+<tr><td>Domaine</td><td>gsblolo.local</td></tr></table>
+<h3>Ce que j'ai réalisé</h3><ol>
+<li>Création des VM sur Proxmox (q35, UEFI, TPM 2.0, 4 vCPU, 4 Gio de RAM, 64 Gio de disque).</li>
+<li>Installation de Windows Server 2022 et configuration réseau statique.</li>
+<li>Rôles AD DS et DNS, promotion en contrôleur de domaine d'une nouvelle forêt.</li>
+<li>Organisation de l'annuaire : OU Services, Utilisateurs, Ordinateurs, Groupes et 8 groupes de sécurité.</li>
+<li>Script PowerShell d'import des comptes depuis un CSV (identifiant <code>initiale.nom</code>, vérification des doublons, mot de passe à changer à la première connexion, jamais stocké dans le dépôt).</li>
+<li>Jonction d'un poste client Windows au domaine et ouverture de session réussie.</li></ol>
+<h3>Pour aller plus loin</h3><p>Documentation de l'ajout d'un <b>contrôleur de domaine secondaire</b> sur une maquette : haute disponibilité, réplication AD, redondance DNS et basculement DHCP, avec tests de bascule.</p>`},
+  {id:'p3', title:'Projet 3', role:'À définir', progress:15, status:'Démarrage', short:'Description du projet à compléter.', tech:'À compléter', html:'<p>Fiche à compléter.</p>'},
+  {id:'p4', title:'Projet 4', role:'À définir', progress:80, status:'Bientôt terminé', short:'Description du projet à compléter.', tech:'À compléter', html:'<p>Fiche à compléter.</p>'}
+];
+
+const E5_COLS = ['Gérer le patrimoine informatique','Répondre aux incidents et demandes','Développer la présence en ligne','Travailler en mode projet','Mettre à disposition un service','Organiser son développement professionnel'];
+const E5_ROWS = [
+  {sep:'Réalisations en cours de formation'},
+  {t:'<a href="https://drive.google.com/drive/folders/17k6Yh1YECzoqbg8lJewWjeEWQFlthh7E?usp=drive_link" target="_blank" rel="noopener">Global Swiss Bourdin</a>', d:'20/05/26 – 21/05/26', on:[0,1]},
+  {t:'TP Réseaux sur Cisco (protocoles RIP et OSPF)', d:'16/05/26 – 20/05/26', on:[2,3,4]},
+  {sep:'Réalisations en milieu professionnel — première année'},
+  {t:'Gestion du parc : commandes des nouveaux arrivants, adaptation des moyens, respect des règles internes, gestion des incidents matériel, suivi des accès serveurs (dont sauvegarde)', d:'27/08/25 – en cours', on:[0]},
+  {t:'Système de gestion de tickets via formulaire SharePoint', d:'—', on:[1]},
+  {t:'Kiséo (prise en main admin, migration des comptes) — Migration NEO', d:'26/02/26 – 19/04/26', on:[4]},
+  {t:'E-learning Equans : identification de relais / sachants dans le monde Equans', d:'27/08/25 – en cours', on:[5]},
+  {t:'Projet de développement du SharePoint de l\'entreprise', d:'23/05/26 – en cours', on:[2,3]},
+  {sep:'Réalisations en milieu professionnel — seconde année'},
+  {todo:'À venir.'}
+];
+
+/* ===== RENDU ===== */
+const $ = (s,r=document)=>r.querySelector(s);
+
+// Navigation
+const nav = $('#nav');
+TABS.filter(t=>t.id!=='accueil').forEach(t=>{
+  const b=document.createElement('button'); b.type='button'; b.dataset.go=t.id; b.textContent=t.label; nav.append(b);
+});
+$('#shortcuts').innerHTML = TABS.filter(t=>t.id!=='accueil').map(t=>
+  `<div class="card link" tabindex="0" role="link" data-go="${t.id}"><div style="font-size:28px">${t.icon}</div><h3 style="margin-top:6px">${t.label}</h3><p>${t.desc}</p></div>`).join('');
+
+function show(id){
+  if(!TABS.some(t=>t.id===id)) id='accueil';
+  document.querySelectorAll('.page').forEach(p=>p.classList.toggle('on',p.id===id));
+  nav.querySelectorAll('button').forEach(b=>{ if(b.dataset.go===id) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
+  document.title = (id==='accueil'?'Loïc Bodet — Portfolio':TABS.find(t=>t.id===id).label+' · Loïc Bodet')+' · La Faille';
+  window.scrollTo({top:0});
+  if(id==='projets') requestAnimationFrame(()=>document.querySelectorAll('#quests .prog i').forEach(i=>i.style.width=i.dataset.w+'%'));
+  else document.querySelectorAll('#quests .prog i').forEach(i=>i.style.width='0');
+}
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-go]'); if(!el) return;
+  e.preventDefault(); location.hash=el.dataset.go;
+});
+document.addEventListener('keydown',e=>{
+  if((e.key==='Enter'||e.key===' ')&&e.target.matches('.card.link[data-go]')){e.preventDefault();location.hash=e.target.dataset.go}
+});
+addEventListener('hashchange',()=>show(location.hash.slice(1)));
+
+// Parcours
+$('#matches').innerHTML = MATCHES.map(m=>
+  `<article class="match ${m.win?'win':''}"><span></span><div><h3>${m.title}</h3><small>${m.sub}</small></div><div class="when"><span class="tag ${m.win?'win':'now'}">${m.icon} ${m.tag}</span><br>${m.when}</div></article>`).join('');
+
+// Projets
+$('#quests').innerHTML = PROJECTS.map(p=>
+  `<article class="card link" tabindex="0" role="button" data-p="${p.id}" aria-label="Ouvrir la fiche ${p.title}">
+    <span class="tag ${p.progress>=80?'win':'now'}">${p.progress>=80?'✔':'●'} ${p.status}</span>
+    <h3 style="margin-top:10px">${p.title}</h3><small style="color:var(--cyan)">${p.role}</small>
+    <p>${p.short}</p>
+    <div class="prog ${p.progress>=80?'cy':''}" role="progressbar" aria-valuenow="${p.progress}" aria-valuemin="0" aria-valuemax="100"><i data-w="${p.progress}"></i></div>
+    <small style="color:var(--muted)">Avancement : ${p.progress} %</small>
+  </article>`).join('');
+const dlg=$('#dlg');
+function openProject(id){
+  const p=PROJECTS.find(x=>x.id===id); if(!p) return;
+  $('#dlg-in').innerHTML=`<h2 id="dlg-t">${p.title}</h2><span class="tag now">${p.status} — ${p.progress} %</span>${p.html}<h3>Technos / outils</h3><p>${p.tech}</p>`;
+  dlg.showModal();
+}
+$('#quests').addEventListener('click',e=>{const c=e.target.closest('[data-p]'); if(c) openProject(c.dataset.p)});
+$('#quests').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.dataset.p){e.preventDefault();openProject(e.target.dataset.p)}});
+$('#dlg-x').onclick=()=>dlg.close();
+dlg.addEventListener('click',e=>{if(e.target===dlg) dlg.close()});
+
+// E5
+$('#legend').innerHTML = E5_COLS.map((c,i)=>`<div><b>C${i+1}</b>${c}</div>`).join('');
+$('#e5t').innerHTML = `<thead><tr><th>Réalisations professionnelles</th><th>Période</th>${E5_COLS.map((c,i)=>`<th title="${c}">C${i+1}</th>`).join('')}</tr></thead><tbody>`+
+  E5_ROWS.map(r=> r.sep ? `<tr><td class="sep" colspan="${E5_COLS.length+2}">${r.sep}</td></tr>`
+    : r.todo ? `<tr><td colspan="${E5_COLS.length+2}" style="color:var(--muted)">${r.todo}</td></tr>`
+    : `<tr><td>${r.t}</td><td>${r.d}</td>${E5_COLS.map((c,i)=>r.on.includes(i)?`<td class="k on" title="${c}"><span aria-hidden="true">✔</span><span style="position:absolute;left:-9999px">${c}</span></td>`:'<td class="k"><span aria-hidden="true">·</span></td>').join('')}</tr>`).join('')+'</tbody>';
+
+// Braises animées (hero)
+(function(){
+  const cv=$('#embers'), cx=cv.getContext('2d');
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let w,h,ps=[];
+  function size(){w=cv.width=cv.offsetWidth;h=cv.height=cv.offsetHeight}
+  size(); addEventListener('resize',size);
+  const mk=()=>({x:Math.random()*w,y:h+10,r:Math.random()*2+.6,v:Math.random()*.6+.25,d:Math.random()*2-1,c:Math.random()<.35?'10,200,185':'200,170,110',a:Math.random()*.6+.3});
+  for(let i=0;i<70;i++){const p=mk();p.y=Math.random()*h;ps.push(p)}
+  (function loop(){
+    if($('#accueil').classList.contains('on')){
+      cx.clearRect(0,0,w,h);
+      ps.forEach((p,i)=>{p.y-=p.v;p.x+=p.d*.3;
+        if(p.y<-10) ps[i]=mk();
+        cx.fillStyle=`rgba(${p.c},${p.a*(p.y/h)})`;cx.beginPath();cx.arc(p.x,p.y,p.r,0,7);cx.fill()});
+    }
+    requestAnimationFrame(loop);
+  })();
+})();
+
+show(location.hash.slice(1));
+</script>
+</body>
+</html>
