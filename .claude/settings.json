@@ -1,7 +1,8 @@
 {
   "hooks": {
     "Stop": [
-      { "hooks": [ { "type": "command", "command": "sh \"$CLAUDE_PROJECT_DIR/.claude/autopush.sh\"" } ] }
+      { "hooks": [ { "type": "command", "command": "sh \"$CLAUDE_PROJECT_DIR/.claude/autopush.sh\"" } ] },
+      { "hooks": [ { "type": "command", "command": "sh \"$CLAUDE_PROJECT_DIR/../Portfolio Claude Bis/.claude/autopush.sh\"" } ] }
     ]
   }
 }
